@@ -1,7 +1,7 @@
-import { Text, View } from "react-native";
+import React from 'react';
+import { Redirect } from 'expo-router';
 
-export function index(){
-    <View>
-        <Text> e-commerce</Text>
-    </View>
+export default function Index() {
+  // Redirect to the client home by default
+  return <Redirect href="/client" />;
 }
