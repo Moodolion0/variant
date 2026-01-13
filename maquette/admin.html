@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tableau de bord Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "primary-dark": "#009bbd", // Slightly darker for hover/active states
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2c32",
+                        "text-main-light": "#111618",
+                        "text-main-dark": "#e0e6e8",
+                        "text-secondary-light": "#637f88",
+                        "text-secondary-dark": "#94aab0",
+                        "success": "#078836",
+                        "warning": "#e6a23c",
+                        "danger": "#f56c6c"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for cleaner look in horizontal scroll sections */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main-light dark:text-text-main-dark antialiased selection:bg-primary/30">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800 transition-colors">
+<div class="flex items-center p-4 justify-between">
+<div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark font-medium">12 Octobre, 2023</p>
+<h2 class="text-xl font-bold leading-tight tracking-tight">Bonjour, Admin</h2>
+</div>
+<button class="relative flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-card-dark shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-text-main-light dark:text-text-main-dark" style="font-size: 24px;">notifications</span>
+<span class="absolute top-2 right-2.5 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</button>
+</div>
+</header>
+<!-- Time Filters -->
+<div class="px-4 py-2 bg-background-light dark:bg-background-dark">
+<div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
+<button class="flex h-9 shrink-0 items-center justify-center px-4 rounded-full bg-primary text-white text-sm font-medium shadow-md shadow-primary/20 transition-transform active:scale-95">
+                    Aujourd'hui
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center px-4 rounded-full bg-white dark:bg-card-dark text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95">
+                    7 jours
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center px-4 rounded-full bg-white dark:bg-card-dark text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95">
+                    30 jours
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center w-9 rounded-full bg-white dark:bg-card-dark text-text-secondary-light dark:text-text-secondary-dark border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 20px;">calendar_month</span>
+</button>
+</div>
+</div>
+<main class="flex-1 flex flex-col gap-6 p-4 pt-2 pb-24">
+<!-- Quick Stats Grid -->
+<section class="grid grid-cols-2 gap-3">
+<!-- Ventes -->
+<div class="flex flex-col gap-1 rounded-xl p-4 bg-white dark:bg-card-dark shadow-sm border border-gray-100/50 dark:border-gray-800">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">payments</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-success bg-success/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined mr-0.5" style="font-size: 12px;">trending_up</span>
+                            12%
+                        </span>
+</div>
+<p class="mt-2 text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">Ventes</p>
+<p class="text-2xl font-bold tracking-tight">12 450 €</p>
+</div>
+<!-- Commandes -->
+<div class="flex flex-col gap-1 rounded-xl p-4 bg-white dark:bg-card-dark shadow-sm border border-gray-100/50 dark:border-gray-800">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-purple-500/10 rounded-lg text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">shopping_bag</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-success bg-success/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined mr-0.5" style="font-size: 12px;">trending_up</span>
+                            5%
+                        </span>
+</div>
+<p class="mt-2 text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">Commandes</p>
+<p class="text-2xl font-bold tracking-tight">85</p>
+</div>
+<!-- Clients -->
+<div class="flex flex-col gap-1 rounded-xl p-4 bg-white dark:bg-card-dark shadow-sm border border-gray-100/50 dark:border-gray-800">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-orange-500/10 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">group</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-success bg-success/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined mr-0.5" style="font-size: 12px;">trending_up</span>
+                            18%
+                        </span>
+</div>
+<p class="mt-2 text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">Clients</p>
+<p class="text-2xl font-bold tracking-tight">24</p>
+</div>
+<!-- Produits -->
+<div class="flex flex-col gap-1 rounded-xl p-4 bg-white dark:bg-card-dark shadow-sm border border-gray-100/50 dark:border-gray-800">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-rose-500/10 rounded-lg text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">inventory_2</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">
+                            0%
+                        </span>
+</div>
+<p class="mt-2 text-text-secondary-light dark:text-text-secondary-dark text-xs font-medium uppercase tracking-wider">Produits</p>
+<p class="text-2xl font-bold tracking-tight">142</p>
+</div>
+</section>
+<!-- Chart Section -->
+<section class="flex flex-col gap-4 rounded-xl bg-white dark:bg-card-dark p-5 shadow-sm border border-gray-100/50 dark:border-gray-800">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">Performance des Ventes</h3>
+<p class="text-3xl font-bold tracking-tight text-text-main-light dark:text-text-main-dark mt-1">12 450 €</p>
+</div>
+<div class="flex items-center gap-1 text-success bg-success/10 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_upward</span>
+<span class="text-xs font-bold">+12%</span>
+</div>
+</div>
+<div class="relative w-full h-40">
+<!-- Custom SVG Chart matching the theme -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 350 150">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#19b3e6" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#19b3e6" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line class="dark:stroke-gray-700" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="150" y2="150"></line>
+<line class="dark:stroke-gray-700" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="100" y2="100"></line>
+<line class="dark:stroke-gray-700" stroke="#e5e7eb" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="50" y2="50"></line>
+<!-- Area -->
+<path d="M0,120 C50,110 80,40 120,50 S200,90 240,60 S300,20 350,30 V150 H0 Z" fill="url(#chartGradient)"></path>
+<!-- Line -->
+<path d="M0,120 C50,110 80,40 120,50 S200,90 240,60 S300,20 350,30" fill="none" stroke="#19b3e6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle class="dark:fill-card-dark" cx="120" cy="50" fill="white" r="4" stroke="#19b3e6" stroke-width="2"></circle>
+<circle class="dark:fill-card-dark" cx="240" cy="60" fill="white" r="4" stroke="#19b3e6" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between text-xs text-text-secondary-light dark:text-text-secondary-dark font-medium px-1">
+<span>Lun</span>
+<span>Mar</span>
+<span>Mer</span>
+<span>Jeu</span>
+<span>Ven</span>
+<span>Sam</span>
+<span>Dim</span>
+</div>
+</section>
+<!-- Actions Rapides -->
+<section>
+<h3 class="text-base font-bold mb-3 px-1 text-text-main-light dark:text-text-main-dark">Actions rapides</h3>
+<div class="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+<button class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary active:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 28px;">add_box</span>
+</div>
+<span class="text-xs font-medium text-center text-text-secondary-light dark:text-text-secondary-dark">Ajouter<br/>Produit</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary active:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 28px;">person_add</span>
+</div>
+<span class="text-xs font-medium text-center text-text-secondary-light dark:text-text-secondary-dark">Nouvel<br/>Admin</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary active:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 28px;">inventory</span>
+</div>
+<span class="text-xs font-medium text-center text-text-secondary-light dark:text-text-secondary-dark">Gérer<br/>Stock</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[80px]">
+<div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary active:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 28px;">local_shipping</span>
+</div>
+<span class="text-xs font-medium text-center text-text-secondary-light dark:text-text-secondary-dark">Suivi<br/>Livraison</span>
+</button>
+</div>
+</section>
+<!-- Commandes Récentes -->
+<section class="bg-white dark:bg-card-dark rounded-xl shadow-sm border border-gray-100/50 dark:border-gray-800 overflow-hidden">
+<div class="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
+<h3 class="text-base font-bold text-text-main-light dark:text-text-main-dark">Commandes Récentes</h3>
+<a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors" href="#">Voir tout</a>
+</div>
+<div class="flex flex-col">
+<!-- Order Item 1 -->
+<div class="flex items-center gap-4 p-4 border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-xs">
+                            JD
+                        </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="text-sm font-semibold text-text-main-light dark:text-text-main-dark truncate">Jean Dupont</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">120 €</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">#12345 • Il y a 5 min</p>
+<span class="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/30 px-2 py-0.5 text-xs font-medium text-yellow-800 dark:text-yellow-500">
+                                    En cours
+                                </span>
+</div>
+</div>
+</div>
+<!-- Order Item 2 -->
+<div class="flex items-center gap-4 p-4 border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-xs">
+                            MK
+                        </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="text-sm font-semibold text-text-main-light dark:text-text-main-dark truncate">Marie Klein</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">85 €</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">#12344 • Il y a 2h</p>
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-xs font-medium text-green-800 dark:text-green-500">
+                                    Livré
+                                </span>
+</div>
+</div>
+</div>
+<!-- Order Item 3 -->
+<div class="flex items-center gap-4 p-4 border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-xs">
+                            PL
+                        </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="text-sm font-semibold text-text-main-light dark:text-text-main-dark truncate">Paul Legrand</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">240 €</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">#12343 • Il y a 5h</p>
+<span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-500">
+                                    Expédié
+                                </span>
+</div>
+</div>
+</div>
+<!-- Order Item 4 -->
+<div class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-xs">
+                            SR
+                        </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="text-sm font-semibold text-text-main-light dark:text-text-main-dark truncate">Sophie Richard</p>
+<p class="text-sm font-bold text-text-main-light dark:text-text-main-dark">45 €</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">#12342 • Hier</p>
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-xs font-medium text-green-800 dark:text-green-500">
+                                    Livré
+                                </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 z-30 w-full max-w-md bg-white dark:bg-card-dark border-t border-gray-100 dark:border-gray-800 pb-safe">
+<div class="flex items-center justify-around h-16 px-2">
+<button class="flex flex-col items-center justify-center w-full h-full text-primary space-y-1">
+<span class="material-symbols-outlined" style="font-size: 24px;">dashboard</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors space-y-1 group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" style="font-size: 24px;">shopping_cart</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors space-y-1 group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" style="font-size: 24px;">inventory_2</span>
+<span class="text-[10px] font-medium">Produits</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors space-y-1 group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" style="font-size: 24px;">settings</span>
+<span class="text-[10px] font-medium">Réglages</span>
+</button>
+</div>
+</nav>
+</div>
+</body></html>
