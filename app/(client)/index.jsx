@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import Banner from '../components/Banner';
 import BottomNav from '../components/BottomNav';
 import CategoryChips from '../components/CategoryChips';
@@ -6,55 +6,81 @@ import ProductCard from '../components/ProductCard';
 import SearchBar from '../components/SearchBar';
 import TopBar from '../components/TopBar';
 
-const PRODUCTS = [
-  { id: '1', title: 'Premium Wireless Headphones', price: '$120.00' },
-  { id: '2', title: 'Series 7 Smart Watch', price: '$250.00' },
-  { id: '3', title: 'Pro Running Shoes', price: '$85.00' },
-  { id: '4', title: 'Urban Leather Backpack', price: '$45.00' },
-  { id: '5', title: 'Noise Cancelling Earbuds', price: '$60.00' },
-  { id: '6', title: 'Fitness Band', price: '$39.00' },
-];
+import products from '../constants/products';
+import useInfiniteFetchQuery from '../hooks/useInfiniteFetchQuery';
+
+const PAGE_SIZE = 12; // page size for infinite loading
 
 export default function ClientHome() {
+  // local fetcher that simulates paging
+  const fetcher = async ({ pageParam = 0, pageSize = PAGE_SIZE }) => {
+    const start = pageParam * pageSize;
+    const items = products.slice(start, start + pageSize);
+    const nextPageParam = start + pageSize >= products.length ? null : pageParam + 1;
+    // simulate network delay
+    await new Promise((res) => setTimeout(res, 250));
+    return { items, nextPageParam };
+  };
+
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteFetchQuery(fetcher, { initialPageParam: 0, pageSize: PAGE_SIZE });
+  const items = (data?.pages || []).flat();
+
+  const renderHeader = () => (
+    <View>
+      <SearchBar placeholder="Search for products..." />
+      <CategoryChips />
+      <Banner />
+
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>Featured</Text>
+        <Text style={styles.link}>See All</Text>
+      </View>
+      <FlatList
+        data={[1,2,3,4]}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(i)=>String(i)}
+        renderItem={({item}) => (
+          <View style={styles.featureItem}><Text style={styles.featureText}>{['New Arrivals','Best Sellers','Top Rated','Accessories'][item-1]}</Text></View>
+        )}
+        contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}
+      />
+
+      <View style={styles.productsHeader}>
+        <Text style={styles.sectionTitle}>Popular Products</Text>
+      </View>
+    </View>
+  );
+
+  const onEndReached = () => {
+    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  };
+
   return (
     <View style={styles.container}>
       <TopBar title="Hello, Client 👋" subtitle="Welcome back" />
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <SearchBar placeholder="Search for products..." />
-        <CategoryChips />
-        <Banner />
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Featured</Text>
-          <Text style={styles.link}>See All</Text>
-        </View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}>
-          {/* Simple featured items as placeholder */}
-          <View style={styles.featureItem}><Text style={styles.featureText}>New Arrivals</Text></View>
-          <View style={styles.featureItem}><Text style={styles.featureText}>Best Sellers</Text></View>
-          <View style={styles.featureItem}><Text style={styles.featureText}>Top Rated</Text></View>
-          <View style={styles.featureItem}><Text style={styles.featureText}>Accessories</Text></View>
-        </ScrollView>
+      <FlatList
+        data={items}
+        keyExtractor={(i) => i.id}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 16 }}
+        renderItem={({ item }) => (
+          <View style={{ width: '48%' }}>
+            <ProductCard product={item} />
+          </View>
+        )}
+        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        ListHeaderComponent={renderHeader}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.6}
+        ListFooterComponent={() => (
+          isFetchingNextPage ? <View style={{ padding: 12 }}><ActivityIndicator /></View> : <View style={{ height: 80 }} />
+        )}
+        contentContainerStyle={{ paddingTop: 12, paddingBottom: 0 }}
+        showsVerticalScrollIndicator={false}
+      />
 
-        <View style={styles.productsHeader}>
-          <Text style={styles.sectionTitle}>Popular Products</Text>
-        </View>
-
-        <FlatList
-          data={PRODUCTS}
-          keyExtractor={(i) => i.id}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 16 }}
-          renderItem={({ item }) => (
-            <View style={{ width: '48%' }}>
-              <ProductCard title={item.title} price={item.price} />
-            </View>
-          )}
-          ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-        />
-
-        <View style={{ height: 120 }} />
-      </ScrollView>
       <BottomNav />
     </View>
   );
