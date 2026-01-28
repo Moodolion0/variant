@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Inscription Livreur</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111618] dark:text-white min-h-screen">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-white dark:bg-background-dark p-4 border-b border-[#dce3e5] dark:border-[#2d3a3f] justify-between">
+<div class="text-[#111618] dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors" data-icon="arrow_back">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Inscription Livreur</h2>
+</div>
+<div class="max-w-[480px] mx-auto pb-20">
+<!-- Headline Section -->
+<div class="px-4 pt-6">
+<h2 class="text-[#111618] dark:text-white tracking-tight text-[28px] font-bold leading-tight">Devenir livreur</h2>
+<p class="text-[#637f88] dark:text-gray-400 text-base font-normal leading-normal pt-2">Rejoignez notre flotte de partenaires et commencez à gagner de l'argent dès aujourd'hui.</p>
+</div>
+<!-- Form Section: Personal Info -->
+<div class="mt-6">
+<div class="px-4 pb-2">
+<h3 class="text-[#111618] dark:text-white text-sm font-bold uppercase tracking-wider">Informations personnelles</h3>
+</div>
+<div class="flex flex-col gap-1 px-4 py-2">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-medium pb-2">Nom complet</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-[#2d3a3f] bg-white dark:bg-[#1a282d] h-14 placeholder:text-[#637f88] p-[15px] text-base" placeholder="Ex: Jean Dupont" type="text"/>
+</label>
+</div>
+<div class="flex flex-col gap-1 px-4 py-2">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-medium pb-2">Email professionnel</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-[#2d3a3f] bg-white dark:bg-[#1a282d] h-14 placeholder:text-[#637f88] p-[15px] text-base" placeholder="jean.dupont@exemple.com" type="email"/>
+</label>
+</div>
+<div class="flex flex-col gap-1 px-4 py-2">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-medium pb-2">Numéro de téléphone</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-[#2d3a3f] bg-white dark:bg-[#1a282d] h-14 placeholder:text-[#637f88] p-[15px] text-base" placeholder="+33 6 00 00 00 00" type="tel"/>
+</label>
+</div>
+<div class="flex flex-col gap-1 px-4 py-2">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-medium pb-2">Mot de passe</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-[#2d3a3f] bg-white dark:bg-[#1a282d] h-14 placeholder:text-[#637f88] p-[15px] text-base" placeholder="••••••••" type="password"/>
+</label>
+</div>
+</div>
+<!-- Documents Upload Section -->
+<div class="mt-8">
+<div class="px-4 pb-2">
+<h3 class="text-[#111618] dark:text-white text-sm font-bold uppercase tracking-wider">Documents obligatoires</h3>
+<p class="text-[#637f88] dark:text-gray-400 text-xs mt-1">Formats acceptés : JPG, PNG, PDF (Max 5Mo)</p>
+</div>
+<div class="px-4 py-3 grid grid-cols-1 gap-4">
+<!-- ID Card Upload -->
+<div class="flex items-center justify-between p-4 border-2 border-dashed border-[#dce3e5] dark:border-[#2d3a3f] rounded-xl bg-white dark:bg-[#1a282d] cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1e2e34] transition-colors">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<div>
+<p class="text-[#111618] dark:text-white font-medium">Pièce d'identité</p>
+<p class="text-xs text-[#637f88]">Recto / Verso</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
+</div>
+<!-- Driver's License Upload -->
+<div class="flex items-center justify-between p-4 border-2 border-dashed border-[#dce3e5] dark:border-[#2d3a3f] rounded-xl bg-white dark:bg-[#1a282d] cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1e2e34] transition-colors">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">license</span>
+</div>
+<div>
+<p class="text-[#111618] dark:text-white font-medium">Permis de conduire</p>
+<p class="text-xs text-[#637f88]">En cours de validité</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
+</div>
+</div>
+</div>
+<!-- Info Box -->
+<div class="mx-4 mt-6 p-4 bg-primary/10 border border-primary/20 rounded-xl flex gap-3">
+<span class="material-symbols-outlined text-primary shrink-0">info</span>
+<p class="text-[#111618] dark:text-white text-sm leading-snug">
+                Votre candidature sera examinée par un administrateur. Vous recevrez une notification de validation sous 24h à 48h.
+            </p>
+</div>
+<!-- Submit Button -->
+<div class="px-4 py-8">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+                Soumettre ma candidature
+            </button>
+<p class="text-center text-xs text-[#637f88] mt-4 px-4">
+                En cliquant sur "Soumettre", vous acceptez nos <a class="text-primary underline" href="#">Conditions Générales</a> et notre <a class="text-primary underline" href="#">Politique de Confidentialité</a>.
+            </p>
+</div>
+</div>
+</body></html>

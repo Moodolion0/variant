@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sélection de Profil Utilisateur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+        .radio-checked-border:checked + div {
+            border-color: #19b3e6;
+            background-color: rgba(25, 179, 230, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
+<!-- Top Navigation Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Inscription</h2>
+</div>
+<!-- Main Content Container -->
+<div class="flex-1 flex flex-col px-4 pt-4 pb-10 max-w-md mx-auto w-full">
+<!-- Header Text Section -->
+<div class="text-center mt-4">
+<h1 class="text-[#111618] dark:text-white tracking-tight text-[32px] font-bold leading-tight pb-3">Commencez l'aventure</h1>
+<p class="text-[#637f88] dark:text-gray-400 text-base font-normal leading-normal px-4">Choisissez votre type de compte pour continuer votre expérience.</p>
+</div>
+<!-- Visual Selection Cards (ImageGrid Style) -->
+<div class="grid grid-cols-2 gap-4 py-8">
+<!-- Option 1: Acheteur -->
+<label class="relative cursor-pointer group">
+<input checked="" class="peer hidden" name="profile_type" type="radio"/>
+<div class="bg-white dark:bg-[#1c2a2f] border-2 border-transparent peer-checked:border-primary rounded-xl overflow-hidden shadow-sm transition-all flex flex-col aspect-[3/4]">
+<div class="h-3/4 bg-cover bg-center" data-alt="Photo showing a happy person shopping with bags" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuB38ImTL1mJafMw3a_kxwbChmZNu8d82PbtIerhj7EX24MRKoSACsTQG6GEBlY1xf4G9aDpRBnLCMB8Uk3WS8g5hDNWa-G3iE3V4IQpG6jWGL6QtB6HyQj9a1iMu4_b5UP4PWD3IoAS3QuWyBPlmjhFtl9rSmEAePN0_utheaDBOkXxNu1AnthAe-SGMdZ0JqwglcXTKNi62Apco5QwYMwceuu3RZsGVSGw7KLLZtHtVfuJz0xGpEPGgxgChIMJDaKT140ZeYzdOpE');">
+</div>
+<div class="p-3 flex items-center justify-between">
+<span class="text-[#111618] dark:text-white font-bold text-sm">Acheteur</span>
+</div>
+</div>
+</label>
+<!-- Option 2: Livreur -->
+<label class="relative cursor-pointer group">
+<input class="peer hidden" name="profile_type" type="radio"/>
+<div class="bg-white dark:bg-[#1c2a2f] border-2 border-transparent peer-checked:border-primary rounded-xl overflow-hidden shadow-sm transition-all flex flex-col aspect-[3/4]">
+<div class="h-3/4 bg-cover bg-center" data-alt="Delivery person on a scooter with a package" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuACIMmRbrBxz1dALUK0f22ELWkZCYPkEK7ImMnwHtwM8Xfm7wMFR7guI-F789eKAAcaNgw-B_Pt5H8fc15KwFUDE7qDc3F12aGiijayfwoSZTnOmkkNK-s7YVhgBd1gEcUr5JdTHQDaoivpKtYTVB0gJARkvOWIwLAIhZ6uqpc8W2E-5lb15y0k7zcJAPjGSdZlGtpXiKjielDjtXeks_5OAVxSFew2YIMlHYa4m_4R5ShcOBCP5OO283KYm4EcDs8UXXlg68BQQBI');">
+</div>
+<div class="p-3 flex items-center justify-between">
+<span class="text-[#111618] dark:text-white font-bold text-sm">Livreur</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="mt-auto space-y-4">
+<button class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-transform">
+                Continuer
+            </button>
+<div class="flex flex-col items-center gap-2">
+<p class="text-[#637f88] text-sm">Vous avez déjà un compte ? <a class="text-primary font-bold" href="#">Se connecter</a></p>
+</div>
+</div>
+<!-- Progress indicator -->
+<div class="flex justify-center gap-2 mt-8">
+<div class="h-1.5 w-8 rounded-full bg-primary"></div>
+<div class="h-1.5 w-2 rounded-full bg-[#dce3e5] dark:bg-gray-700"></div>
+<div class="h-1.5 w-2 rounded-full bg-[#dce3e5] dark:bg-gray-700"></div>
+</div>
+</div>
+</body></html>
