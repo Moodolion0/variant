@@ -47,17 +47,20 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            'full_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'phone' => 'nullable|string|max:20',
+            'password' => 'required|string|min:6',
             'role' => 'required|in:admin,client,livreur',
         ]);
 
         $user = User::create([
-            'full_name' => $data['full_name'],
+            'full_name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'phone_number' => $data['phone'] ?? null,
+            'password_hash' => $data['password'], // Sera hashé automatiquement par le mutator
             'role' => $data['role'],
+            'status' => $data['role'] === 'livreur' ? 'en_attente' : 'valide', // Les livreurs doivent être validés
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
