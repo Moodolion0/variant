@@ -1,25 +1,41 @@
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from '../constants/colors';
+import useCart from '../hooks/useCart';
 
 export default function ProductCard({ product }) {
   const router = useRouter();
-  const onPress = () => {
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const goToDetail = () => {
     if (product && product.id) router.push(`/product/${product.id}`);
   };
+
+  const onAdd = (e) => {
+    // add single item
+    addItem(product, 1);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 800);
+    if (e && e.stopPropagation) e.stopPropagation();
+  };
+
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.9}>
-      <Image source={{ uri: product?.image }} style={styles.image} />
-      <View style={styles.info}>
-        <Text style={styles.title} numberOfLines={2}>{product?.title}</Text>
-        <View style={styles.row}>
-          <Text style={styles.price}>{product?.price}</Text>
-          <View style={styles.addBtn}>
-            <Text style={{ color: '#fff' }}>+</Text>
+    <View style={styles.card}>
+      <TouchableOpacity onPress={goToDetail} activeOpacity={0.9} style={{ flex: 1 }}>
+        <Image source={{ uri: product?.image }} style={styles.image} />
+        <View style={styles.info}>
+          <Text style={styles.title} numberOfLines={2}>{product?.title}</Text>
+          <View style={styles.row}>
+            <Text style={styles.price}>{product?.price}</Text>
+            <TouchableOpacity style={styles.addBtn} onPress={onAdd} accessibilityLabel="Ajouter au panier">
+              <Text style={{ color: '#fff', fontWeight: '700' }}>{added ? '✓' : '+'}</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 }
 

@@ -10,7 +10,7 @@ export default function BottomNav() {
   const { count } = useCart();
 
   const tabs = [
-    { label: 'Accueil', icon: 'home', route: '/client' },
+    { label: 'Accueil', icon: 'home', route: '/' },
     { label: 'Catégories', icon: 'category', route: '/categories' },
     { label: 'Panier', icon: 'shopping_cart', route: '/cart', badge: count > 0 ? count : null },
     { label: 'Commandes', icon: 'receipt_long', route: '/orders' },
