@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111618] dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="w-10">
+<span class="material-symbols-outlined text-2xl cursor-pointer">arrow_back_ios</span>
+</div>
+<h1 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Mon Panier</h1>
+<div class="w-10 text-right">
+<span class="material-symbols-outlined text-2xl text-red-500 cursor-pointer">delete_sweep</span>
+</div>
+</div>
+</header>
+<!-- Main Content Area (Scrollable) -->
+<main class="flex-1 overflow-y-auto pb-40">
+<div class="max-w-md mx-auto space-y-1 p-2">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900/50 p-4 rounded-xl shadow-sm mb-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 shrink-0" data-alt="Une boîte de fraises fraîches bio" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvd31_SQ_NZ5Pju51dcYfRBLCQJJGaZQsgtWMTn-GMLOpVdlHcrIr_rdzFe9RRMVRSDNBrDD0Vk4UzIv4luW09Pwmhmy4Cyp7kB71EZfULrtbRqNQaaUxTDwXjJCyiV55Iq69jJjkKAXlGl0TGL8hB7D9d0qFaJFWK70QBmI2kBuDjsnkiI5uSCqXitSEEE5y_Kx3g-l8_lIB6kkqjSZOqxVPr5N3uiwZJJ-Y0Layp7Iks5k35Qy1zFwU0iZGQP3n5GSveC75Lv3s");'>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-start">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight line-clamp-1">Fraises Gariguette Bio</p>
+<button class="text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<p class="text-primary text-sm font-bold">12,00 €</p>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1">
+<button class="text-lg font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow-sm">-</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="text-lg font-bold flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white shadow-sm">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900/50 p-4 rounded-xl shadow-sm mb-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 shrink-0" data-alt="Bouteille de jus d'orange pressé" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnan02a2YBSS6yqZoS2rDA7fhTwG3eNZRFD-O81LBaFKSG11jMHq31MaAzltUi6Regf-hSjFWZEMQqMR9_ozyLvWfHhHw_vIeKO--DeTBk9FjvgLeX2hZYm8N1egqzphDcnshv5hHaL_IV28qeBi4fsfHCjdtUvXQ1jKdT-mdV9Um_zMJensR0IoFnWnHy0qI-MJWEKMvYCn2OL-h9U6HN4FyWUy8jBnCfKXpgvjDocNmCVzQ0BYo9ToSueXf1oW1FFMDx6qTwp9A");'>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-start">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight line-clamp-1">Jus d'Orange Pressé 1L</p>
+<button class="text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<p class="text-primary text-sm font-bold">4,50 €</p>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1">
+<button class="text-lg font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow-sm">-</button>
+<span class="text-sm font-bold w-4 text-center">2</span>
+<button class="text-lg font-bold flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white shadow-sm">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900/50 p-4 rounded-xl shadow-sm mb-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 shrink-0" data-alt="Pain complet artisanal bio" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD7-mFoq7yuPjoybdp_GaPb1UkTP5T7O5EaWC92e0T4ELpH0brajLtPs7L6q1zym39CsZcEULiGDRhYKNVslQKtc3vFDjmKEh_PGNsjpni3IuJLF3qmoNCpVChhxgOdWFluhT6ggFd98ld3LGjYi6ZRI0uhuv4eAo98OFqydcSvG-ibaatloy1ru7J8KG5qqmBxzhYC5gTGiOmCCYBsxYJUKnmba9L6TmrzOzOjn9GdrfcG1nOMpN_J7IfxXU74-PA4mq5bPjpGTQ8");'>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<div class="flex justify-between items-start">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight line-clamp-1">Pain de Campagne Bio</p>
+<button class="text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<p class="text-primary text-sm font-bold">3,80 €</p>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1">
+<button class="text-lg font-bold flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow-sm">-</button>
+<span class="text-sm font-bold w-4 text-center">1</span>
+<button class="text-lg font-bold flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white shadow-sm">+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Sticky Summary & Navigation -->
+<div class="fixed bottom-0 left-0 right-0 z-50">
+<!-- Summary Section -->
+<div class="bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 px-6 py-4 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+<div class="max-w-md mx-auto">
+<div class="flex justify-between items-center mb-4">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Sous-total (4 articles)</p>
+<p class="text-[#111618] dark:text-white text-xl font-bold">24,80 €</p>
+</div>
+<button class="w-full h-14 bg-primary text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+                    Valider la commande
+                </button>
+</div>
+</div>
+<!-- Tab Bar -->
+<nav class="bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 px-2 pt-2 pb-6">
+<div class="flex justify-around items-center max-w-md mx-auto">
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">category</span>
+<span class="text-[10px] font-medium">Catégories</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<div class="relative">
+<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="absolute -top-1 -right-2 bg-primary text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center border-2 border-white dark:border-background-dark">4</span>
+</div>
+<span class="text-[10px] font-bold">Panier</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profil</span>
+</div>
+</div>
+</nav>
+</div>
+</body></html>

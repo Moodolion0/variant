@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Détails du Produit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col bg-white dark:bg-background-dark overflow-x-hidden pb-32">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-[#111618] dark:text-white flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Détails du Produit</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 bg-transparent text-[#111618] dark:text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">share</span>
+</button>
+</div>
+</div>
+<!-- HeaderImage (Carousel Placeholder) -->
+<div class="@container">
+<div class="@[480px]:px-4 @[480px]:py-3">
+<div class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-gray-200 dark:bg-gray-800 @[480px]:rounded-lg min-h-[400px] relative" data-alt="Professional wireless noise cancelling headphones in silver" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 40%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlWSW23AmVmJOO68Vue-Oioy6zeFLI9tmmTK8Gv1WEKu6qYGEru3MnDbxahfp5MmI4whI6wG-3UCBJbeUvmc-9GKF9L9TDoWji8sVyv_-ZvmJ0X-hS9B2Ph5DqLB3jObiAX5pInb4uyqNzQD9dXWh0s7s0jjsBxItOZy2kXSQosi9AZZPhftF9iAJjNi84aFTmhEtX78RafHPWZ0hXewQ6OSwLvZjK1AJDGJwb1SJBdg4utKUKOcQ7qH3jZCDvc83lSbv166_It4E");'>
+<!-- Wishlist button overlay -->
+<button class="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 p-2 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-red-500" style="font-size: 24px; font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<div class="flex justify-center gap-2 p-5">
+<div class="size-2 rounded-full bg-white"></div>
+<div class="size-2 rounded-full bg-white opacity-40"></div>
+<div class="size-2 rounded-full bg-white opacity-40"></div>
+<div class="size-2 rounded-full bg-white opacity-40"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Headline -->
+<div class="pt-6 px-4">
+<div class="flex justify-between items-start">
+<h1 class="text-[#111618] dark:text-white tracking-tight text-[28px] font-bold leading-tight max-w-[80%]">
+                    Casque Audio Bluetooth Premium - Midnight Silver
+                </h1>
+<div class="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-bold uppercase tracking-wider">
+                    Nouveau
+                </div>
+</div>
+</div>
+<!-- Price -->
+<div class="px-4 pb-2 pt-2">
+<h2 class="text-primary text-[26px] font-bold leading-tight tracking-[-0.015em]">249,00 €</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400">TVA incluse, livraison gratuite</p>
+</div>
+<!-- Description -->
+<div class="px-4 py-4">
+<h3 class="text-[#111618] dark:text-white text-base font-bold mb-2">Description</h3>
+<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-relaxed">
+                Découvrez une clarté sonore exceptionnelle avec notre dernier casque audio. Équipé d'une réduction de bruit active hybride, de haut-parleurs de 40mm personnalisés et d'une autonomie de 40 heures. Conçu avec des matériaux durables et des coussinets à mémoire de forme pour un confort ultime durant vos longues sessions d'écoute.
+            </p>
+</div>
+<!-- Quantity Selector Section -->
+<div class="px-4 py-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 mt-4">
+<span class="text-[#111618] dark:text-white font-semibold">Quantité</span>
+<div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-xl p-1">
+<button class="flex items-center justify-center size-10 rounded-lg hover:bg-white dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-primary">remove</span>
+</button>
+<span class="px-6 text-lg font-bold text-[#111618] dark:text-white">1</span>
+<button class="flex items-center justify-center size-10 rounded-lg hover:bg-white dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-primary">add</span>
+</button>
+</div>
+</div>
+<!-- Fixed Bottom Action Bar -->
+<div class="fixed bottom-16 left-0 right-0 p-4 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-gray-100 dark:border-gray-800 z-40">
+<button class="w-full bg-primary text-white h-14 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">shopping_bag</span>
+                Ajouter au panier
+            </button>
+</div>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 pb-safe z-50">
+<div class="flex justify-around items-center h-16">
+<div class="flex flex-col items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-medium mt-1">Accueil</span>
+</div>
+<div class="flex flex-col items-center justify-center text-gray-400">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-medium mt-1">Catégories</span>
+</div>
+<div class="flex flex-col items-center justify-center text-gray-400">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-medium mt-1">Panier</span>
+</div>
+<div class="flex flex-col items-center justify-center text-gray-400">
+<span class="material-symbols-outlined">package_2</span>
+<span class="text-[10px] font-medium mt-1">Commandes</span>
+</div>
+<div class="flex flex-col items-center justify-center text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium mt-1">Profil</span>
+</div>
+</div>
+</nav>
+</div>
+</body></html>

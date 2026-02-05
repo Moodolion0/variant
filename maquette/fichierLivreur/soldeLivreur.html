@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111618] dark:text-white min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Mon Solde</h2>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Balance Card Section -->
+<div class="p-4 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-lg bg-gradient-to-br from-primary to-[#1596c2] text-white p-6">
+<div class="flex flex-col gap-1">
+<p class="text-white/80 text-sm font-medium uppercase tracking-wider">Solde actuel disponible</p>
+<p class="text-4xl font-bold leading-tight tracking-tight mt-1">45.000 FCFA</p>
+</div>
+<div class="mt-8">
+<button class="w-full flex cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-white text-primary text-base font-bold transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="truncate">Demander un retrait</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Section Header -->
+<div class="flex items-center justify-between px-4 pb-3 pt-5">
+<h2 class="text-[#111618] dark:text-white text-[20px] font-bold leading-tight tracking-[-0.015em]">Historique des opérations</h2>
+<button class="text-primary text-sm font-semibold">Voir tout</button>
+</div>
+<!-- Transactions List -->
+<div class="flex flex-col bg-white dark:bg-background-dark/50 mx-4 rounded-xl overflow-hidden shadow-sm">
+<!-- Item: Gain Livraison -->
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-3 border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 shrink-0 size-12">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Livraison #8821</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal line-clamp-2">Aujourd'hui, 14:30</p>
+</div>
+<div class="shrink-0 text-right">
+<p class="text-green-600 dark:text-green-400 text-base font-bold leading-normal">+1.200 FCFA</p>
+</div>
+</div>
+<!-- Item: Pénalité -->
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-3 border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 shrink-0 size-12">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Pénalité annulation</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal line-clamp-2">Hier, 10:15</p>
+</div>
+<div class="shrink-0 text-right">
+<p class="text-red-600 dark:text-red-400 text-base font-bold leading-normal">-100 FCFA</p>
+</div>
+</div>
+<!-- Item: Retrait -->
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-3 border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 shrink-0 size-12">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Retrait vers Mobile Money</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal line-clamp-2">12 Oct, 09:00</p>
+</div>
+<div class="shrink-0 text-right">
+<p class="text-[#111618] dark:text-white text-base font-bold leading-normal">-10.000 FCFA</p>
+</div>
+</div>
+<!-- Item: Gain Livraison -->
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-3 border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 shrink-0 size-12">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Livraison #8795</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal line-clamp-2">11 Oct, 18:20</p>
+</div>
+<div class="shrink-0 text-right">
+<p class="text-green-600 dark:text-green-400 text-base font-bold leading-normal">+2.500 FCFA</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Tab Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 pb-6 pt-2 px-6 flex justify-between items-center z-20">
+<div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="text-[10px] font-medium">Livraisons</span>
+</div>
+<div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-medium">Historique</span>
+</div>
+<div class="flex flex-col items-center gap-1 cursor-pointer text-primary">
+<span class="material-symbols-outlined !fill-1">account_balance_wallet</span>
+<span class="text-[10px] font-bold">Solde</span>
+</div>
+<div class="flex flex-col items-center gap-1 cursor-pointer opacity-50">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profil</span>
+</div>
+</nav>
+</body></html>

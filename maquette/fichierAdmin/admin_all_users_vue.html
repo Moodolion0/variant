@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestion des Utilisateurs Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-tab-shadow {
+            box-shadow: 0 -1px 0 0 rgba(0,0,0,0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111618] dark:text-white antialiased">
+<!-- Container for iPhone screen feel -->
+<div class="relative mx-auto flex h-full min-h-screen w-full max-w-[430px] flex-col bg-white dark:bg-background-dark overflow-x-hidden shadow-2xl">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-20 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Utilisateurs</h2>
+</div>
+<!-- SegmentedButtons -->
+<div class="flex px-4 py-3">
+<div class="flex h-11 flex-1 items-center justify-center rounded-xl bg-[#f0f3f4] dark:bg-white/10 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-primary has-[:checked]:shadow-[0_2px_8px_rgba(0,0,0,0.08)] has-[:checked]:text-[#111618] dark:has-[:checked]:text-white text-[#637f88] dark:text-gray-400 text-sm font-semibold leading-normal transition-all">
+<span class="truncate">Acheteurs</span>
+<input checked="" class="invisible w-0" name="user-type" type="radio" value="Acheteurs"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-primary has-[:checked]:shadow-[0_2px_8px_rgba(0,0,0,0.08)] has-[:checked]:text-[#111618] dark:has-[:checked]:text-white text-[#637f88] dark:text-gray-400 text-sm font-semibold leading-normal transition-all">
+<span class="truncate">Livreurs</span>
+<input class="invisible w-0" name="user-type" type="radio" value="Livreurs"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Search & Filter Section -->
+<div class="px-4 py-2 flex gap-2">
+<!-- SearchBar -->
+<label class="flex flex-col min-w-0 h-12 flex-1">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+<div class="text-[#637f88] flex border-none bg-[#f0f3f4] dark:bg-white/10 items-center justify-center pl-4 rounded-l-xl">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-[#111618] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#f0f3f4] dark:bg-white/10 placeholder:text-[#637f88] px-3 text-base font-normal leading-normal" placeholder="Rechercher..." value=""/>
+</div>
+</label>
+<!-- Filter Button (Custom for design) -->
+<button class="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+<!-- Chips (Status Filters) -->
+<div class="flex gap-2 p-4 overflow-x-auto no-scrollbar">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-4">
+<p class="text-white text-sm font-semibold">Tous</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f3f4] dark:bg-white/10 px-4">
+<p class="text-[#111618] dark:text-gray-200 text-sm font-medium">Actifs</p>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f3f4] dark:bg-white/10 px-4">
+<p class="text-[#111618] dark:text-gray-200 text-sm font-medium">Bloqués</p>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f3f4] dark:bg-white/10 px-4 whitespace-nowrap">
+<p class="text-[#111618] dark:text-gray-200 text-sm font-medium">En attente</p>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<!-- List Section -->
+<div class="flex-1 pb-24">
+<h3 class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#637f88] dark:text-gray-500">Récemment actifs</h3>
+<!-- ListItem 1: Active -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[80px] py-3 justify-between border-b border-[#f0f3f4] dark:border-white/5 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shadow-sm border border-gray-100 dark:border-white/10" data-alt="Portrait photo of a professional male user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC91FRCcZfT5xPV932w4pI1EWvTkXNOJu-rmX0rzIM7G6Mh3TA4bkq4E6vHAj85j-2BPwvXxUhf-phHN_uxytN0-CIjF0fH7i5SwbOqX-kHgWDMuNusCBpxJa-TQrnSJGqRr2sSYC1Z5l5RF5GVNG2ISA-b-5Ii6LNEqUze-YGLwSJwuf4Az4WDbVIQ-aE4ZWQ7J1wLfi-zhsKSSYn0KB83Cbwe5XuZZZpL6HkY3ssl-vsd6akQr0L7CVSl0oFYg-Q_S0Yr86ikWb0");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight">Jean Dupont</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-0.5">Acheteur • 14 commandes</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 text-[10px] font-bold uppercase tracking-tight">Actif</span>
+<span class="material-symbols-outlined text-gray-300 text-xl">chevron_right</span>
+</div>
+</div>
+<!-- ListItem 2: Pending -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[80px] py-3 justify-between border-b border-[#f0f3f4] dark:border-white/5 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shadow-sm border border-gray-100 dark:border-white/10" data-alt="Portrait photo of a young female user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeViD848HADCV2sfIAmIOyc5iTNgxk9Q3Vr1_7VWBGDKahmXDRtkQvHOA4BJELnY0Fgi9BvbSaYc-OlabVB8ugW7nuR1csPWqBbpFo9qN7t6QYNYVaCYXHygLW6cTTR6P1A9uHMKiT4lHVhegUnsZIhQY1UkMAUizMcCHD3NvxbF69w-s-dXW9jjbKI1vFAJwmzwMC2i--lE8rebhOQ5ryYzn6QiTD-adXgFGjLWJDDG6mseMigVVRzGNJANZqyvWwXLhGWGBQYlM");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight">Alice Martin</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-0.5">Acheteur • Inscription aujourd'hui</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 text-[10px] font-bold uppercase tracking-tight">En attente</span>
+<span class="material-symbols-outlined text-gray-300 text-xl">chevron_right</span>
+</div>
+</div>
+<!-- ListItem 3: Blocked -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[80px] py-3 justify-between border-b border-[#f0f3f4] dark:border-white/5 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shadow-sm border border-gray-100 dark:border-white/10" data-alt="Portrait photo of a man in glasses" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyhwdTmnZNeCHo7SxtyoXLarb3uOxoi21sUE3TCap2M-xTGoFS1W6jndemVrlFu9JZxNcIxDTwGc-OSfNPZ6LuwMbDl6F7jIeNXhQGmYcbDvS59rO-UlqmcP74j82yAAbEIpGTGrLiUDDNpDk3kHcCP0lz_L5N5hQeE3vrCg72WwW7uCialLb_KA08pzT4L1QRUobvw1WGDV7Gsyk4nb6YAErswLl4Ilzx0e9ASCHvtpGqWlO4lk4Irmt22MFFp_EOGH05YHDC_Fw");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight">Marc Voisin</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-0.5">Acheteur • Compte restreint</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 text-[10px] font-bold uppercase tracking-tight">Bloqué</span>
+<span class="material-symbols-outlined text-gray-300 text-xl">chevron_right</span>
+</div>
+</div>
+<!-- ListItem 4: Active -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[80px] py-3 justify-between border-b border-[#f0f3f4] dark:border-white/5 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shadow-sm border border-gray-100 dark:border-white/10" data-alt="Portrait of a woman with curly hair" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCeb5dAuJJAJgdbkUHdh4CKMBsypBAkGdQowF_syszH9xkbjoN-7-tBhEwGH_S9v28Ij21GJEIWzoCQC5N5dUwmxb_ufTHbQCcrEsS7LONvuwm3jij6TUwFYEppYqN17FmZw1h3yUhM_5csPGldBDSTFTbmf1Gh3XQNdtVkLBPAiirw2xwAq0u2fmXkduHOTAmijO1JWvwostrJS0jlkj7p3qejRuniqmn4THx01ymVs4Pdy5iUXj94ux1QtAbgPOx1htB6f4u3344");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight">Sophie Laurent</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-0.5">Acheteur • 42 commandes</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 text-[10px] font-bold uppercase tracking-tight">Actif</span>
+<span class="material-symbols-outlined text-gray-300 text-xl">chevron_right</span>
+</div>
+</div>
+<!-- ListItem 5: Active -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[80px] py-3 justify-between border-b border-[#f0f3f4] dark:border-white/5 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shadow-sm border border-gray-100 dark:border-white/10" data-alt="Abstract profile placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9sT5SsM_U91IodeK8E9fLT13CW3-RfKteODxai94Bc24Za8qevwtBf-bgbpyj81remEut79aaMo3XRyienXKvhmAK5WNKke6tAjR6g6JPuk4lteR1baDbi4713DlTYnd1pC6QDDPCiDJZQDNuZTOpqNF4Pac6nAGRbw6MAMPhG8dKl8qR3lEdvN-ibdNsCiCUoctJPn0iOZLhWol1V7l_w9k6l24HJmbIitaaLgN3WvQiD-J7wc5KwSxeZH-o0JoI5tvozxKbIag");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-tight">Thomas Bernard</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-0.5">Acheteur • 3 commandes</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 text-[10px] font-bold uppercase tracking-tight">Actif</span>
+<span class="material-symbols-outlined text-gray-300 text-xl">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<div class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] h-20 bg-white/90 dark:bg-background-dark/95 backdrop-blur-lg ios-tab-shadow px-4 flex items-start justify-between z-30 pt-2 border-t border-gray-100 dark:border-white/10">
+<button class="flex flex-col items-center justify-center gap-1 w-1/5 text-[#637f88] dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-1/5 text-[#637f88] dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">receipt_long</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-1/5 text-[#637f88] dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">inventory_2</span>
+<span class="text-[10px] font-medium">Produits</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-1/5 text-primary">
+<span class="material-symbols-outlined text-[28px] fill-current">group</span>
+<span class="text-[10px] font-bold">Utilisateurs</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-1/5 text-[#637f88] dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+<span class="text-[10px] font-medium">Paramètres</span>
+</button>
+</div>
+</div>
+<!-- Floating Action Button for adding user (Optional but good for UX) -->
+<div class="fixed bottom-24 right-4 md:right-[calc(50%-200px)] z-40">
+<button class="flex size-14 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/40 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</body></html>

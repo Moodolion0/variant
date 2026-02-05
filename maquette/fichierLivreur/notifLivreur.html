@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications Livreur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased">
+<!-- Main Wrapper for Phone Viewport -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto border-x border-gray-200 dark:border-gray-800">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 ios-blur p-4 pb-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex size-12 shrink-0 items-center justify-start text-primary">
+<span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">Notifications</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="relative flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Section: Today -->
+<div class="px-4 pt-6 pb-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Aujourd'hui</h3>
+</div>
+<!-- List Item: New Delivery (Priority) -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-[#1a262b] mx-4 mb-3 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all active:scale-95">
+<div class="flex items-center justify-center rounded-lg bg-primary text-white shrink-0 size-12 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-tight truncate pr-2">Nouvelle livraison disponible à 400m</p>
+<span class="text-primary text-xs font-medium uppercase tracking-wider">Maintenant</span>
+</div>
+<p class="text-slate-500 dark:text-[#9db2b8] text-sm font-normal leading-snug mt-1">Une nouvelle commande est prête à être récupérée au restaurant "L'Artisan Burger".</p>
+</div>
+</div>
+<!-- List Item: Wallet Credited -->
+<div class="group relative flex items-center gap-4 bg-white dark:bg-[#1a262b] mx-4 mb-3 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all active:scale-95">
+<div class="flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 dark:bg-emerald-500/20 shrink-0 size-12">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-tight truncate pr-2">Votre solde a été crédité</p>
+<span class="text-slate-400 dark:text-[#9db2b8] text-xs font-normal">1h</span>
+</div>
+<p class="text-slate-500 dark:text-[#9db2b8] text-sm font-normal leading-snug mt-1">Le paiement pour vos 5 dernières courses (+42.50€) a été ajouté à votre portefeuille.</p>
+</div>
+</div>
+<!-- Section: Earlier -->
+<div class="px-4 pt-6 pb-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Anciennes notifications</h3>
+</div>
+<!-- List Item: Profile Validated -->
+<div class="group relative flex items-center gap-4 bg-white/50 dark:bg-[#1a262b]/50 mx-4 mb-3 p-4 rounded-xl border border-gray-100 dark:border-gray-800 transition-all opacity-80">
+<div class="flex items-center justify-center rounded-lg bg-blue-500/10 text-blue-500 dark:bg-blue-500/20 shrink-0 size-12">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-tight truncate pr-2">Profil validé par l'admin</p>
+<span class="text-slate-400 dark:text-[#9db2b8] text-xs font-normal">3h</span>
+</div>
+<p class="text-slate-500 dark:text-[#9db2b8] text-sm font-normal leading-snug mt-1">Félicitations ! Votre compte est actif et vous pouvez accepter des livraisons.</p>
+</div>
+</div>
+<!-- List Item: Security Update -->
+<div class="group relative flex items-center gap-4 bg-white/50 dark:bg-[#1a262b]/50 mx-4 mb-3 p-4 rounded-xl border border-gray-100 dark:border-gray-800 transition-all opacity-80">
+<div class="flex items-center justify-center rounded-lg bg-orange-500/10 text-orange-500 dark:bg-orange-500/20 shrink-0 size-12">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-tight truncate pr-2">Mise à jour de sécurité</p>
+<span class="text-slate-400 dark:text-[#9db2b8] text-xs font-normal">Hier</span>
+</div>
+<p class="text-slate-500 dark:text-[#9db2b8] text-sm font-normal leading-snug mt-1">N'oubliez pas de porter votre casque et de respecter les limitations de vitesse.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<footer class="absolute bottom-0 left-0 right-0 z-50 bg-background-light/95 dark:bg-background-dark/95 ios-blur border-t border-gray-200 dark:border-gray-800 pb-8 pt-3 px-6">
+<div class="flex justify-between items-center max-w-sm mx-auto">
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-slate-400 dark:text-gray-500 group-active:text-primary">navigation</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500">Livraisons</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-slate-400 dark:text-gray-500 group-active:text-primary">history</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500">Historique</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<div class="relative">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<div class="absolute -top-1 -right-1 size-2 rounded-full bg-red-500 border border-white dark:border-background-dark"></div>
+</div>
+<span class="text-[10px] font-bold text-primary">Alertes</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-slate-400 dark:text-gray-500 group-active:text-primary">payments</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500">Solde</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-slate-400 dark:text-gray-500 group-active:text-primary">account_circle</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500">Profil</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

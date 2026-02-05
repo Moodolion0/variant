@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ajouter un Nouveau Produit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111618] dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto shadow-xl bg-white dark:bg-[#111d21] overflow-x-hidden">
+<header class="sticky top-0 z-20 flex items-center bg-white dark:bg-[#111d21] border-b border-[#dce3e5] dark:border-gray-800 p-4 pb-3 justify-between">
+<div class="text-[#111618] dark:text-white flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios_new</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Ajouter un Produit</h2>
+<div class="size-10 flex items-center justify-center">
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-48">
+<div class="px-4 py-6">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal pb-3">Photos du produit</p>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#dce3e5] dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary" style="font-size: 32px;">add_a_photo</span>
+<span class="text-[10px] font-medium mt-1 text-[#637f88] dark:text-gray-400">Ajouter</span>
+</div>
+<div class="relative aspect-square rounded-xl overflow-hidden border border-[#dce3e5] dark:border-gray-700">
+<img alt="Product thumbnail 1 preview" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmnhU18GXE_ZNe4aKYC1RdXab1H9Q-eunrQ8FK8GYHVtM0r4fh0OnwjOOHadgW6lSuMGxxaf3mYRYTWEd9qzcaDuQmTz0zmmGcWoeAV1T4ONpPYqSABQvNA80K2eXodanfBJGx6WFbLxJrFEWoTLSc0GWAbFD7_tHlrtrRnHbEbqotMYfwIOjd6Zrw4Z8mbpyx5pn4XerSZe5S4JhcXkgn0ThryB5YO_VAeXp4aykpKiDYqHiwdSojlXo5bVWzrAs7u7KY5RLuthQ"/>
+<button class="absolute top-1 right-1 size-6 bg-black/50 rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+</button>
+</div>
+<div class="relative aspect-square rounded-xl overflow-hidden border border-[#dce3e5] dark:border-gray-700">
+<img alt="Product thumbnail 2 preview" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC71m88tFFqDwdcAn38opvzXG0ApKGu9e6UJXOfwJ_Y7HTOgmfqtV_M8Zvbd4qD8SlULQdfCCkB0EV1SCMAdhHSbzVhKMDYzmjYys6--FtE1aQNNXzLZpEaRbhCEwHm1FgmN1rMPEKUXNneM8zm_0RxatmwdBKIDHPDiTbPdmrYkqlJl1SahiblAyiHsedmagwhNE7Zpt3YDnpxxuTgLiDQYL7mlhyxNeoYsvtOcVrA9m5HczED37ECLvwnMxSMUY-mJruPu-qdKOc"/>
+<button class="absolute top-1 right-1 size-6 bg-black/50 rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col px-4 py-3">
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-base font-medium leading-normal pb-2">Nom du produit</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary h-14 placeholder:text-[#637f88] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Ex: Produit Haute Qualité" value=""/>
+</label>
+</div>
+<div class="flex flex-col px-4 py-3">
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-base font-medium leading-normal pb-2">Description</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary min-h-36 placeholder:text-[#637f88] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Entrez la description détaillée du produit"></textarea>
+</label>
+</div>
+<div class="flex flex-row gap-4 px-4 py-3">
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-base font-medium leading-normal pb-2">Prix (€)</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary h-14 placeholder:text-[#637f88] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="0.00" step="0.01" type="number"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-base font-medium leading-normal pb-2">Stock</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary h-14 placeholder:text-[#637f88] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="0" type="number"/>
+</label>
+</div>
+<div class="flex flex-col px-4 py-3">
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-base font-medium leading-normal pb-2">Sélectionner un Fournisseur</p>
+<div class="relative">
+<select class="appearance-none form-select flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary h-14 p-[15px] text-base font-normal leading-normal pr-10">
+<option disabled="" selected="" value="">Choisir un fournisseur</option>
+<option value="techcorp">Fournisseur A</option>
+<option value="globalparts">Fournisseur B</option>
+<option value="euroelec">Fournisseur C</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#637f88]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</label>
+</div>
+</main>
+<div class="fixed bottom-0 w-full max-w-md bg-white dark:bg-[#111d21] border-t border-[#dce3e5] dark:border-gray-800 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-4">
+<div class="px-4 mb-4">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">publish</span>
+<span>Publier le produit</span>
+</button>
+</div>
+<nav class="flex justify-around items-end">
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-[10px] font-semibold">Produits</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-medium">Utilisateurs</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Paramètres</span>
+</div>
+</nav>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications Client</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#19b3e6",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111d21",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111618] dark:text-white">
+<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-2xl cursor-pointer">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Notifications</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[24px]">notifications_active</span>
+</button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="pb-1">
+<div class="flex border-b border-[#dce3e5] dark:border-gray-700 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-primary pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Toutes</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#637f88] dark:text-gray-400 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Non lues</p>
+</a>
+</div>
+</div>
+</div>
+<!-- Notification List -->
+<div class="flex flex-col flex-1 pb-24">
+<!-- Unread Item 1 -->
+<div class="flex gap-4 bg-primary/5 dark:bg-primary/10 px-4 py-4 justify-between border-b border-gray-50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="text-white flex items-center justify-center rounded-xl bg-primary shrink-0 size-12 shadow-sm">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-snug">Votre commande est en cours de livraison</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-medium mt-1">Il y a 2 minutes</p>
+<p class="text-[#4a5e65] dark:text-gray-300 text-sm font-normal leading-normal mt-1">Votre colis est avec le livreur et arrivera aujourd'hui avant 18h.</p>
+<button class="mt-3 text-primary text-sm font-bold flex items-center gap-1">
+                            Suivre mon colis <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="shrink-0">
+<div class="flex size-7 items-center justify-center"><div class="size-3 rounded-full bg-primary animate-pulse"></div></div>
+</div>
+</div>
+<!-- Unread Item 2 -->
+<div class="flex gap-4 bg-primary/5 dark:bg-primary/10 px-4 py-4 justify-between border-b border-gray-50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="text-[#111618] dark:text-white flex items-center justify-center rounded-xl bg-[#ffd700]/20 shrink-0 size-12">
+<span class="material-symbols-outlined text-[#b8860b]">sell</span>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-snug">Promo flash sur vos favoris</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-medium mt-1">Il y a 1 heure</p>
+<p class="text-[#4a5e65] dark:text-gray-300 text-sm font-normal leading-normal mt-1">Bénéficiez de -20% sur les articles de votre liste de souhaits pendant 2h !</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="flex size-7 items-center justify-center"><div class="size-3 rounded-full bg-primary"></div></div>
+</div>
+</div>
+<!-- Read Item -->
+<div class="flex gap-4 bg-white dark:bg-background-dark px-4 py-4 justify-between border-b border-gray-50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="text-[#637f88] dark:text-gray-400 flex items-center justify-center rounded-xl bg-[#f0f3f4] dark:bg-gray-800 shrink-0 size-12">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="flex flex-1 flex-col justify-center opacity-80">
+<p class="text-[#111618] dark:text-white text-base font-medium leading-snug">Confirmation de réception</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-1">Hier, 14:30</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal mt-1">Merci d'avoir confirmé la réception de votre commande #12345.</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<span class="material-symbols-outlined text-gray-300 dark:text-gray-600">chevron_right</span>
+</div>
+</div>
+<!-- Read Item 2 -->
+<div class="flex gap-4 bg-white dark:bg-background-dark px-4 py-4 justify-between border-b border-gray-50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="text-[#637f88] dark:text-gray-400 flex items-center justify-center rounded-xl bg-[#f0f3f4] dark:bg-gray-800 shrink-0 size-12">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex flex-1 flex-col justify-center opacity-80">
+<p class="text-[#111618] dark:text-white text-base font-medium leading-snug">Remboursement effectué</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-1">Il y a 2 jours</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal mt-1">Le remboursement de 45,00€ pour le retour #9928 a été traité.</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<span class="material-symbols-outlined text-gray-300 dark:text-gray-600">chevron_right</span>
+</div>
+</div>
+<!-- Date Separator -->
+<div class="px-4 py-4 bg-background-light dark:bg-background-dark/50">
+<p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Semaine dernière</p>
+</div>
+<!-- Read Item 3 -->
+<div class="flex gap-4 bg-white dark:bg-background-dark px-4 py-4 justify-between border-b border-gray-50 dark:border-gray-800">
+<div class="flex items-start gap-4">
+<div class="text-[#637f88] dark:text-gray-400 flex items-center justify-center rounded-xl bg-[#f0f3f4] dark:bg-gray-800 shrink-0 size-12">
+<span class="material-symbols-outlined">redeem</span>
+</div>
+<div class="flex flex-1 flex-col justify-center opacity-80">
+<p class="text-[#111618] dark:text-white text-base font-medium leading-snug">Joyeux Anniversaire !</p>
+<p class="text-[#637f88] dark:text-gray-400 text-xs font-normal mt-1">5 oct. 2023</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal mt-1">Voici un petit cadeau : profitez de 10€ offerts dès 50€ d'achat.</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center">
+<span class="material-symbols-outlined text-gray-300 dark:text-gray-600">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Navigation Bar (iOS Style) -->
+<div class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 px-2 pb-6 pt-2">
+<div class="flex justify-around items-center h-12">
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-medium">Catégories</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-medium">Panier</span>
+<span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] size-4 flex items-center justify-center rounded-full border-2 border-white dark:border-background-dark">2</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">package_2</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold">Profil</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

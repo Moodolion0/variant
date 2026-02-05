@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications Administrateur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111618] dark:text-white transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-white dark:bg-background-dark shadow-2xl overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-[#dce3e5] dark:border-white/10">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Notifications</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="relative flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#111618] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<span class="absolute top-2 right-2 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+</button>
+</div>
+</header>
+<!-- Filter Tabs -->
+<div class="bg-white dark:bg-background-dark sticky top-[68px] z-10">
+<div class="flex border-b border-[#dce3e5] dark:border-white/10 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-primary pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Tout</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#637f88] dark:text-gray-400 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Non lus</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#637f88] dark:text-gray-400 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Alertes</p>
+</a>
+</div>
+</div>
+<!-- Notification List -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Urgent: Validation -->
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[88px] py-4 justify-between border-b border-gray-100 dark:border-white/5">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shrink-0 border border-gray-200" data-alt="Portrait photo of a delivery driver candidate" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKoyTjYl0HJ2ksO1RD7uX18hYFqqqASkVyPn5tDX80NSY9zxx8GFvjcGftt4oq9ru8qGSaSafXv7MVLDtO5SBmgztQOlemN_JdIUUR0Prxd3X7uqeggHjU7ZZj7_932kJeBm0vS088NtDZmYeucd2WtHGsO_waP2LVCAbgKr-2AOHtnHkzJln9uqw6JocRtEjAuPu7JA4vqOP-V12ksZYY8NJVoMR7Ztu4I854Odg25Pymps1Kr7gReyfZ_F12uu8aiNEtxTG6cy8");'></div>
+<div class="flex flex-col justify-center">
+<div class="flex items-center gap-2">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Nouveau livreur en attente</p>
+<div class="h-2 w-2 rounded-full bg-primary"></div>
+</div>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Marc Lambert a soumis ses documents pour validation.</p>
+<p class="text-[#637f88] dark:text-gray-500 text-xs mt-1">Il y a 2m</p>
+</div>
+</div>
+<div class="shrink-0">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold leading-normal w-fit">
+<span>Valider</span>
+</button>
+</div>
+</div>
+<!-- Warning: Stock -->
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[88px] py-4 justify-between border-b border-gray-100 dark:border-white/5">
+<div class="flex items-center gap-4">
+<div class="text-[#e67e22] flex items-center justify-center rounded-xl bg-[#fff7f0] dark:bg-[#2c1a0a] shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">warning</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1 text-orange-600 dark:text-orange-400">Stock faible : iPhone 15 Pro</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Il ne reste que 3 unités disponibles.</p>
+<p class="text-[#637f88] dark:text-gray-500 text-xs mt-1">Il y a 14m</p>
+</div>
+</div>
+<div class="shrink-0">
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+<span class="material-symbols-outlined text-lg">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- New Order -->
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[88px] py-4 justify-between border-b border-gray-100 dark:border-white/5">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-xl bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">shopping_cart</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Nouvelle commande #8942</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Sophie Bernard - 1,240.00 €</p>
+<p class="text-[#637f88] dark:text-gray-500 text-xs mt-1">Il y a 45m</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-xs font-bold text-primary px-2 py-1 bg-primary/10 rounded">Payé</p>
+</div>
+</div>
+<!-- New User Registration -->
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[88px] py-4 justify-between border-b border-gray-100 dark:border-white/5">
+<div class="flex items-center gap-4">
+<div class="text-emerald-500 flex items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/30 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">person_add</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Nouveau client inscrit</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Bienvenue à Thomas Morel (Toulouse, FR).</p>
+<p class="text-[#637f88] dark:text-gray-500 text-xs mt-1">Il y a 2h</p>
+</div>
+</div>
+</div>
+<!-- Stock: Restock Suggestion -->
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[88px] py-4 justify-between border-b border-gray-100 dark:border-white/5">
+<div class="flex items-center gap-4">
+<div class="text-[#637f88] flex items-center justify-center rounded-xl bg-[#f0f3f4] dark:bg-gray-800 shrink-0 size-12">
+<span class="material-symbols-outlined text-2xl">inventory_2</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal line-clamp-1">Rapport hebdomadaire disponible</p>
+<p class="text-[#637f88] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">L'analyse des ventes de la semaine dernière est prête.</p>
+<p class="text-[#637f88] dark:text-gray-500 text-xs mt-1">Il y a 5h</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-[#dce3e5] dark:border-white/10 px-2 py-3">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 flex-1 text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</a>
+<a class="flex flex-col items-center gap-1 flex-1 text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">receipt_long</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</a>
+<a class="flex flex-col items-center gap-1 flex-1 text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">inventory</span>
+<span class="text-[10px] font-medium">Produits</span>
+</a>
+<a class="flex flex-col items-center gap-1 flex-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="text-[10px] font-bold">Alertes</span>
+</a>
+<a class="flex flex-col items-center gap-1 flex-1 text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">group</span>
+<span class="text-[10px] font-medium">Users</span>
+</a>
+<a class="flex flex-col items-center gap-1 flex-1 text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-[10px] font-medium">Paramètres</span>
+</a>
+</div>
+<!-- iOS Home Indicator Notch -->
+<div class="mt-4 mx-auto h-1 w-32 rounded-full bg-black/20 dark:bg-white/20"></div>
+</nav>
+</div>
+</body></html>

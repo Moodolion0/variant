@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestion des Livraisons - Livreur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab {
+            font-variation-settings: 'FILL' 1;
+            color: #19b3e6;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111618] dark:text-white min-h-screen pb-24">
+<!-- Header Section -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">local_shipping</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 ml-2">Livraisons</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="relative flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-[#111618] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<span class="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-red-500"></span>
+</button>
+</div>
+</div>
+<!-- Segmented Control -->
+<div class="px-4 py-2">
+<div class="flex h-11 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm text-[#637f88] dark:text-gray-400 has-[:checked]:text-primary text-sm font-semibold transition-all">
+<span class="truncate">Disponibles</span>
+<input checked="" class="hidden" name="delivery-tab" type="radio" value="disponibles"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm text-[#637f88] dark:text-gray-400 has-[:checked]:text-primary text-sm font-semibold transition-all">
+<span class="truncate">Mes Livraisons</span>
+<input class="hidden" name="delivery-tab" type="radio" value="mine"/>
+</label>
+</div>
+</div>
+</header>
+<main class="max-w-md mx-auto">
+<!-- Section Header -->
+<div class="flex items-center justify-between px-4 pt-6 pb-2">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">À moins de 1km</h3>
+<span class="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">3 nouvelles</span>
+</div>
+<!-- Delivery List (Disponibles) -->
+<div class="space-y-4 px-4 pb-8">
+<!-- Card 1 -->
+<div class="flex flex-col overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-transform active:scale-[0.98]">
+<div class="relative h-32 w-full bg-gray-200 dark:bg-gray-800">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Map showing delivery route from bakery" data-location="Paris" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAC2w5Jes0Nw1Gin5F2MpjvxOcMmYPUji5BN-F-y2o0jAJEOwSOi_S7MdhsZ9sEamk6FxdxecmokhkD2jMnHhdx1J0Fcu00BBM8Dh1452IIKKzQlgyGKp6ByiJYXwvptxk015h0DbepE_axWYojYIYcBklImlixeurV3Ctyz6G0NVvN_tws_Z0IE_Whm6WmXXV6BldOKcSLW573Cbl1zBz6uHcXYABl4HHZzBvQNom2hg4ZZ5KYftBlNg6isRcYHua-IkVatMSNp4w');"></div>
+<div class="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold tracking-wider text-primary uppercase">Express</div>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-primary text-2xl font-bold">12.50 €</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium">0.5 km de votre position</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md shadow-primary/20 transition-all">
+                            Accepter
+                        </button>
+</div>
+<div class="space-y-2 pt-2 border-t border-gray-50 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-primary"></div>
+<div class="w-0.5 h-4 bg-gray-200 dark:bg-gray-700"></div>
+<div class="size-2 rounded-full border-2 border-primary bg-white dark:bg-gray-900"></div>
+</div>
+<div class="space-y-3 flex-1">
+<div>
+<p class="text-xs text-gray-400 uppercase font-semibold">Départ</p>
+<p class="text-sm font-medium text-[#111618] dark:text-white line-clamp-1">Boulangerie Artisanale • 12 Rue de la République</p>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase font-semibold">Arrivée</p>
+<p class="text-sm font-medium text-[#111618] dark:text-white line-clamp-1">8 Bis Avenue Foch, Paris</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-transform active:scale-[0.98]">
+<div class="relative h-32 w-full bg-gray-200 dark:bg-gray-800">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Map showing short inner city delivery" data-location="Paris Center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCdFWiOD7dwGN_HD4-Q5_i4yGFb_kdp3T2OffdxoNBfO7sbvwv4xG9xTb6JPVf6lrTUBqaBUINQUowj9BSFixFCs0NY3RKW4TxQAGgVl8OoP0_CBGZdVf_c-ePiuDj2JInR4kA9PhMztLzOIaGElkaUmwcNVW3iKDUWBXDaFd_WZF05OnbaIrnhWOtXPI7V08_APum9-DeThL7lVbqWIW7jLOF1tSo7qml2rRxryATm1ndb_Ct3X-W1-snRt9WAyrlOPmD2y4qrYw4');"></div>
+<div class="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold tracking-wider text-orange-500 uppercase">Fragile</div>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-primary text-2xl font-bold">8.20 €</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium">0.8 km de votre position</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md shadow-primary/20 transition-all">
+                            Accepter
+                        </button>
+</div>
+<div class="space-y-2 pt-2 border-t border-gray-50 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="flex flex-col items-center">
+<div class="size-2 rounded-full bg-primary"></div>
+<div class="w-0.5 h-4 bg-gray-200 dark:bg-gray-700"></div>
+<div class="size-2 rounded-full border-2 border-primary bg-white dark:bg-gray-900"></div>
+</div>
+<div class="space-y-3 flex-1">
+<div>
+<p class="text-xs text-gray-400 uppercase font-semibold">Départ</p>
+<p class="text-sm font-medium text-[#111618] dark:text-white line-clamp-1">Epicerie Fine du Canal</p>
+</div>
+<div>
+<p class="text-xs text-gray-400 uppercase font-semibold">Arrivée</p>
+<p class="text-sm font-medium text-[#111618] dark:text-white line-clamp-1">42 Rue de Crimée</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- More alerts placeholder -->
+<div class="flex items-center justify-center p-8">
+<p class="text-[#637f88] text-sm text-center">Vous voyez toutes les courses disponibles dans un rayon de 1km.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 px-6 py-3">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined active-tab text-2xl">local_shipping</span>
+<span class="text-[10px] font-bold text-primary">Livraisons</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl hover:text-primary transition-colors">history</span>
+<span class="text-[10px] font-medium">Historique</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl hover:text-primary transition-colors">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Solde</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-[#637f88] dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl hover:text-primary transition-colors">person</span>
+<span class="text-[10px] font-medium">Profil</span>
+</a>
+</div>
+</nav>
+<!-- Spacer for fixed nav -->
+<div class="h-20"></div>
+</body></html>

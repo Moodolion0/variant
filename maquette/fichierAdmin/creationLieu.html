@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ajouter un Nouveau Lieu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-[480px] mx-auto bg-white dark:bg-background-dark shadow-xl overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-10 flex items-center bg-white dark:bg-background-dark px-4 py-4 border-b border-gray-100 dark:border-gray-800">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer text-[#111618] dark:text-white">
+<span class="material-symbols-outlined" data-icon="arrow_back_ios_new">arrow_back_ios_new</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Ajouter un lieu</h2>
+</header>
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Section: General Info -->
+<div class="px-4 pt-6">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Informations Générales</h3>
+<div class="flex flex-col gap-4">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-gray-300 text-sm font-medium leading-normal pb-2">Nom du lieu</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#637f88] p-[15px] text-base font-normal" placeholder="Ex: Quartier Plateau, Centre Commercial" type="text" value=""/>
+</label>
+</div>
+</div>
+<!-- Section: Coordinates -->
+<div class="px-4 pt-8">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Coordonnées Géographiques</h3>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="my_location">my_location</span>
+</div>
+<p class="text-sm text-[#637f88] dark:text-gray-400 mb-4">Saisissez les coordonnées manuellement ou déplacez le marqueur sur la carte.</p>
+<div class="flex flex-row gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-300 text-sm font-medium leading-normal pb-2">Latitude</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#637f88] p-[15px] text-base font-normal" placeholder="0.000000" step="0.000001" type="number"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-[#111618] dark:text-gray-300 text-sm font-medium leading-normal pb-2">Longitude</p>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#637f88] p-[15px] text-base font-normal" placeholder="0.000000" step="0.000001" type="number"/>
+</label>
+</div>
+</div>
+<!-- Map View Container -->
+<div class="px-4 py-6">
+<div class="relative w-full aspect-video rounded-xl overflow-hidden border border-[#dce3e5] dark:border-gray-700 bg-gray-100 group">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover flex items-center justify-center" data-alt="Map showing a city street view with a central marker" data-location="Paris, France" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAT-g2OUGbtxsnrl7DOdEX-_uUlvGoamIdkwnAo318xrA_sVLBrJUGKCqc1mlmSYoeItVtWcmnRPVKLANRQ4fTYaObRzYOUInnLurLu-M9MqlzvP_ZvgmnYfs2eL-FgnCmdQYGIEhjIILi0tYrGHJyc681wizay8lFe9R05v9ZB1zqzQuUk7uFBU-pI2d63KmdqBcmzKYRSGO2e-XdjGTcANfFtTIQKrV4QCY67pAqTu9LnQi9U3LX6HMg7zDKupfD8kY6h8ulOMDk");'>
+<!-- Marker Overlay Simulation -->
+<div class="relative flex flex-col items-center mb-10">
+<div class="bg-primary text-white p-2 rounded-lg shadow-lg mb-1 text-xs font-bold whitespace-nowrap">
+                                Nouveau Lieu
+                            </div>
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<div class="w-2 h-1 bg-black/20 rounded-full blur-[2px] mt-1"></div>
+</div>
+<!-- Zoom Controls UI -->
+<div class="absolute bottom-4 right-4 flex flex-col gap-2">
+<button class="size-10 bg-white dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center text-gray-700 dark:text-white">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="size-10 bg-white dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center text-gray-700 dark:text-white">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Submit Button Area -->
+<div class="px-4 py-4">
+<button class="w-full h-14 bg-primary text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">save</span>
+                    Enregistrer le lieu
+                </button>
+</div>
+</main>
+<!-- Admin Navigation Bar -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 flex justify-around py-3 px-2 z-20">
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Tableau</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="text-[10px] font-medium">Lieux</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Réglages</span>
+</div>
+</nav>
+</div>
+</body></html>

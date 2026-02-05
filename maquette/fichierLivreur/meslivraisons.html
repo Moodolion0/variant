@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mes Livraisons en Cours (Livreur)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-tab-bar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
+<!-- Header Section -->
+<header class="sticky top-0 z-30 bg-white dark:bg-background-dark/90 border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center px-4 py-4 justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-900 dark:text-white">local_shipping</span>
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Mes Livraisons</h2>
+</div>
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[24px]">notifications</span>
+</div>
+</div>
+<!-- Sub-Tabs -->
+<div class="flex border-b border-gray-100 dark:border-gray-800 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">En cours (3)</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-gray-500 dark:text-gray-400 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Historique</p>
+</a>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Active Deliveries List -->
+<div class="flex flex-col gap-1 p-4">
+<!-- Delivery Card 1 -->
+<div class="mb-4">
+<div class="flex flex-col gap-4 rounded-xl bg-white dark:bg-gray-900 p-4 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wider">Aujourd'hui, 14:20</p>
+<h3 class="text-gray-900 dark:text-white text-lg font-bold">Commande #8829</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="size-2 rounded-full bg-orange-500"></span>
+<p class="text-orange-600 dark:text-orange-400 text-sm font-semibold">En route vers le fournisseur</p>
+</div>
+</div>
+<div class="w-20 h-20 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-gray-100 dark:border-gray-700" data-alt="Small delivery package overview" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVF7dV82bTQv0AcPADMR-wKAmmED-mY_60Kz6wep1q6pIY0ZmlCgUTSa6GmYi0AhfFAHGMSADpMYIbiPRYgoHQ_TFcUD9rSpLrCSMrq-wy80nKOEahyhzXzZ9PlXzJZczAfv7Kwcnv6M6CaIC-E9R-Esgng19SxWz1o2EShvBNC398LRxEtqWZedfN1F8vC7YpkFQH-N6rvZJqu2YcJshLo20at8NJf1WnGbZeK8b7TvTKAHOcW9SJHt1-UCxtuBXEV4K1dlqabvI");'>
+</div>
+</div>
+<div class="flex items-center gap-3 py-2 border-y border-gray-50 dark:border-gray-800">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">location_on</span>
+<p class="text-sm text-gray-600 dark:text-gray-300 truncate">12 Rue de la République, Lyon</p>
+</div>
+<button class="flex w-full items-center justify-center rounded-lg h-12 px-4 bg-primary text-white font-bold gap-2 active:scale-[0.98] transition-transform">
+<span>Voir détails</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Delivery Card 2 -->
+<div class="mb-4">
+<div class="flex flex-col gap-4 rounded-xl bg-white dark:bg-gray-900 p-4 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wider">Aujourd'hui, 13:45</p>
+<h3 class="text-gray-900 dark:text-white text-lg font-bold">Commande #8831</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="size-2 rounded-full bg-primary"></span>
+<p class="text-primary text-sm font-semibold">En cours de livraison</p>
+</div>
+</div>
+<div class="w-20 h-20 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-gray-100 dark:border-gray-700" data-alt="Food delivery bag item" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAfz_3XfURHCdr5ziW8mqmEP8k9SqxwYIFVCuEc9KtF_w4p1UtFFoq6im2crxL-v0E87tJ3QWSAax-H3nJDMR6uJpY4fLLAAve9-wXa7VTO9gm4gd_pcQqeMcNy4PKIdJEJPCTIdSumroR__BfToJUQ-a8suTbjZfvmjEUpBtWTLuC22LX0vfFbmR6OmBfkQTUCBNr7LqLj6rJqzEKiPqs_Bu9jH9DwQ24uKoj0QuFpEMDF8V_1VicxStI6MSZqo5qZUW6Su7QueTY");'>
+</div>
+</div>
+<div class="flex items-center gap-3 py-2 border-y border-gray-50 dark:border-gray-800">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">location_on</span>
+<p class="text-sm text-gray-600 dark:text-gray-300 truncate">45 Avenue Victor Hugo, Lyon</p>
+</div>
+<button class="flex w-full items-center justify-center rounded-lg h-12 px-4 bg-primary text-white font-bold gap-2 active:scale-[0.98] transition-transform">
+<span>Voir détails</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Delivery Card 3 -->
+<div class="mb-4">
+<div class="flex flex-col gap-4 rounded-xl bg-white dark:bg-gray-900 p-4 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wider">Aujourd'hui, 15:05</p>
+<h3 class="text-gray-900 dark:text-white text-lg font-bold">Commande #8835</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="size-2 rounded-full bg-green-500"></span>
+<p class="text-green-600 dark:text-green-400 text-sm font-semibold">Prise en charge acceptée</p>
+</div>
+</div>
+<div class="w-20 h-20 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 border border-gray-100 dark:border-gray-700" data-alt="Parcel cardboard box" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBvCzipTOHXbANxA_f0Bb1raPQIhpSS7EIA9mgIj8PAtqfZQCha5q5aDFzrJ8Z3752HIlnCFIcvYM259Y9omI6lei-gD_uG66VQsu_H3PSQsnhtQDjj38RxlfQ9fwKYodarC9ZhOQ_6X4HUO2cfnxa4tcHk4uQ1NJ_Ioa3yLJfhIXz2QY1j5muwtfuPPC1oXbN1JxA3JOJ02E3CH_z89TP3t7CegOvsz1C6vDlw1geZOurDw7cyrsOXACQo_ahsmjpCyk_GyuoMmWk");'>
+</div>
+</div>
+<div class="flex items-center gap-3 py-2 border-y border-gray-50 dark:border-gray-800">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">location_on</span>
+<p class="text-sm text-gray-600 dark:text-gray-300 truncate">Point Relais Bellecour, Lyon</p>
+</div>
+<button class="flex w-full items-center justify-center rounded-lg h-12 px-4 bg-primary text-white font-bold gap-2 active:scale-[0.98] transition-transform">
+<span>Voir détails</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS style) -->
+<nav class="fixed bottom-0 w-full ios-tab-bar bg-white/80 dark:bg-background-dark/80 border-t border-gray-200 dark:border-gray-800 pb-6 pt-2 px-4 z-50">
+<div class="flex items-center justify-around max-w-lg mx-auto">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="text-[10px] font-bold text-primary">Livraisons</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-[28px]">history</span>
+<span class="text-[10px] font-medium text-gray-400 dark:text-gray-500">Historique</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-[28px]">account_balance_wallet</span>
+<span class="text-[10px] font-medium text-gray-400 dark:text-gray-500">Solde</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-[28px]">account_circle</span>
+<span class="text-[10px] font-medium text-gray-400 dark:text-gray-500">Profil</span>
+</a>
+</div>
+</nav>
+</body></html>

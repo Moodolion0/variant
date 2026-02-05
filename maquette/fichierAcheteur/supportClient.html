@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aide &amp; Support Clients</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back_ios_new</span>
+</button>
+<h1 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Aide &amp; Support</h1>
+<div class="flex items-center justify-end">
+<button class="relative flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">notifications</span>
+<span class="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-red-500"></span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-md mx-auto w-full pb-32">
+<!-- Search Bar Section -->
+<section class="px-4 py-6">
+<div class="mb-2">
+<h2 class="text-2xl font-bold dark:text-white">Comment pouvons-nous vous aider ?</h2>
+</div>
+<label class="flex flex-col w-full mt-4">
+<div class="flex w-full items-stretch rounded-xl h-14 shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="flex bg-white dark:bg-[#1c2a2f] items-center justify-center pl-4">
+<span class="material-symbols-outlined text-slate-400 dark:text-[#9db2b8]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-white dark:bg-[#1c2a2f] focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#9db2b8] px-4 text-base font-normal" placeholder="Rechercher un article ou un mot-clé"/>
+</div>
+</label>
+</section>
+<!-- Categories Section -->
+<section class="py-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold px-4 pb-4">Catégories de problèmes</h3>
+<div class="grid grid-cols-3 gap-3 px-4">
+<div class="flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-[#3c4d53] bg-white dark:bg-[#1c2426] p-4 items-center text-center transition-all active:scale-95 cursor-pointer">
+<div class="text-primary bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined" style="font-size: 28px;">local_shipping</span>
+</div>
+<h4 class="text-slate-900 dark:text-white text-xs font-bold">Livraison</h4>
+</div>
+<div class="flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-[#3c4d53] bg-white dark:bg-[#1c2426] p-4 items-center text-center transition-all active:scale-95 cursor-pointer">
+<div class="text-primary bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined" style="font-size: 28px;">credit_card</span>
+</div>
+<h4 class="text-slate-900 dark:text-white text-xs font-bold">Paiement</h4>
+</div>
+<div class="flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-[#3c4d53] bg-white dark:bg-[#1c2426] p-4 items-center text-center transition-all active:scale-95 cursor-pointer">
+<div class="text-primary bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined" style="font-size: 28px;">person</span>
+</div>
+<h4 class="text-slate-900 dark:text-white text-xs font-bold">Compte</h4>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-6">
+<div class="flex items-center justify-between px-4 pb-4">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Questions fréquentes</h3>
+<button class="text-primary text-sm font-semibold">Voir tout</button>
+</div>
+<div class="space-y-2 px-4">
+<!-- FAQ Item 1 -->
+<div class="group flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1c2426] transition-colors hover:border-primary/50">
+<button class="flex items-center justify-between p-4 w-full text-left">
+<span class="text-sm font-medium dark:text-slate-200">Où est mon colis ?</span>
+<span class="material-symbols-outlined text-slate-400">expand_more</span>
+</button>
+</div>
+<!-- FAQ Item 2 -->
+<div class="group flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1c2426] transition-colors hover:border-primary/50">
+<button class="flex items-center justify-between p-4 w-full text-left">
+<span class="text-sm font-medium dark:text-slate-200">Comment modifier ma commande ?</span>
+<span class="material-symbols-outlined text-slate-400">expand_more</span>
+</button>
+</div>
+<!-- FAQ Item 3 -->
+<div class="group flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1c2426] transition-colors hover:border-primary/50">
+<button class="flex items-center justify-between p-4 w-full text-left">
+<span class="text-sm font-medium dark:text-slate-200">Moyens de paiement acceptés</span>
+<span class="material-symbols-outlined text-slate-400">expand_more</span>
+</button>
+</div>
+<!-- FAQ Item 4 -->
+<div class="group flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1c2426] transition-colors hover:border-primary/50">
+<button class="flex items-center justify-between p-4 w-full text-left">
+<span class="text-sm font-medium dark:text-slate-200">Politique de remboursement</span>
+<span class="material-symbols-outlined text-slate-400">expand_more</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Action Section -->
+<section class="px-4 py-4 space-y-3">
+<button class="flex w-full items-center justify-center gap-3 bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">forum</span>
+                Chatter avec un conseiller
+            </button>
+<button class="flex w-full items-center justify-center gap-3 bg-transparent border-2 border-primary text-primary font-bold py-4 rounded-xl active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">mail</span>
+                Envoyer un ticket
+            </button>
+</section>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 pb-8 pt-2">
+<div class="max-w-md mx-auto flex justify-around items-center px-2">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-medium">Catégories</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 relative" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px] font-medium">Panier</span>
+<span class="absolute -top-1 right-0 bg-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">package_2</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">account_circle</span>
+<span class="text-[10px] font-bold">Profil</span>
+</a>
+</div>
+</nav>
+</body></html>

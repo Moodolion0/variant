@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Détails de la Commande Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111618] dark:text-white min-h-screen flex flex-col pb-24">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#111618] dark:text-white cursor-pointer" data-icon="arrow_back_ios" data-size="24px">arrow_back_ios</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Détails #ORD-8829</h2>
+<div class="flex items-center justify-end">
+<span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">En cours</span>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-md mx-auto w-full px-4 pt-6 space-y-6">
+<!-- Client Information Card -->
+<section class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+<h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase px-4 pt-4 tracking-wider">Client</h3>
+<div class="flex gap-4 p-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 shrink-0 border-2 border-primary/10" data-alt="Portrait photo of customer Jean Dupont" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNpVMvZ9xYm6cTwg3_SBd1ZyQ9MH7nezzIy_EbGdej_mVJCLqZy8jTfMIVbnkIAH-EDV1cHYmfjCf3UWl8VgHiZKOCVuwFfvMXFqqMQBeYUc7STE7TGUkdyN3v7ZNCUdXr5TuIb-myms7_qtYiBeT6sn2Ac23z63Pm164tT-wkLzbHYUVdQpSAJWkGhAc38zngR2Q539raX81tNYmqikj5uH1vMR-xXwaQFj2DX0de7NjSxF5FfF6wp1-GR3fD7T9A4mCYNvGFGz4");'>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-base font-bold">Jean Dupont</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm">123 Rue de la Paix, 75002 Paris</p>
+<p class="text-primary text-sm font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">call</span>
+                        +33 6 12 34 56 78
+                    </p>
+</div>
+</div>
+</section>
+<!-- Product List Section -->
+<section class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+<h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase px-4 pt-4 tracking-wider">Produits commandés</h3>
+<div class="divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Item 1 -->
+<div class="flex gap-4 p-4 justify-between items-center">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="Modern iPhone 15 Pro in natural titanium" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDi5cH1GW_83VLp7Jdiz7c-8q3td7sYtPhw1Yrg0FBVQtJnHTo2YPicqt-odp0NNk1FL9uLML0W2yCCtAaBQ8KATH3ejaW3-rbDACbkVWWFlkpsQncgMu25eLGxtM14rAP_myTJyRbVLk1E6PPZhu2WdnuXvwj9324lUVdPk8MeraTqJAWJMTn9PBw77nYlfee_0tAYYPXqhGf8X6HKKJsLeDzCdLv5wcpeBbgqraLP-Ou-TusCYV6NpR4vuU76Mttrag69czOAqoQ");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-sm font-semibold">iPhone 15 Pro</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">Fournisseur: Apple Store</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs">Qté: 1 x 1200€</p>
+</div>
+</div>
+<div class="shrink-0 text-right">
+<p class="text-[#111618] dark:text-white text-sm font-bold">1200€</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4 p-4 justify-between items-center">
+<div class="flex items-start gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16 shrink-0" data-alt="MagSafe clear case for iPhone" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAw2xZ1fwHj1sBbQ6Y68H9x1_7yb4Zg5o6MzAwV_xXDCGM2kZQyQJ2QHAr6vgdiZJrTdgoSFXtjltCSRRnqOofLYDqeHKRG6rJgJlmdHWHIOymjFAjTngxmLtVVLZvORsu8vkq5J4DyZ9qWB1FTkkgfzyt-u98z6GnDEkWvnWypZqm1u_V_bnaXkxOLkbHe0n-CGirrWmKO9gvkPUYL71sRIdHt3sD-hujH9r44HxC6_Y7etwWS5M_sGnJTmume-u95ggP8Z9yg3w8");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-[#111618] dark:text-white text-sm font-semibold">Coque MagSafe</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">Fournisseur: AccesLog</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs">Qté: 2 x 45€</p>
+</div>
+</div>
+<div class="shrink-0 text-right">
+<p class="text-[#111618] dark:text-white text-sm font-bold">90€</p>
+</div>
+</div>
+</div>
+<!-- Financial Summary -->
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 space-y-2 border-t border-gray-100 dark:border-gray-800">
+<div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+<span>Sous-total</span>
+<span>1290€</span>
+</div>
+<div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+<span>Frais de livraison</span>
+<span>9.90€</span>
+</div>
+<div class="flex justify-between text-lg font-bold text-[#111618] dark:text-white pt-2 border-t border-gray-200 dark:border-gray-700">
+<span>Total Final</span>
+<span class="text-primary">1299.90€</span>
+</div>
+</div>
+</section>
+<!-- Delivery Logistics Card -->
+<section class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+<h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase px-4 pt-4 tracking-wider">Logistique</h3>
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">directions_bike</span>
+</div>
+<div>
+<p class="text-[#111618] dark:text-white text-sm font-semibold">Livreur: Marc L.</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs">Distance estimée: 4.2 km</p>
+</div>
+</div>
+<button class="text-primary bg-primary/10 px-3 py-1 rounded text-xs font-bold">Suivre</button>
+</div>
+</section>
+</main>
+<!-- Fixed Action Footer -->
+<footer class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 px-4 py-4 z-50">
+<div class="max-w-md mx-auto space-y-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-primary/20">
+                Modifier le statut
+            </button>
+<div class="flex gap-3">
+<button class="flex-1 border border-gray-200 dark:border-gray-700 dark:text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">message</span>
+                    Client
+                </button>
+<button class="flex-1 border border-gray-200 dark:border-gray-700 dark:text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">electric_moped</span>
+                    Livreur
+                </button>
+</div>
+</div>
+<!-- iOS Safe Area Spacer -->
+<div class="h-4"></div>
+</footer>
+<!-- Bottom Navigation Bar (Admin Tab Bar) -->
+<nav class="fixed bottom-0 hidden w-full bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 py-2 px-6 flex justify-between items-center z-40">
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Dashboard</span>
+</div>
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-[10px]">Commandes</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-[10px]">Produits</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Paramètres</span>
+</div>
+</nav>
+</body></html>

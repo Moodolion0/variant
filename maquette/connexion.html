@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19b3e6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Connexion à l'Espace Personnel</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Main Content Area -->
+<div class="flex flex-col items-center justify-center grow p-6 sm:p-10">
+<!-- Logo Section -->
+<div class="w-full max-w-[480px] mb-8">
+<div class="flex justify-center mb-4">
+<div class="w-24 h-24 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined !text-5xl">shopping_cart</span>
+</div>
+</div>
+<h1 class="text-[#111618] dark:text-white tracking-tight text-2xl font-bold leading-tight text-center pb-2">
+                    Bienvenue
+                </h1>
+<p class="text-[#637f88] dark:text-gray-400 text-sm text-center">
+                    Accédez à votre compte pour continuer
+                </p>
+</div>
+<!-- Login Form -->
+<div class="w-full max-w-[480px] bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+<!-- Email Field -->
+<div class="flex flex-col gap-1 mb-5">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-semibold leading-normal pb-2">Email</p>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#637f88]">mail</span>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#637f88] pl-12 pr-4 text-base font-normal" placeholder="exemple@email.com" type="email"/>
+</div>
+</label>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-1 mb-2">
+<label class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-semibold leading-normal pb-2">Mot de passe</p>
+<div class="flex w-full items-stretch rounded-lg">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#637f88]">lock</span>
+<input class="form-input flex w-full rounded-lg text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce3e5] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#637f88] pl-12 pr-12 text-base font-normal" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-[#637f88]" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+</label>
+</div>
+<!-- Forgot Password -->
+<div class="flex justify-end mb-8">
+<a class="text-primary text-sm font-medium hover:underline" href="#">Mot de passe oublié ?</a>
+</div>
+<!-- Login Button -->
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-colors shadow-md shadow-primary/20">
+                    Se connecter
+                </button>
+</div>
+<!-- Footer / Sign Up Link -->
+<div class="mt-8 text-center">
+<p class="text-[#637f88] dark:text-gray-400 text-base font-normal">
+                    Pas encore de compte ? 
+                    <a class="text-primary font-bold hover:underline ml-1" href="#">S'inscrire</a>
+</p>
+</div>
+<!-- App Illustration Background (Subtle) -->
+<div class="mt-12 w-full max-w-[320px] opacity-40 grayscale pointer-events-none">
+<div class="w-full aspect-[3/2] bg-center bg-no-repeat bg-cover rounded-xl" data-alt="Modern abstract illustration for app login screen background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA28Ispi7mH7erl1Ep2_ZDNIRX0BscAGzOXfVINtrgsxY3RrfCT7QDlHy7tFIN9bSwJZN7VcNi_xv2tVVkykDSgBeqzJkjVxKmu_hUwVxjNyppjxDNNAQoaKJ6ROdQ4Ceadbm67B6bNi5xA4vanhOnx0WWvRlDaj5AJwf6G8sSW7XuCwh0nxvqDmbzpykkTC8S6rq-vvFn44ENmfkQKJRMVpp0UMxfJpq_TZsZEfW4687clURGHLzSCsRFhsasXoIDvgahmL1ZTDBQ");'>
+</div>
+</div>
+</div>
+<!-- Footer Spacer for iOS home indicator -->
+<div class="h-8"></div>
+</div>
+</body></html>
