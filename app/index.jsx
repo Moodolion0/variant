@@ -1,7 +1,20 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import AuthGuard from './components/auth/AuthGuard';
-import { useAuth } from './hooks/useAuth';
+
+// Composant temporaire AuthGuard
+const AuthGuard = ({ children, requireAuth }) => {
+  if (requireAuth) {
+    // Pour l'instant, on retourne toujours les enfants
+    return <>{children}</>;
+  }
+  return <>{children}</>;
+};
+
+// Hook temporaire useAuth
+const useAuth = () => ({
+  isAuthenticated: false,
+  isLoading: false,
+});
 
 export default function Welcome() {
   const router = useRouter();

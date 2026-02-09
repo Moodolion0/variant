@@ -30,11 +30,6 @@ export const authService = {
       const data = await response.json();
 
       if (!response.ok) {
-        // Gérer les erreurs de validation Laravel
-        if (data.errors) {
-          const errorMessage = Object.values(data.errors).flat().join(', ');
-          throw new Error(errorMessage);
-        }
         throw new Error(data.message || 'Erreur de connexion');
       }
 
@@ -66,11 +61,6 @@ export const authService = {
       const data = await response.json();
 
       if (!response.ok) {
-        // Gérer les erreurs de validation Laravel
-        if (data.errors) {
-          const errorMessage = Object.values(data.errors).flat().join(', ');
-          throw new Error(errorMessage);
-        }
         throw new Error(data.message || 'Erreur d\'inscription');
       }
 

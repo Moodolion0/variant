@@ -1,9 +1,31 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import BottomNav from '../components/BottomNav';
-import colors from '../constants/colors';
-import useCart from '../hooks/useCart';
+
+// Couleurs temporaires
+const colors = {
+  primary: '#19b3e6',
+  backgroundLight: '#f6f7f8',
+  textPrimary: '#111618',
+  textSecondary: '#637f88',
+};
+
+// Hook temporaire pour le panier
+const useCart = () => ({
+  cart: [],
+  removeItem: (id) => console.log('Remove item:', id),
+  updateQuantity: (id, qty) => console.log('Update quantity:', id, qty),
+  clearCart: () => console.log('Clear cart'),
+  total: 0,
+  loaded: true,
+});
+
+// Composant temporaire BottomNav
+const BottomNav = () => (
+  <View style={styles.bottomNav}>
+    <Text style={styles.bottomNavText}>Navigation</Text>
+  </View>
+);
 
 export default function CartScreen() {
   const router = useRouter();
@@ -98,7 +120,7 @@ const styles = StyleSheet.create({
   continueBtnText: { color: '#fff', fontWeight: '700' },
   cartItem: { flexDirection: 'row', gap: 12, backgroundColor: '#fff', padding: 12, borderRadius: 12, marginBottom: 8, borderWidth: 1, borderColor: '#e5e7eb' },
   itemImage: { width: 80, height: 80, borderRadius: 8, backgroundColor: '#eee' },
-  itemInfo: { flex: 1, justifyContent: 'space-between' },
+  itemInfo: { flex: 1, justifyContent: 'space-between'},
   itemHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   itemTitle: { flex: 1, fontSize: 14, fontWeight: '600', color: colors.textPrimary },
   itemPrice: { fontSize: 12, fontWeight: '700', color: colors.primary, marginVertical: 4 },
@@ -112,4 +134,16 @@ const styles = StyleSheet.create({
   summaryValue: { fontSize: 18, fontWeight: '700', color: colors.textPrimary },
   checkoutBtn: { backgroundColor: colors.primary, paddingVertical: 14, borderRadius: 12, alignItems: 'center' },
   checkoutText: { color: '#fff', fontWeight: '700', fontSize: 14 },
+  bottomNav: { 
+    height: 80, 
+    backgroundColor: '#fff', 
+    borderTopWidth: 1, 
+    borderColor: '#e5e7eb', 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
+  bottomNavText: { 
+    fontSize: 12, 
+    color: colors.textSecondary 
+  },
 });

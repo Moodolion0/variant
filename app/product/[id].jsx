@@ -2,9 +2,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import colors from '../constants/colors';
-import products from '../constants/products';
-import useCart from '../hooks/useCart';
+import colors from '../shared/constants/colors';
+import products from '../shared/constants/products';
+import useCart from '../shared/hooks/useCart';
 
 export default function ProductDetail() {
   const { id } = useLocalSearchParams();

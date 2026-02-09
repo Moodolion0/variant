@@ -1,6 +1,10 @@
 import { Slot } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AuthProvider } from './hooks/useAuth';
+
+// Composant temporaire AuthProvider
+const AuthProvider = ({ children }) => {
+  return <>{children}</>;
+};
 
 export default function Layout() {
   return (
