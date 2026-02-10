@@ -9,12 +9,14 @@
     "ios": "expo start --ios"
   },
   "dependencies": {
-    "expo": "~54.0.31",
-    "react": "19.1.0",
-    "react-native": "0.81.5",
-    "expo-router": "~6.0.21",
     "@expo/vector-icons": "^15.0.3",
-    "react-native-safe-area-context": "~5.6.0"
+    "expo": "~54.0.33",
+    "expo-router": "~6.0.23",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-web": "^0.21.2"
   },
   "devDependencies": {
     "typescript": "~5.9.2"

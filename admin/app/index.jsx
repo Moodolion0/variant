@@ -1,25 +1,48 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useState } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import BottomNav from "./components/BottomNav";
+import Dashboard from "./components/Dashboard";
+import Header from "./components/Header";
+import OrderList from "./components/OrderList";
+import ProductForm from "./components/ProductForm";
+import ProductList from "./components/ProductList";
+import Settings from "./components/Settings";
+import SupplierForm from "./components/SupplierForm";
+import SupplierList from "./components/SupplierList";
+import UserList from "./components/UserList";
 
-export default function AdminApp(){
+export default function AdminApp() {
+  const [route, setRoute] = useState("dashboard");
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.greeting}>Bonjour, Admin</Text>
-        <Text style={styles.date}>12 Octobre, 2023</Text>
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <View style={styles.content}>
+        {route === "dashboard" && <Dashboard onNavigate={setRoute} />}
+        {route === "products" && (
+          <ProductList onCreate={() => setRoute("create")} />
+        )}
+        {route === "create" && (
+          <ProductForm onDone={() => setRoute("products")} />
+        )}
+        {route === "orders" && (
+          <OrderList onDetail={(id) => setRoute(`order-detail-${id}`)} />
+        )}
+        {route === "users" && <UserList />}
+        {route === "suppliers" && (
+          <SupplierList onAdd={() => setRoute("suppliers-add")} />
+        )}
+        {route === "suppliers-add" && (
+          <SupplierForm onDone={() => setRoute("suppliers")} />
+        )}
+        {route === "settings" && <Settings />}
       </View>
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
-        <Text style={styles.title}>Quick stats and charts will appear here.</Text>
-        <View style={{ height: 16 }} />
-        <Text>Use this minimal project to develop the admin UI separately.</Text>
-      </ScrollView>
-    </View>
+      <BottomNav current={route} onNavigate={setRoute} />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f6f7f8' },
-  header: { padding: 16, backgroundColor: '#fff', borderBottomWidth: 1, borderColor: '#eee' },
-  greeting: { fontSize: 20, fontWeight: '700' },
-  date: { color: '#637f88', marginTop: 4 },
-  title: { fontSize: 16, fontWeight: '700' }
+  container: { flex: 1, backgroundColor: "#f6f7f8" },
+  content: { flex: 1 },
 });
