@@ -8,7 +8,6 @@ import ProductForm from "./components/ProductForm";
 import ProductList from "./components/ProductList";
 import Settings from "./components/Settings";
 import SupplierForm from "./components/SupplierForm";
-import SupplierList from "./components/SupplierList";
 import UserList from "./components/UserList";
 
 export default function AdminApp() {
@@ -16,25 +15,30 @@ export default function AdminApp() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      {route === "dashboard" && <Header />}
       <View style={styles.content}>
         {route === "dashboard" && <Dashboard onNavigate={setRoute} />}
         {route === "products" && (
-          <ProductList onCreate={() => setRoute("create")} />
+          <ProductList
+            onCreate={(type) => {
+              if (type === "product") {
+                setRoute("create-product");
+              } else {
+                setRoute("create-supplier");
+              }
+            }}
+          />
         )}
-        {route === "create" && (
+        {route === "create-product" && (
           <ProductForm onDone={() => setRoute("products")} />
+        )}
+        {route === "create-supplier" && (
+          <SupplierForm onDone={() => setRoute("products")} />
         )}
         {route === "orders" && (
           <OrderList onDetail={(id) => setRoute(`order-detail-${id}`)} />
         )}
         {route === "users" && <UserList />}
-        {route === "suppliers" && (
-          <SupplierList onAdd={() => setRoute("suppliers-add")} />
-        )}
-        {route === "suppliers-add" && (
-          <SupplierForm onDone={() => setRoute("suppliers")} />
-        )}
         {route === "settings" && <Settings />}
       </View>
       <BottomNav current={route} onNavigate={setRoute} />

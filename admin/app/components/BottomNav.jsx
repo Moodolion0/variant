@@ -7,14 +7,12 @@ export default function BottomNav({ current, onNavigate }) {
     { key: "orders", label: "Commandes", icon: "shopping_bag" },
     { key: "products", label: "Produits", icon: "inventory_2" },
     { key: "users", label: "Utilisateurs", icon: "group" },
-    { key: "suppliers", label: "Fournisseurs", icon: "factory" },
     { key: "settings", label: "Paramètres", icon: "settings" },
   ];
 
   const isActive = (key) =>
     current === key ||
     (current.includes("create") && key === "products") ||
-    (current.includes("suppliers") && key === "suppliers") ||
     (current.includes("order-detail") && key === "orders");
 
   return (
