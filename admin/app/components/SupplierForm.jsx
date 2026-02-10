@@ -98,7 +98,9 @@ export default function SupplierForm({ onDone }) {
         </View>
 
         {/* Section Localisation */}
-        <Text style={[styles.sectionTitle, { marginTop: 24 }]}>Localisation</Text>
+        <Text style={[styles.sectionTitle, { marginTop: 24 }]}>
+          Localisation
+        </Text>
 
         {/* Localisation */}
         <View style={styles.fieldContainer}>
