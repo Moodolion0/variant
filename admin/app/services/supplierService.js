@@ -22,9 +22,49 @@ let suppliers = [
   },
 ];
 
+// Mock products for suppliers' associated products lists
+const supplierProducts = {
+  s1: [{ id: "p1", name: "iPhone 15 Pro Max", ref: "IP15-PM", price: 1299.0 }],
+  s2: [{ id: "p2", name: "MacBook Pro M3", ref: "MB-M3-14", price: 2499.0 }],
+  s3: [{ id: "p3", name: "AirPods Max", ref: "AP-MAX-S", price: 549.0 }],
+};
+
 export async function list() {
   return new Promise((resolve) =>
     setTimeout(() => resolve([...suppliers]), 200),
+  );
+}
+
+export async function getDetail(id) {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      const supplier = suppliers.find((s) => s.id === id);
+      if (!supplier) {
+        resolve(null);
+        return;
+      }
+      // Enrich with detail data
+      const enriched = {
+        ...supplier,
+        contactPerson:
+          id === "s1"
+            ? "Jean Dupont"
+            : id === "s2"
+              ? "Marie Martin"
+              : "Pierre Moreau",
+        coordinates: {
+          lat: 48.8566,
+          lng: 2.3522, // Paris by default; would vary by location
+        },
+        stat: {
+          products: supplierProducts[id]?.length || 0,
+          orders: Math.floor(Math.random() * 150) + 30,
+          growth: Math.floor(Math.random() * 35) + 8,
+        },
+        associatedProducts: supplierProducts[id] || [],
+      };
+      resolve(enriched);
+    }, 250),
   );
 }
 
@@ -36,14 +76,6 @@ export async function create(data) {
       resolve(item);
     }, 300);
   });
-}
-
-export async function getDetail(id) {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(suppliers.find((s) => s.id === id));
-    }, 200),
-  );
 }
 
 export default { list, create, getDetail };

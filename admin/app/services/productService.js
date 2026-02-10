@@ -8,6 +8,7 @@ let products = [
     ref: "IP15-PM",
     image: null,
     supplier: "Fournisseur A",
+    supplierId: "s1",
   },
   {
     id: "p2",
@@ -17,6 +18,7 @@ let products = [
     ref: "MB-M3-14",
     image: null,
     supplier: "Fournisseur B",
+    supplierId: "s2",
   },
   {
     id: "p3",
@@ -26,6 +28,7 @@ let products = [
     ref: "AP-MAX-S",
     image: null,
     supplier: "Fournisseur C",
+    supplierId: "s3",
   },
 ];
 
@@ -36,6 +39,52 @@ function uid() {
 export async function list() {
   return new Promise((resolve) =>
     setTimeout(() => resolve([...products]), 200),
+  );
+}
+
+export async function getDetail(id) {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      const product = products.find((p) => p.id === id);
+      if (!product) {
+        resolve(null);
+        return;
+      }
+      // Enrich with detail data
+      const enriched = {
+        ...product,
+        description:
+          "Produit de haute qualité avec spécifications complètes et garantie fabricant. Livraison rapide et support client dédié.",
+        images: [],
+        restockDays: 5,
+        supplierDetails: {
+          name:
+            product.supplierId === "s1"
+              ? "Jean Dupont"
+              : product.supplierId === "s2"
+                ? "Marie Martin"
+                : "Pierre Moreau",
+          email:
+            product.supplierId === "s1"
+              ? "jean@techdistri.fr"
+              : product.supplierId === "s2"
+                ? "marie@globalparts.com"
+                : "pierre@euroelec.eu",
+          phone:
+            product.supplierId === "s1"
+              ? "+33 1 23 45 67 89"
+              : product.supplierId === "s2"
+                ? "+33 6 12 34 56 78"
+                : "+33 4 56 78 90 12",
+        },
+        stats: {
+          orders: Math.floor(Math.random() * 100) + 20,
+          revenue: Math.floor(Math.random() * 50000) + 10000,
+          growth: Math.floor(Math.random() * 40) + 5,
+        },
+      };
+      resolve(enriched);
+    }, 250),
   );
 }
 
@@ -67,4 +116,4 @@ export async function remove(id) {
   );
 }
 
-export default { list, create, update, remove };
+export default { list, create, getDetail, update, remove };

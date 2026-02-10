@@ -12,7 +12,11 @@ import productService from "../services/productService";
 import supplierService from "../services/supplierService";
 import ProductItem from "./ProductItem";
 
-export default function ProductList({ onCreate }) {
+export default function ProductList({
+  onCreate,
+  onProductDetail,
+  onSupplierDetail,
+}) {
   const [tab, setTab] = useState("articles");
   const [products, setProducts] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
@@ -116,7 +120,11 @@ export default function ProductList({ onCreate }) {
         <FlatList
           data={filteredProducts}
           keyExtractor={(i) => i.id}
-          renderItem={({ item }) => <ProductItem item={item} />}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => onProductDetail?.(item.id)}>
+              <ProductItem item={item} />
+            </TouchableOpacity>
+          )}
           contentContainerStyle={{ paddingBottom: 100 }}
         />
       ) : (
@@ -124,24 +132,33 @@ export default function ProductList({ onCreate }) {
           data={filteredSuppliers}
           keyExtractor={(s) => s.id}
           renderItem={({ item }) => (
-            <View style={styles.supplierCard}>
-              <View style={styles.supplierIcon}>
-                <MaterialIcons name="factory" size={24} color="#19b3e6" />
-              </View>
-              <View style={styles.supplierInfo}>
-                <Text style={styles.supplierName}>{item.name}</Text>
-                <View style={styles.supplierMeta}>
-                  <MaterialIcons name="location_on" size={14} color="#637f88" />
-                  <Text style={styles.supplierLocation}>{item.location}</Text>
+            <TouchableOpacity
+              onPress={() => onSupplierDetail?.(item.id)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.supplierCard}>
+                <View style={styles.supplierIcon}>
+                  <MaterialIcons name="factory" size={24} color="#19b3e6" />
                 </View>
+                <View style={styles.supplierInfo}>
+                  <Text style={styles.supplierName}>{item.name}</Text>
+                  <View style={styles.supplierMeta}>
+                    <MaterialIcons
+                      name="location_on"
+                      size={14}
+                      color="#637f88"
+                    />
+                    <Text style={styles.supplierLocation}>{item.location}</Text>
+                  </View>
+                </View>
+                <MaterialIcons
+                  name="chevron_right"
+                  size={20}
+                  color="#999"
+                  style={{ alignSelf: "center" }}
+                />
               </View>
-              <MaterialIcons
-                name="chevron_right"
-                size={20}
-                color="#999"
-                style={{ alignSelf: "center" }}
-              />
-            </View>
+            </TouchableOpacity>
           )}
           contentContainerStyle={{ paddingBottom: 100 }}
         />
