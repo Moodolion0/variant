@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#19b3e6",
+              "background-light": "#f8fafc",
+              "surface": "#ffffff",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-display text-slate-900 min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 h-14 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="p-1 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-icons text-primary">arrow_back_ios</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight text-slate-800">Détails Produit</h1>
+</div>
+<div class="relative">
+<button class="p-2 hover:bg-slate-100 rounded-full transition-colors relative">
+<span class="material-icons text-slate-600">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-40">
+<section class="relative w-full aspect-[4/3] bg-slate-200">
+<div class="flex overflow-x-auto snap-x snap-mandatory h-full hide-scrollbar">
+<div class="flex-none w-full h-full snap-center">
+<img alt="Product" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIFoGUOrXTWuAejaQU30M7sCzTYo9EtUA9tMq_2QBnSyq0UeIL9_eVHR61raGca5leWaibKcB2pouwu68iO-jnXFp9NxGa4Tjm1dJT-BhgUgL5K3sOe6aqbOF_Neln6D-vQan_YQfc5qrl5u3v0tnOrPBZerD__Lso5ruHqg3X_BRn64_uk8ZCqqlzX2iQ14xa27siTQruE78dwV5nqfNqprdNjGRj7gRbZUbn2nC6gqdrlQxilseOyU02YxVkZ5vssFDE2NbhRcM"/>
+</div>
+<div class="flex-none w-full h-full snap-center">
+<img alt="Product view 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5XrLjwTzLJkuo_KMMR5NqFNY4XgwUazT0kYW-wzQLuxsWNLJz9snugAfPYldmKOFmUB6uQfGT-AcdZKcBF8a8KjOqQBxri2zfRPjhoJn9isiawptDUee3mPoCpL05kmV2vYDlN9MKB2jluRk4kt4KGe8dYDPzQT8rk5B4MedhgnC6N7OPM_x627k-UEiRU5EqR1KdEON-zJXg6hbejCX9hLOkzMQChrQqlnNOLfid5yaSzTQr9whCXlmBOQmU8IJsAZ8d103y8DY"/>
+</div>
+</div>
+<button class="absolute bottom-4 right-4 bg-primary text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-icons">add_a_photo</span>
+</button>
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 bg-black/10 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
+<div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/50"></div>
+</div>
+</section>
+<div class="px-4 mt-6 space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h2 class="text-2xl font-bold text-slate-900 leading-tight">Elite Minimalist Watch v2</h2>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/20">ACTIF</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-primary">129,00 €</span>
+<span class="text-slate-400 line-through text-sm">159,00 €</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<span class="text-sm font-semibold text-slate-500">Stock actuel</span>
+<span class="text-sm font-bold text-slate-900">42 unités</span>
+</div>
+<div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%] rounded-full shadow-sm"></div>
+</div>
+<div class="flex items-center gap-1.5 mt-3">
+<span class="material-icons text-[14px] text-amber-500">history_toggle_off</span>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Réapprovisionnement suggéré dans 12 jours</p>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Description</h3>
+<p class="text-slate-600 leading-relaxed text-sm">
+                Une montre élégante alliant minimalisme scandinave et précision horlogère. Boîtier en acier inoxydable brossé, verre saphir inrayable et bracelet en cuir véritable italien. Résistante à l'eau jusqu'à 50m.
+            </p>
+</div>
+<div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+<span class="material-icons text-sm">factory</span> Fournisseur
+            </h3>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-primary shadow-sm">
+<span class="material-icons">business</span>
+</div>
+<div class="flex-1">
+<p class="font-bold text-slate-800 text-sm">Chronos &amp; Co. Distribution</p>
+<p class="text-xs text-slate-500">Contact: Marc Lefebvre</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-white border border-slate-200 p-2 rounded-full shadow-sm hover:text-primary transition-colors text-slate-600">
+<span class="material-icons text-base">chat_bubble_outline</span>
+</button>
+<button class="bg-white border border-slate-200 p-2 rounded-full shadow-sm hover:text-primary transition-colors text-slate-600">
+<span class="material-icons text-base">phone_in_talk</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+<p class="text-[10px] font-bold uppercase text-slate-400 mb-2">Commandes totales</p>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900">1,284</span>
+<span class="text-[10px] text-green-600 font-bold bg-green-50 px-1 rounded">+12%</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+<p class="text-[10px] font-bold uppercase text-slate-400 mb-2">Revenus générés</p>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold text-slate-900">165k€</span>
+<span class="material-icons text-sm text-primary">trending_up</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-24 left-4 right-4 flex gap-3 z-40">
+<button class="flex-1 bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-icons">edit</span>
+        Modifier le produit
+    </button>
+<button class="w-16 bg-white border border-red-100 text-red-500 rounded-xl flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform">
+<span class="material-icons">delete_outline</span>
+</button>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 h-20 px-6 pb-6 flex items-center justify-between z-50">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">home</span>
+<span class="text-[10px] font-semibold">Accueil</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">receipt_long</span>
+<span class="text-[10px] font-semibold">Commandes</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons text-[24px]">inventory_2</span>
+<span class="text-[10px] font-bold">Produits</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">group</span>
+<span class="text-[10px] font-semibold">Utilisateurs</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">settings</span>
+<span class="text-[10px] font-semibold">Paramètres</span>
+</button>
+</nav>
+
+</body></html>

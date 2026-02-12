@@ -18,6 +18,8 @@ class SupplierUpdateRequest extends FormRequest
             'latitude' => ['sometimes', 'nullable', 'numeric'],
             'longitude' => ['sometimes', 'nullable', 'numeric'],
             'address_text' => ['nullable', 'string'],
+            'email' => ['sometimes', 'nullable', 'email', 'max:255'],
+            'phone' => ['sometimes', 'nullable', 'string', 'max:20'],
         ];
     }
 }

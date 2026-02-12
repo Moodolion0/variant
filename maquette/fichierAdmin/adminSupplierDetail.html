@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#19b3e6",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111d21",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-display text-slate-900 min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 h-14 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="p-1 hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-icons text-primary">arrow_back_ios</span>
+</button>
+<h1 class="text-lg font-semibold tracking-tight">Détails Fournisseur</h1>
+</div>
+<div class="relative">
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors relative">
+<span class="material-icons text-slate-600">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-40">
+<section class="bg-white px-4 py-6 border-b border-slate-200">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+<span class="material-icons text-primary text-3xl">business</span>
+</div>
+<div>
+<h2 class="text-xl font-bold text-slate-900 leading-tight">Chronos &amp; Co. Distribution</h2>
+<p class="text-sm text-slate-500 font-medium">ID Fournisseur: #SUP-8829</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400 text-xl">person</span>
+<div>
+<p class="text-xs text-slate-400 font-semibold uppercase">Contact principal</p>
+<p class="text-sm font-medium">Marc Lefebvre</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400 text-xl">email</span>
+<div>
+<p class="text-xs text-slate-400 font-semibold uppercase">Email</p>
+<p class="text-sm font-medium">m.lefebvre@chronosdistribution.com</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400 text-xl">phone</span>
+<div>
+<p class="text-xs text-slate-400 font-semibold uppercase">Téléphone</p>
+<p class="text-sm font-medium">+33 1 45 67 89 00</p>
+</div>
+</div>
+</div>
+</section>
+<section class="px-4 mt-6">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">location_on</span> Localisation
+        </h3>
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+<div class="p-4">
+<p class="text-sm font-medium text-slate-700">15 Rue de l'Horlogerie, 75001 Paris, France</p>
+</div>
+<div class="w-full h-32 bg-slate-200 relative">
+<img alt="Map" class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8Hicpdvg-GGFMQGgVRYO2eyLSFc5jokMZ-8DreNUHnEDb3vkutZC1evlCdZaT-SlN3IfGLy5B1kdARnkAddJAEC-cn_q6ruSil9FvJZaPiIxfgdM06fif9dg-_ia1HGpXWtDpDbq2gkEms-3q7CV2Rh9sCQ5TU5uYMygxiEUv9vTZDWSTlBX4j7YX0BYdsSFVJAI97Y9YE0gwhMIYPI2DtUDzM6Td-HlhFYvA0yxPAW1Nu6-xmhshyoPoFlG3bJ1nOrlTY3mSkjk"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-icons text-red-500 text-3xl">place</span>
+</div>
+<div class="absolute bottom-2 right-2">
+<button class="bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold shadow-sm">OUVRIR GPS</button>
+</div>
+</div>
+</div>
+</section>
+<section class="px-4 mt-6">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">bar_chart</span> Statistiques Fournisseur
+        </h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+<p class="text-xs font-medium text-slate-500 mb-1">Produits fournis</p>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold text-slate-900">24</span>
+<span class="material-icons text-sm text-primary">inventory</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+<p class="text-xs font-medium text-slate-500 mb-1">Commandes totales</p>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold text-slate-900">1,284</span>
+<span class="material-icons text-sm text-green-500">shopping_cart</span>
+</div>
+</div>
+</div>
+</section>
+<section class="px-4 mt-6">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">list</span> Produits associés
+            </h3>
+<button class="text-primary text-xs font-bold">VOIR TOUT</button>
+</div>
+<div class="space-y-3">
+<div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center gap-4 shadow-sm">
+<img alt="Product" class="w-14 h-14 object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIFoGUOrXTWuAejaQU30M7sCzTYo9EtUA9tMq_2QBnSyq0UeIL9_eVHR61raGca5leWaibKcB2pouwu68iO-jnXFp9NxGa4Tjm1dJT-BhgUgL5K3sOe6aqbOF_Neln6D-vQan_YQfc5qrl5u3v0tnOrPBZerD__Lso5ruHqg3X_BRn64_uk8ZCqqlzX2iQ14xa27siTQruE78dwV5nqfNqprdNjGRj7gRbZUbn2nC6gqdrlQxilseOyU02YxVkZ5vssFDE2NbhRcM"/>
+<div class="flex-1">
+<h4 class="text-sm font-bold text-slate-900">Elite Minimalist Watch</h4>
+<p class="text-xs text-slate-500">Réf: WH-001</p>
+</div>
+<p class="font-bold text-primary">129,00 €</p>
+</div>
+<div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center gap-4 shadow-sm">
+<img alt="Product" class="w-14 h-14 object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5XrLjwTzLJkuo_KMMR5NqFNY4XgwUazT0kYW-wzQLuxsWNLJz9snugAfPYldmKOFmUB6uQfGT-AcdZKcBF8a8KjOqQBxri2zfRPjhoJn9isiawptDUee3mPoCpL05kmV2vYDlN9MKB2jluRk4kt4KGe8dYDPzQT8rk5B4MedhgnC6N7OPM_x627k-UEiRU5EqR1KdEON-zJXg6hbejCX9hLOkzMQChrQqlnNOLfid5yaSzTQr9whCXlmBOQmU8IJsAZ8d103y8DY"/>
+<div class="flex-1">
+<h4 class="text-sm font-bold text-slate-900">Classic Leather Strap</h4>
+<p class="text-xs text-slate-500">Réf: WH-002</p>
+</div>
+<p class="font-bold text-primary">45,00 €</p>
+</div>
+<div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center gap-4 shadow-sm">
+<div class="w-14 h-14 bg-slate-100 flex items-center justify-center rounded-lg">
+<span class="material-icons text-slate-300">image</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold text-slate-900">Stainless Mesh Band</h4>
+<p class="text-xs text-slate-500">Réf: WH-003</p>
+</div>
+<p class="font-bold text-primary">59,00 €</p>
+</div>
+</div>
+</section>
+</main>
+<div class="fixed bottom-20 left-4 right-4 flex gap-3 z-40">
+<button class="flex-1 bg-primary text-white font-bold py-4 rounded-xl shadow-xl shadow-primary/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-icons">edit</span>
+        Modifier le fournisseur
+    </button>
+<button class="w-16 bg-red-50 border border-red-200 text-red-500 rounded-xl flex items-center justify-center active:scale-[0.98] transition-transform shadow-sm">
+<span class="material-icons">delete_outline</span>
+</button>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 h-20 px-6 pb-4 flex items-center justify-between z-50">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">home</span>
+<span class="text-[10px] font-medium">Accueil</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">receipt_long</span>
+<span class="text-[10px] font-medium">Commandes</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">inventory_2</span>
+<span class="text-[10px] font-medium">Produits</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons text-[24px]">group</span>
+<span class="text-[10px] font-bold">Utilisateurs</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons text-[24px]">settings</span>
+<span class="text-[10px] font-medium">Paramètres</span>
+</button>
+</nav>
+
+</body></html>

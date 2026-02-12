@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LivreurController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/orders/{id}/mark-ready', [OrderController::class, 'markAsReady']); // Déclenche alerte livreur
         Route::get('/inventory', [ProductController::class, 'supplierInventory']);
         Route::patch('/inventory/{id}', [ProductController::class, 'updateStock']);
+
+        // Routes pour les images de produits
+        Route::post('/products/{product}/images', [ImageController::class, 'uploadProductImage']);
+        Route::get('/products/{product}/images', [ImageController::class, 'getProductImages']);
+        Route::delete('/images/{image}', [ImageController::class, 'deleteProductImage']);
     });
 
     // --- PROFIL : ADMIN ---
@@ -58,12 +64,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users', [AuthController::class, 'allUsers']);
         Route::get('/users/livreurs/pending', [LivreurController::class, 'pendingLivreurs']);
         Route::post('/users/livreurs/{id}/validate', [LivreurController::class, 'validateLivreur']);
-        
+
         // Gestion Catalogue
         Route::apiResource('products', ProductController::class)->except(['index', 'show']);
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('locations', LocationController::class); // Lieux de livraison prédéfinis
-        
+
         // Stats & Global
         Route::get('/dashboard-stats', [OrderController::class, 'adminStats']);
         Route::get('/all-orders', [OrderController::class, 'allOrders']);

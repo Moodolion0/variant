@@ -13,6 +13,9 @@ class Product_image extends Model
     protected $fillable = [
         'product_id',
         'file_url',
+        'cloudinary_public_id',
+        'width',
+        'height',
     ];
 
     public function product()

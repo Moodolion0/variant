@@ -15,6 +15,8 @@ class Supplier extends Model
         'latitude',
         'longitude',
         'address_text',
+        'email',
+        'phone',
     ];
 
     protected $casts = [
