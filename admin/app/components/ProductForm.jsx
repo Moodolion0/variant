@@ -1,159 +1,218 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
-    Alert,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import productService from "../services/productService";
+import ProductImageManager from "./ProductImageManager";
 
-export default function ProductForm({ onDone }) {
+export default function ProductForm({ token, onDone }) {
   const [form, setForm] = useState({
     name: "",
     description: "",
     price: "",
-    stock: "",
-    supplier: "",
+    stock_quantity: "",
+    supplier_id: "",
   });
   const [loading, setLoading] = useState(false);
+  const [productId, setProductId] = useState(null);
+  const [productCreated, setProductCreated] = useState(false);
 
   const handleChange = (field, value) => {
     setForm({ ...form, [field]: value });
   };
 
-  async function handleSubmit() {
+  async function handleCreateProduct() {
     if (!form.name.trim()) {
       Alert.alert("Erreur", "Le nom est requis");
       return;
     }
-    setLoading(true);
-    const payload = {
-      name: form.name.trim(),
-      description: form.description,
-      price: parseFloat(form.price) || 0,
-      stock: parseInt(form.stock) || 0,
-      supplier: form.supplier,
-    };
-    await productService.create(payload);
-    setLoading(false);
-    onDone();
+    if (!form.price || isNaN(parseFloat(form.price))) {
+      Alert.alert("Erreur", "Prix valide requis");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const payload = {
+        name: form.name.trim(),
+        description: form.description.trim(),
+        price: parseFloat(form.price),
+        stock_quantity: parseInt(form.stock_quantity) || 0,
+        supplier_id: parseInt(form.supplier_id) || 1,
+      };
+
+      const response = await fetch("http://localhost:8000/api/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Erreur création produit");
+      }
+
+      setProductId(data.data?.id || data.id);
+      setProductCreated(true);
+      Alert.alert("Succès", "Produit créé! Vous pouvez maintenant ajouter des images.");
+    } catch (error) {
+      Alert.alert("Erreur", error.message);
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
+  // Écran 1: Créer le produit
+  if (!productCreated) {
+    return (
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.topBar}>
+          <TouchableOpacity onPress={onDone}>
+            <MaterialIcons name="arrow_back_ios_new" size={20} color="#111618" />
+          </TouchableOpacity>
+          <Text style={styles.title}>Ajouter un Produit</Text>
+          <View style={{ width: 20 }} />
+        </View>
+
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {/* Nom du produit */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Nom du produit *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Ex: iPhone 15 Pro"
+              placeholderTextColor="#637f88"
+              value={form.name}
+              onChangeText={(v) => handleChange("name", v)}
+              editable={!loading}
+            />
+          </View>
+
+          {/* Description */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Description</Text>
+            <TextInput
+              style={[styles.input, { height: 120, textAlignVertical: "top" }]}
+              placeholder="Entrez la description détaillée..."
+              placeholderTextColor="#637f88"
+              multiline
+              value={form.description}
+              onChangeText={(v) => handleChange("description", v)}
+              editable={!loading}
+            />
+          </View>
+
+          {/* Prix et Stock */}
+          <View style={styles.rowContainer}>
+            <View style={styles.halfField}>
+              <Text style={styles.label}>Prix (XOF) *</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="0.00"
+                placeholderTextColor="#637f88"
+                keyboardType="decimal-pad"
+                value={form.price}
+                onChangeText={(v) => handleChange("price", v)}
+                editable={!loading}
+              />
+            </View>
+            <View style={styles.halfField}>
+              <Text style={styles.label}>Stock</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="0"
+                placeholderTextColor="#637f88"
+                keyboardType="number-pad"
+                value={form.stock_quantity}
+                onChangeText={(v) => handleChange("stock_quantity", v)}
+                editable={!loading}
+              />
+            </View>
+          </View>
+
+          {/* Fournisseur */}
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>ID Fournisseur</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="1"
+              placeholderTextColor="#637f88"
+              keyboardType="number-pad"
+              value={form.supplier_id}
+              onChangeText={(v) => handleChange("supplier_id", v)}
+              editable={!loading}
+            />
+          </View>
+        </ScrollView>
+
+        {/* Footer Button */}
+        <View style={styles.footerContainer}>
+          <TouchableOpacity
+            style={[styles.submitBtn, loading && styles.submitBtnDisabled]}
+            onPress={handleCreateProduct}
+            disabled={loading}
+          >
+            <MaterialIcons name="add" size={20} color="#fff" />
+            <Text style={styles.submitText}>
+              {loading ? "Création..." : "Créer le produit"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
+  // Écran 2: Ajouter les images
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={onDone}>
           <MaterialIcons name="arrow_back_ios_new" size={20} color="#111618" />
         </TouchableOpacity>
-        <Text style={styles.title}>Ajouter un Produit</Text>
+        <Text style={styles.title}>Images du Produit</Text>
         <View style={{ width: 20 }} />
       </View>
 
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {/* Photo du produit */}
-        <View>
-          <Text style={styles.sectionTitle}>Photos du produit</Text>
-          <View style={styles.photoGrid}>
-            <View style={styles.photoPlaceholder}>
-              <MaterialIcons name="add_a_photo" size={28} color="#19b3e6" />
-              <Text style={styles.photoLabel}>Ajouter</Text>
-            </View>
-          </View>
-        </View>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.scrollContent}>
+          <Text style={styles.productInfo}>
+            Produit créé: <Text style={styles.productIdText}>#{productId}</Text>
+          </Text>
 
-        {/* Nom du produit */}
-        <View style={styles.fieldContainer}>
-          <Text style={styles.label}>Nom du produit</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Ex: Produit Haute Qualité"
-            placeholderTextColor="#637f88"
-            value={form.name}
-            onChangeText={(v) => handleChange("name", v)}
+          <ProductImageManager
+            productId={productId}
+            token={token}
+            onImagesUpdate={(images) => {
+              // Images mises à jour
+            }}
           />
-        </View>
 
-        {/* Description */}
-        <View style={styles.fieldContainer}>
-          <Text style={styles.label}>Description</Text>
-          <TextInput
-            style={[styles.input, { height: 120, textAlignVertical: "top" }]}
-            placeholder="Entrez la description détaillée du produit"
-            placeholderTextColor="#637f88"
-            multiline
-            value={form.description}
-            onChangeText={(v) => handleChange("description", v)}
-          />
-        </View>
-
-        {/* Prix et Stock */}
-        <View style={styles.rowContainer}>
-          <View style={styles.halfField}>
-            <Text style={styles.label}>Prix (€)</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="0.00"
-              placeholderTextColor="#637f88"
-              keyboardType="decimal-pad"
-              value={form.price}
-              onChangeText={(v) => handleChange("price", v)}
-            />
-          </View>
-          <View style={styles.halfField}>
-            <Text style={styles.label}>Stock</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="0"
-              placeholderTextColor="#637f88"
-              keyboardType="number-pad"
-              value={form.stock}
-              onChangeText={(v) => handleChange("stock", v)}
-            />
-          </View>
-        </View>
-
-        {/* Fournisseur */}
-        <View style={styles.fieldContainer}>
-          <Text style={styles.label}>Sélectionner un Fournisseur</Text>
-          <View style={styles.selectWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder="Choisir un fournisseur"
-              placeholderTextColor="#637f88"
-              value={form.supplier}
-              onChangeText={(v) => handleChange("supplier", v)}
-            />
-            <MaterialIcons
-              name="expand_more"
-              size={20}
-              color="#637f88"
-              style={styles.selectIcon}
-            />
-          </View>
+          <TouchableOpacity
+            style={styles.finishBtn}
+            onPress={onDone}
+          >
+            <MaterialIcons name="check-circle" size={20} color="#fff" />
+            <Text style={styles.finishBtnText}>Terminer</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-
-      {/* Footer Button */}
-      <View style={styles.footerContainer}>
-        <TouchableOpacity
-          style={styles.submitBtn}
-          onPress={handleSubmit}
-          disabled={loading}
-        >
-          <MaterialIcons name="publish" size={20} color="#fff" />
-          <Text style={styles.submitText}>
-            {loading ? "Publication..." : "Publier le produit"}
-          </Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -180,33 +239,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 16,
     paddingBottom: 120,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#111618",
-    marginBottom: 12,
-  },
-  photoGrid: {
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 16,
-  },
-  photoPlaceholder: {
-    width: 80,
-    height: 80,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: "#dce3e5",
-    borderStyle: "dashed",
-    backgroundColor: "#f9fafb",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  photoLabel: {
-    fontSize: 10,
-    color: "#637f88",
-    marginTop: 4,
   },
   fieldContainer: {
     marginBottom: 12,
@@ -235,14 +267,6 @@ const styles = StyleSheet.create({
   halfField: {
     flex: 1,
   },
-  selectWrapper: {
-    position: "relative",
-  },
-  selectIcon: {
-    position: "absolute",
-    right: 12,
-    top: 12,
-  },
   footerContainer: {
     position: "absolute",
     bottom: 0,
@@ -263,7 +287,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 8,
   },
+  submitBtnDisabled: {
+    opacity: 0.6,
+  },
   submitText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  productInfo: {
+    fontSize: 14,
+    color: "#637f88",
+    marginBottom: 16,
+  },
+  productIdText: {
+    fontWeight: "700",
+    color: "#19b3e6",
+  },
+  finishBtn: {
+    backgroundColor: "#10b981",
+    paddingVertical: 14,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    marginTop: 20,
+  },
+  finishBtnText: {
     color: "#fff",
     fontSize: 14,
     fontWeight: "700",

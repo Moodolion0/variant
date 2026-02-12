@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    Alert,
     ScrollView,
     StyleSheet,
     Switch,
@@ -8,9 +9,24 @@ import {
     View,
 } from "react-native";
 
-export default function Settings() {
+export default function Settings({ onLogout }) {
   const [notifications, setNotifications] = React.useState(true);
   const [darkMode, setDarkMode] = React.useState(false);
+
+  const handleLogout = () => {
+    Alert.alert(
+      "Déconnexion",
+      "Êtes-vous sûr de vouloir vous déconnecter?",
+      [
+        { text: "Annuler", onPress: () => {}, style: "cancel" },
+        {
+          text: "Déconnecter",
+          onPress: () => onLogout && onLogout(),
+          style: "destructive",
+        },
+      ]
+    );
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -49,9 +65,11 @@ export default function Settings() {
       </View>
 
       <View style={[styles.section, { marginBottom: 100 }]}>
-        <TouchableOpacity style={styles.dangerButton}>
-          <Text style={styles.dangerButtonText}>Se déconnecter</Text>
-        </TouchableOpacity>
+        {onLogout && (
+          <TouchableOpacity style={styles.dangerButton} onPress={handleLogout}>
+            <Text style={styles.dangerButtonText}>Se déconnecter</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );

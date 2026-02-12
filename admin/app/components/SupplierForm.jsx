@@ -1,5 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Dynamically import expo-location with fallback
+let Location = null;
+try {
+  Location = require("expo-location");
+} catch (e) {
+  console.warn("expo-location not available:", e.message);
+}
 import {
     Alert,
     ScrollView,
@@ -8,20 +16,72 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    ActivityIndicator,
 } from "react-native";
 import supplierService from "../services/supplierService";
+import MapPicker from "./MapPicker";
 
 export default function SupplierForm({ onDone }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    location: "",
+    address_text: "",
+    latitude: null,
+    longitude: null,
   });
   const [loading, setLoading] = useState(false);
+  const [loadingLocation, setLoadingLocation] = useState(false);
+
+  // Get current location on mount
+  useEffect(() => {
+    requestLocationPermission();
+  }, []);
+
+  const requestLocationPermission = async () => {
+    if (!Location) {
+      console.warn("Location module not available, skipping automatic location");
+      return;
+    }
+
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Permission refusée",
+          "Nous avons besoin de l'accès à votre localisation pour continuer"
+        );
+        return;
+      }
+
+      setLoadingLocation(true);
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
+
+      setForm((prev) => ({
+        ...prev,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      }));
+      setLoadingLocation(false);
+    } catch (error) {
+      console.error("Erreur de localisation:", error);
+      Alert.alert("Erreur", "Impossible d'accéder à votre localisation");
+      setLoadingLocation(false);
+    }
+  };
 
   const handleChange = (field, value) => {
     setForm({ ...form, [field]: value });
+  };
+
+  const handleMapClick = (lat, lng) => {
+    setForm((prev) => ({
+      ...prev,
+      latitude: lat,
+      longitude: lng,
+    }));
   };
 
   async function handleSubmit() {
@@ -29,16 +89,30 @@ export default function SupplierForm({ onDone }) {
       Alert.alert("Erreur", "Le nom est requis");
       return;
     }
+    if (form.latitude === null || form.longitude === null) {
+      Alert.alert("Erreur", "La localisation est requise");
+      return;
+    }
+
     setLoading(true);
-    const payload = {
-      name: form.name.trim(),
-      email: form.email,
-      phone: form.phone,
-      location: form.location,
-    };
-    await supplierService.create(payload);
-    setLoading(false);
-    onDone();
+    try {
+      const payload = {
+        name: form.name.trim(),
+        email: form.email || null,
+        phone: form.phone || null,
+        address_text: form.address_text || null,
+        latitude: form.latitude,
+        longitude: form.longitude,
+      };
+      await supplierService.create(payload);
+      Alert.alert("Succès", "Fournisseur créé avec succès");
+      onDone();
+    } catch (error) {
+      Alert.alert("Erreur", "Impossible de créer le fournisseur");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -104,29 +178,29 @@ export default function SupplierForm({ onDone }) {
 
         {/* Localisation */}
         <View style={styles.fieldContainer}>
-          <Text style={styles.label}>Localisation</Text>
-          <View style={styles.locationInputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder="Paris, France"
-              placeholderTextColor="#637f88"
-              value={form.location}
-              onChangeText={(v) => handleChange("location", v)}
-            />
-            <MaterialIcons
-              name="location_on"
-              size={20}
-              color="#19b3e6"
-              style={styles.locationIcon}
-            />
-          </View>
+          <Text style={styles.label}>Adresse</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ex: 123 Rue de Paris"
+            placeholderTextColor="#637f88"
+            value={form.address_text}
+            onChangeText={(v) => handleChange("address_text", v)}
+          />
         </View>
 
-        {/* Map Placeholder */}
-        <View style={styles.mapPlaceholder}>
-          <MaterialIcons name="location_on" size={32} color="#19b3e6" />
-          <Text style={styles.mapText}>Maintenez et glissez pour ajuster</Text>
-        </View>
+        {/* Map Picker Component */}
+        <MapPicker
+          latitude={form.latitude}
+          longitude={form.longitude}
+          onLocationChange={handleMapClick}
+        />
+
+        {loadingLocation && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color="#19b3e6" />
+            <Text style={styles.loadingText}>Récupération de la localisation...</Text>
+          </View>
+        )}
       </ScrollView>
 
       {/* Footer Button */}
@@ -195,29 +269,22 @@ const styles = StyleSheet.create({
     color: "#111618",
     height: 44,
   },
-  locationInputWrapper: {
-    position: "relative",
-  },
-  locationIcon: {
-    position: "absolute",
-    right: 12,
-    top: 12,
-  },
-  mapPlaceholder: {
-    height: 160,
-    backgroundColor: "#f3f4f6",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#dce3e5",
+  loadingContainer: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 12,
-    marginBottom: 12,
+    paddingVertical: 16,
+    gap: 8,
+    backgroundColor: "#f0f9ff",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#bfdbfe",
+    marginVertical: 12,
   },
-  mapText: {
+  loadingText: {
     fontSize: 12,
-    color: "#637f88",
-    marginTop: 8,
+    color: "#1e40af",
+    fontWeight: "500",
   },
   footerContainer: {
     position: "absolute",

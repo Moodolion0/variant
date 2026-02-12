@@ -139,10 +139,10 @@ export default function OrderDetail({ orderId, onBack }) {
                   Fournisseur: {item.supplier}
                 </Text>
                 <Text style={styles.productQty}>
-                  Qté: {item.quantity} x {item.price}€
+                  Qté: {item.quantity} x {item.price}XOF
                 </Text>
               </View>
-              <Text style={styles.productTotal}>{item.total}€</Text>
+              <Text style={styles.productTotal}>{item.total}XOF</Text>
             </View>
           ))}
 
@@ -150,15 +150,15 @@ export default function OrderDetail({ orderId, onBack }) {
           <View style={styles.summary}>
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Sous-total</Text>
-              <Text style={styles.summaryValue}>{order.subtotal}€</Text>
+              <Text style={styles.summaryValue}>{order.subtotal}XOF</Text>
             </View>
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Frais de livraison</Text>
-              <Text style={styles.summaryValue}>{order.shippingFee}€</Text>
+              <Text style={styles.summaryValue}>{order.shippingFee}XOF</Text>
             </View>
             <View style={[styles.summaryRow, styles.summaryTotal]}>
               <Text style={styles.totalLabel}>Total Final</Text>
-              <Text style={styles.totalValue}>{order.total}€</Text>
+              <Text style={styles.totalValue}>{order.total}XOF</Text>
             </View>
           </View>
         </View>

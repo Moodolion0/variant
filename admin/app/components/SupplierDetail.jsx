@@ -166,7 +166,7 @@ export default function SupplierDetail({ supplierId, onBack }) {
                 <Text style={styles.productRef}>Réf: {product.ref}</Text>
               </View>
               <Text style={styles.productPrice}>
-                {(product.price || 0).toFixed(2)} €
+                {(product.price || 0).toFixed(2)} XOF
               </Text>
             </View>
           ))}

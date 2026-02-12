@@ -89,7 +89,7 @@ export default function OrderList({ onDetail }) {
                 <Text style={styles.customerName}>{item.customer}</Text>
                 <Text style={styles.itemCount}>{item.items} articles</Text>
               </View>
-              <Text style={styles.amount}>{item.amount.toFixed(2)} €</Text>
+              <Text style={styles.amount}>{item.amount.toFixed(2)} XOF</Text>
             </View>
           </TouchableOpacity>
         )}

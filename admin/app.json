@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Admin",
+    "slug": "admin-app",
+    "version": "1.0.0",
+    "scheme": "admin-app",
+    "plugins": [
+      [
+        "react-native-maps",
+        {
+          "maps": {
+            "ios": "AIzaSyDJKWLYsXY2h1z2dHEjRd3OWmKnzsXQQFU"
+          }
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlways": true,
+          "locationWhenInUse": true,
+          "isIosBackgroundLocationEnabled": false
+        }
+      ]
+    ],
+    "permissions": [
+      "android.permission.ACCESS_FINE_LOCATION",
+      "android.permission.ACCESS_COARSE_LOCATION"
+    ],
+    "ios": {
+      "supportsTabletMode": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

@@ -83,10 +83,10 @@ export default function ProductDetail({ productId, onBack }) {
             </View>
           </View>
           <View style={styles.priceRow}>
-            <Text style={styles.price}>{product.price.toFixed(2)} €</Text>
+            <Text style={styles.price}>{product.price.toFixed(2)} XOF</Text>
             {product.originalPrice && (
               <Text style={styles.originalPrice}>
-                {product.originalPrice.toFixed(2)} €
+                {product.originalPrice.toFixed(2)} XOF
               </Text>
             )}
           </View>
@@ -174,7 +174,7 @@ export default function ProductDetail({ productId, onBack }) {
             <Text style={styles.statLabel}>Revenus générés</Text>
             <View style={styles.statValue}>
               <Text style={styles.statNumber}>
-                {(product.stats?.revenue || 0).toLocaleString("fr-FR")}€
+                {(product.stats?.revenue || 0).toLocaleString("fr-FR")}XOF
               </Text>
               <MaterialIcons name="trending_up" size={16} color="#19b3e6" />
             </View>
