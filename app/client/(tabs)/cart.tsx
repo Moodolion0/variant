@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import useCart from "../hooks/useCart";
+import useCart from "../../hooks/useCart";
 
 // Couleurs
 const colors = {

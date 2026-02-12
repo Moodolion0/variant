@@ -1,74 +1,79 @@
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { authService } from '../../services/authService';
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 // Couleurs temporaires
 const colors = {
-  primary: '#19b3e6',
-  backgroundLight: '#f6f7f8',
-  textPrimary: '#111618',
-  textSecondary: '#637f88',
+  primary: "#19b3e6",
+  backgroundLight: "#f6f7f8",
+  textPrimary: "#111618",
+  textSecondary: "#637f88",
 };
-
-// Hook temporaire
-const useAuth = () => ({
-  register: authService.register,
-  isLoading: false,
-});
 
 export default function RegisterClient() {
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     // Effacer le message d'erreur quand l'utilisateur tape
-    if (errorMessage) setErrorMessage('');
+    if (errorMessage) setErrorMessage("");
   };
 
   const handleSubmit = async () => {
     // Validation basique
-    if (!formData.name || !formData.email || !formData.phone || !formData.password) {
-      setErrorMessage('Veuillez remplir tous les champs');
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.password
+    ) {
+      setErrorMessage("Veuillez remplir tous les champs");
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage('Les mots de passe ne correspondent pas');
+      setErrorMessage("Les mots de passe ne correspondent pas");
       return;
     }
 
     setIsRegistering(true);
-    setErrorMessage('');
-    
+    setErrorMessage("");
+
     try {
       const result = await authService.register({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         password: formData.password,
-        role: 'client'
+        role: "client",
       });
-      console.log('Inscription réussie:', result);
-      
+      console.log("Inscription réussie:", result);
+
       // Redirection directe après succès
-      router.replace('/auth/login');
+      router.replace("/auth/login");
     } catch (error: any) {
-      console.log('Erreur inscription:', error);
-      console.log('Message erreur:', error.message);
-      setErrorMessage(error.message || 'Impossible de créer le compte');
+      console.log("Erreur inscription:", error);
+      console.log("Message erreur:", error.message);
+      setErrorMessage(error.message || "Impossible de créer le compte");
     } finally {
       setIsRegistering(false);
     }
@@ -78,7 +83,10 @@ export default function RegisterClient() {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={() => router.back()}
+          style={styles.backButton}
+        >
           <Text style={styles.backText}>←</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Inscription Acheteur</Text>
@@ -111,7 +119,7 @@ export default function RegisterClient() {
               style={styles.input}
               placeholder="Ex: Jean Dupont"
               value={formData.name}
-              onChangeText={(value) => handleInputChange('name', value)}
+              onChangeText={(value) => handleInputChange("name", value)}
             />
           </View>
 
@@ -123,7 +131,7 @@ export default function RegisterClient() {
               placeholder="exemple@email.com"
               keyboardType="email-address"
               value={formData.email}
-              onChangeText={(value) => handleInputChange('email', value)}
+              onChangeText={(value) => handleInputChange("email", value)}
             />
           </View>
 
@@ -135,7 +143,7 @@ export default function RegisterClient() {
               placeholder="+33 6 12 34 56 78"
               keyboardType="phone-pad"
               value={formData.phone}
-              onChangeText={(value) => handleInputChange('phone', value)}
+              onChangeText={(value) => handleInputChange("phone", value)}
             />
           </View>
 
@@ -148,13 +156,15 @@ export default function RegisterClient() {
                 placeholder="••••••••"
                 secureTextEntry={!showPassword}
                 value={formData.password}
-                onChangeText={(value) => handleInputChange('password', value)}
+                onChangeText={(value) => handleInputChange("password", value)}
               />
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.eyeIcon}
                 onPress={() => setShowPassword(!showPassword)}
               >
-                <Text style={styles.iconText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                <Text style={styles.iconText}>
+                  {showPassword ? "👁️" : "👁️‍🗨️"}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -168,13 +178,17 @@ export default function RegisterClient() {
                 placeholder="••••••••"
                 secureTextEntry={!showConfirmPassword}
                 value={formData.confirmPassword}
-                onChangeText={(value) => handleInputChange('confirmPassword', value)}
+                onChangeText={(value) =>
+                  handleInputChange("confirmPassword", value)
+                }
               />
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.eyeIcon}
                 onPress={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                <Text style={styles.iconText}>{showConfirmPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                <Text style={styles.iconText}>
+                  {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -182,19 +196,19 @@ export default function RegisterClient() {
 
         {/* Submit Button */}
         <View style={styles.submitSection}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.submitButton}
             onPress={handleSubmit}
             disabled={isRegistering}
           >
             <Text style={styles.submitButtonText}>
-              {isRegistering ? 'Création...' : 'Créer mon compte acheteur'}
+              {isRegistering ? "Création..." : "Créer mon compte acheteur"}
             </Text>
           </TouchableOpacity>
-          
+
           <View style={styles.loginSection}>
             <Text style={styles.loginText}>Déjà un compte ?</Text>
-            <TouchableOpacity onPress={() => router.push('/auth/login')}>
+            <TouchableOpacity onPress={() => router.push("/auth/login")}>
               <Text style={styles.loginLink}>Se connecter</Text>
             </TouchableOpacity>
           </View>
@@ -203,7 +217,8 @@ export default function RegisterClient() {
         {/* Security/TOS Footer */}
         <View style={styles.footerSection}>
           <Text style={styles.footerText}>
-            En créant un compte, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité.
+            En créant un compte, vous acceptez nos Conditions d'Utilisation et
+            notre Politique de Confidentialité.
           </Text>
         </View>
       </ScrollView>
@@ -217,32 +232,32 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundLight,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
     paddingHorizontal: 16,
     paddingVertical: 8,
     paddingTop: 50,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: "#f3f4f6",
   },
   backButton: {
     width: 48,
     height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   backText: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.textPrimary,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.textPrimary,
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
     paddingRight: 48,
   },
   placeholder: {
@@ -263,21 +278,21 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   errorContainer: {
-    backgroundColor: '#fee2e2',
-    borderColor: '#fecaca',
+    backgroundColor: "#fee2e2",
+    borderColor: "#fecaca",
     borderWidth: 1,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
   errorText: {
-    color: '#dc2626',
+    color: "#dc2626",
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
   },
   headlineTitle: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.textPrimary,
     marginBottom: 8,
   },
@@ -295,28 +310,28 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
     color: colors.textPrimary,
     marginBottom: 6,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#dce3e5',
+    borderColor: "#dce3e5",
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     height: 56,
     paddingHorizontal: 15,
     fontSize: 16,
     color: colors.textPrimary,
   },
   passwordContainer: {
-    position: 'relative',
+    position: "relative",
   },
   passwordInput: {
     borderWidth: 1,
-    borderColor: '#dce3e5',
+    borderColor: "#dce3e5",
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     height: 56,
     paddingHorizontal: 15,
     paddingRight: 48,
@@ -324,7 +339,7 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
   },
   eyeIcon: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     top: 18,
   },
@@ -341,8 +356,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     height: 56,
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -350,14 +365,14 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   submitButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loginSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     gap: 8,
   },
   loginText: {
@@ -366,7 +381,7 @@ const styles = StyleSheet.create({
   },
   loginLink: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.primary,
   },
   footerSection: {
@@ -377,7 +392,7 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 12,
     color: colors.textSecondary,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: 18,
   },
 });
