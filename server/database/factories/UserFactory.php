@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'full_name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone_number' => $this->faker->unique()->phoneNumber(),
-            'password_hash' => bcrypt('password'),
+            'password' => 'password',
             'role' => \App\Models\User::ROLE_CLIENT,
             'status' => \App\Models\User::STATUS_VALIDE,
         ];

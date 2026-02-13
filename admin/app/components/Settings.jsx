@@ -14,18 +14,14 @@ export default function Settings({ onLogout }) {
   const [darkMode, setDarkMode] = React.useState(false);
 
   const handleLogout = () => {
-    Alert.alert(
-      "Déconnexion",
-      "Êtes-vous sûr de vouloir vous déconnecter?",
-      [
-        { text: "Annuler", onPress: () => {}, style: "cancel" },
-        {
-          text: "Déconnecter",
-          onPress: () => onLogout && onLogout(),
-          style: "destructive",
-        },
-      ]
-    );
+    Alert.alert("Déconnexion", "Êtes-vous sûr de vouloir vous déconnecter?", [
+      { text: "Annuler", onPress: () => {}, style: "cancel" },
+      {
+        text: "Déconnecter",
+        onPress: () => onLogout && onLogout(),
+        style: "destructive",
+      },
+    ]);
   };
 
   return (

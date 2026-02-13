@@ -1,13 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Alert,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import ProductImageManager from "./ProductImageManager";
 
@@ -66,7 +66,10 @@ export default function ProductForm({ token, onDone }) {
 
       setProductId(data.data?.id || data.id);
       setProductCreated(true);
-      Alert.alert("Succès", "Produit créé! Vous pouvez maintenant ajouter des images.");
+      Alert.alert(
+        "Succès",
+        "Produit créé! Vous pouvez maintenant ajouter des images.",
+      );
     } catch (error) {
       Alert.alert("Erreur", error.message);
       console.error(error);
@@ -82,7 +85,11 @@ export default function ProductForm({ token, onDone }) {
         {/* Header */}
         <View style={styles.topBar}>
           <TouchableOpacity onPress={onDone}>
-            <MaterialIcons name="arrow_back_ios_new" size={20} color="#111618" />
+            <MaterialIcons
+              name="arrow_back_ios_new"
+              size={20}
+              color="#111618"
+            />
           </TouchableOpacity>
           <Text style={styles.title}>Ajouter un Produit</Text>
           <View style={{ width: 20 }} />
@@ -204,10 +211,7 @@ export default function ProductForm({ token, onDone }) {
             }}
           />
 
-          <TouchableOpacity
-            style={styles.finishBtn}
-            onPress={onDone}
-          >
+          <TouchableOpacity style={styles.finishBtn} onPress={onDone}>
             <MaterialIcons name="check-circle" size={20} color="#fff" />
             <Text style={styles.finishBtnText}>Terminer</Text>
           </TouchableOpacity>

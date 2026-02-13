@@ -22,6 +22,13 @@ class User extends Authenticatable
     public const STATUS_BLOQUE = 'bloque';
 
     /**
+     * The column name for storing passwords.
+     *
+     * @var string
+     */
+    protected $passwordHashColumn = 'password_hash';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -55,14 +62,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * Hash password when setting via the 'password' attribute or when directly setting password_hash.
+     * Hash password when setting the 'password' attribute.
+     * This gets stored in the 'password_hash' column.
      */
     public function setPasswordAttribute($value)
-    {
-        $this->attributes['password_hash'] = bcrypt($value);
-    }
-
-    public function setPasswordHashAttribute($value)
     {
         $this->attributes['password_hash'] = bcrypt($value);
     }

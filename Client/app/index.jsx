@@ -1,11 +1,11 @@
 import { useRouter } from "expo-router";
 import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { useAuth } from "./hooks/useAuth";
 
@@ -20,7 +20,7 @@ const AuthGuard = ({ children, requireAuth }) => {
 
 export default function Welcome() {
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading } = useAuth();
 
   // Afficher un écran de chargement pendant la vérification d'auth
   if (isLoading) {
@@ -53,7 +53,7 @@ export default function Welcome() {
               style={styles.primaryButton}
               onPress={() => router.push("/auth/choice")}
             >
-              <Text style={styles.primaryButtonText}>S'inscrire</Text>
+              <Text style={styles.primaryButtonText}>S&apos;inscrire</Text>
             </TouchableOpacity>
 
             <TouchableOpacity

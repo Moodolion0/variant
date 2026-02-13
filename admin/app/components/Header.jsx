@@ -1,21 +1,16 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Header({ onLogout }) {
   const handleLogout = () => {
-    Alert.alert(
-      "Déconnexion",
-      "Êtes-vous sûr de vouloir vous déconnecter?",
-      [
-        { text: "Annuler", onPress: () => {}, style: "cancel" },
-        {
-          text: "Déconnecter",
-          onPress: () => onLogout && onLogout(),
-          style: "destructive",
-        },
-      ]
-    );
+    Alert.alert("Déconnexion", "Êtes-vous sûr de vouloir vous déconnecter?", [
+      { text: "Annuler", onPress: () => {}, style: "cancel" },
+      {
+        text: "Déconnecter",
+        onPress: () => onLogout && onLogout(),
+        style: "destructive",
+      },
+    ]);
   };
 
   return (
@@ -30,10 +25,7 @@ export default function Header({ onLogout }) {
           <View style={styles.notifDot} />
         </TouchableOpacity>
         {onLogout && (
-          <TouchableOpacity
-            style={styles.logoutBtn}
-            onPress={handleLogout}
-          >
+          <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
             <MaterialIcons name="logout" size={24} color="#111618" />
           </TouchableOpacity>
         )}

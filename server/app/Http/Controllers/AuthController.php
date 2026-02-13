@@ -74,4 +74,31 @@ class AuthController extends Controller
 
         return response()->json(User::paginate());
     }
+
+    /**
+     * Debug: Create or reset admin user
+     */
+    public function resetAdminUser()
+    {
+        // Delete existing admin
+        User::where('email', 'admin@example.com')->delete();
+
+        // Create new admin with correct password hashing
+        $admin = User::create([
+            'full_name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => 'password', // This will be hashed by the mutator
+            'role' => User::ROLE_ADMIN,
+            'status' => User::STATUS_VALIDE,
+        ]);
+
+        return response()->json([
+            'message' => 'Admin user created successfully',
+            'user' => $admin,
+            'test_credentials' => [
+                'email' => 'admin@example.com',
+                'password' => 'password',
+            ],
+        ]);
+    }
 }

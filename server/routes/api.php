@@ -18,6 +18,7 @@ use App\Http\Controllers\ImageController;
 // --- Routes Publiques ---
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']); // Avec choix du rôle
+Route::post('/reset-admin', [AuthController::class, 'resetAdminUser']); // DEBUG: Create admin
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 

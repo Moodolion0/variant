@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'full_name' => 'Admin User',
             'email' => 'admin@example.com',
-            'password_hash' => bcrypt('password'),
+            'password' => 'password',
             'role' => User::ROLE_ADMIN,
             'status' => User::STATUS_VALIDE,
         ]);
