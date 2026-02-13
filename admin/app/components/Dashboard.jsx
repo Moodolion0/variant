@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useEffect, useState } from "react";
 
@@ -34,23 +34,23 @@ export default function Dashboard({ onNavigate }) {
   }, []);
 
   const stats = [
-    { label: "Ventes", value: "12 450 XOF", percent: "12%", icon: "payments" },
+    { label: "Ventes", value: "12 450 XOF", percent: "12%", icon: "credit-card" },
 
-    { label: "Commandes", value: "85", percent: "5%", icon: "shopping_bag" },
+    { label: "Commandes", value: "85", percent: "5%", icon: "shopping-outline" },
 
-    { label: "Clients", value: "24", percent: "18%", icon: "group" },
+    { label: "Clients", value: "24", percent: "18%", icon: "account-group-outline" },
 
-    { label: "Produits", value: "142", percent: "0%", icon: "inventory_2" },
+    { label: "Produits", value: "142", percent: "0%", icon: "cube-outline" },
   ];
 
   const actions = [
-    { key: "create", label: "Ajouter\nProduit", icon: "add_box" },
+    { key: "create", label: "Ajouter\nProduit", icon: "plus-box" },
 
-    { key: "users", label: "Nouvel\nAdmin", icon: "person_add" },
+    { key: "users", label: "Nouvel\nAdmin", icon: "account-plus" },
 
-    { key: "suppliers", label: "Gérer\nStock", icon: "inventory" },
+    { key: "suppliers", label: "Gérer\nStock", icon: "cube" },
 
-    { key: "orders", label: "Suivi\nLivraison", icon: "local_shipping" },
+    { key: "orders", label: "Suivi\nLivraison", icon: "truck" },
   ];
 
   const statusColor = (status) => {
@@ -97,7 +97,7 @@ export default function Dashboard({ onNavigate }) {
         {stats.map((stat, i) => (
           <View key={i} style={styles.statCard}>
             <View style={styles.statTop}>
-              <MaterialIcons name={stat.icon} size={20} color="#19b3e6" />
+              <MaterialCommunityIcons name={stat.icon} size={20} color="#19b3e6" />
 
               <View style={styles.statPercent}>
                 <Text style={styles.percentText}>
@@ -124,7 +124,7 @@ export default function Dashboard({ onNavigate }) {
           </View>
 
           <View style={styles.chartGrowth}>
-            <MaterialIcons name="trending_up" size={14} color="#22c55e" />
+            <MaterialCommunityIcons name="trending-up" size={14} color="#22c55e" />
 
             <Text style={styles.growthText}>+12%</Text>
           </View>
@@ -158,7 +158,7 @@ export default function Dashboard({ onNavigate }) {
               onPress={() => onNavigate(action.key)}
             >
               <View style={styles.actionIconWrapper}>
-                <MaterialIcons name={action.icon} size={28} color="#19b3e6" />
+                <MaterialCommunityIcons name={action.icon} size={28} color="#19b3e6" />
               </View>
 
               <Text style={styles.actionLabel}>{action.label}</Text>

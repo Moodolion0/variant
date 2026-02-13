@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Alert } from "react-native";
+import { useEffect as useEffectWeb } from "react";
 import BottomNav from "./components/BottomNav";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
@@ -15,6 +16,15 @@ import SupplierForm from "./components/SupplierForm";
 import UserList from "./components/UserList";
 
 export default function AdminApp() {
+  useEffectWeb(() => {
+    if (typeof document !== "undefined" && !document.getElementById("material-icons-css-admin")) {
+      const link = document.createElement("link");
+      link.id = "material-icons-css-admin";
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
+      document.head.appendChild(link);
+    }
+  }, []);
   const [route, setRoute] = useState("dashboard");
   const [auth, setAuth] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,11 +76,18 @@ export default function AdminApp() {
       localStorage.removeItem("admin_user");
     }
     setAuth(null);
+    try {
+      Alert.alert("Déconnecté", "Vous avez été déconnecté.", [
+        { text: "OK" },
+      ]);
+    } catch (e) {
+      // nothing
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {route === "dashboard" && <Header onLogout={handleLogout} />}
+      {route === "dashboard" && <Header />}
       <View style={styles.content}>
         {route === "dashboard" && <Dashboard onNavigate={setRoute} />}
         {route === "products" && (

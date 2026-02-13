@@ -14,6 +14,14 @@ export default function Settings({ onLogout }) {
   const [darkMode, setDarkMode] = React.useState(false);
 
   const handleLogout = () => {
+    // Sur le web, `Alert.alert` peut être peu visible; utiliser `window.confirm`
+    if (typeof window !== "undefined" && typeof window.confirm === "function") {
+      const ok = window.confirm("Êtes-vous sûr de vouloir vous déconnecter?");
+      if (ok) onLogout && onLogout();
+      return;
+    }
+
+    // Mobile / fallback
     Alert.alert("Déconnexion", "Êtes-vous sûr de vouloir vous déconnecter?", [
       { text: "Annuler", onPress: () => {}, style: "cancel" },
       {

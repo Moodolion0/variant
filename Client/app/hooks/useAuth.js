@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import { createContext, useContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { authService } from "../services/authService";
 
 // Créer le contexte d'authentification
@@ -100,14 +101,27 @@ export function AuthProvider({ children }) {
       setUser(null);
       setIsAuthenticated(false);
 
-      // Rediriger vers la page d'accueil
-      router.replace("/");
+      // Alerte visible pour confirmer la déconnexion
+      try {
+        Alert.alert("Déconnecté", "Vous avez été déconnecté.", [
+          { text: "OK", onPress: () => router.replace("/auth/login") },
+        ]);
+      } catch (e) {
+        // fallback si Alert n'est pas disponible
+        router.replace("/auth/login");
+      }
     } catch (error) {
       console.error("Logout hook error:", error);
       // Forcer le logout même en cas d'erreur
       setUser(null);
       setIsAuthenticated(false);
-      router.replace("/");
+      try {
+        Alert.alert("Déconnecté", "Vous avez été déconnecté.", [
+          { text: "OK", onPress: () => router.replace("/auth/login") },
+        ]);
+      } catch (e) {
+        router.replace("/auth/login");
+      }
     } finally {
       setIsLoading(false);
     }

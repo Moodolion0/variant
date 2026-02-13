@@ -19,15 +19,19 @@ export default function LoginScreen({ onLoginSuccess }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
-      Alert.alert("Erreur", "Email et mot de passe requis");
+      const msg = "Email et mot de passe requis";
+      setError(msg);
+      Alert.alert("Erreur", msg);
       return;
     }
 
     try {
       setLoading(true);
+      setError(null);
 
       const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
@@ -41,14 +45,24 @@ export default function LoginScreen({ onLoginSuccess }) {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.message || "Erreur de notification");
+        // Laravel returns validation errors under `errors` for 422
+        let message = data.message || "Erreur lors de la connexion";
+        if (response.status === 422 && data.errors) {
+          message = Object.values(data.errors).flat().join('\n');
+        }
+        setError(message);
+        Alert.alert("Erreur", message);
+        return;
       }
 
       if (!data.token) {
-        throw new Error("Pas de token reçu");
+        const msg = "Pas de token reçu";
+        setError(msg);
+        Alert.alert("Erreur", msg);
+        return;
       }
 
       // Sauvegarder le token
@@ -61,9 +75,11 @@ export default function LoginScreen({ onLoginSuccess }) {
         token: data.token,
         user: data.user,
       });
-    } catch (error) {
-      Alert.alert("Erreur", error.message);
-      console.error(error);
+    } catch (err) {
+      const msg = err?.message || "Erreur réseau";
+      setError(msg);
+      Alert.alert("Erreur", msg);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -78,6 +94,13 @@ export default function LoginScreen({ onLoginSuccess }) {
           <Text style={styles.title}>Admin Portal</Text>
           <Text style={styles.subtitle}>Gestion des produits et commandes</Text>
         </View>
+
+        {/* Afficher erreur (mobile-friendly) */}
+        {error && (
+          <View style={styles.errorBox}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        )}
 
         {/* Form */}
         <View style={styles.form}>
@@ -270,5 +293,19 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "#b45309",
     fontFamily: "monospace",
+  },
+  errorBox: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: "#fee2e2",
+    borderRadius: 6,
+    marginBottom: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: "#f44336",
+  },
+  errorText: {
+    color: "#991b1b",
+    fontSize: 13,
+    fontWeight: "600",
   },
 });

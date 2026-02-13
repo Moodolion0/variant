@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import {
     ScrollView,
@@ -176,7 +176,7 @@ export default function ProductDetail({ productId, onBack }) {
               <Text style={styles.statNumber}>
                 {(product.stats?.revenue || 0).toLocaleString("fr-FR")}XOF
               </Text>
-              <MaterialIcons name="trending_up" size={16} color="#19b3e6" />
+              <MaterialCommunityIcons name="trending-up" size={16} color="#19b3e6" />
             </View>
           </View>
         </View>

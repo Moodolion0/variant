@@ -1,13 +1,13 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function BottomNav({ current, onNavigate }) {
   const items = [
-    { key: "dashboard", label: "Accueil", icon: "dashboard" },
-    { key: "orders", label: "Commandes", icon: "shopping_bag" },
-    { key: "products", label: "Produits", icon: "inventory_2" },
-    { key: "users", label: "Utilisateurs", icon: "group" },
-    { key: "settings", label: "Paramètres", icon: "settings" },
+    { key: "dashboard", label: "Accueil", icon: "view-dashboard-outline" },
+    { key: "orders", label: "Commandes", icon: "shopping-outline" },
+    { key: "products", label: "Produits", icon: "cube-outline" },
+    { key: "users", label: "Utilisateurs", icon: "account-group-outline" },
+    { key: "settings", label: "Paramètres", icon: "cog-outline" },
   ];
 
   const isActive = (key) =>
@@ -23,7 +23,7 @@ export default function BottomNav({ current, onNavigate }) {
           style={styles.btn}
           onPress={() => onNavigate(item.key)}
         >
-          <MaterialIcons
+          <MaterialCommunityIcons
             name={item.icon}
             size={24}
             color={isActive(item.key) ? "#19b3e6" : "#637f88"}
