@@ -12,12 +12,15 @@ class LivreurDocumentSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ensure users exist
-        if (\App\Models\User::count() === 0) {
-            \App\Models\User::factory(5)->create();
+        // Only create documents for users with role 'livreur'
+        $livreurs = \App\Models\User::where('role', \App\Models\User::ROLE_LIVREUR)->get();
+
+        if ($livreurs->isEmpty()) {
+            $this->command->info('No livreur users found. Skipping document creation.');
+            return;
         }
 
-        \App\Models\User::inRandomOrder()->take(5)->each(function (\App\Models\User $user) {
+        $livreurs->each(function (\App\Models\User $user) {
             \App\Models\Livreur_document::factory()->create([
                 'user_id' => $user->id,
             ]);

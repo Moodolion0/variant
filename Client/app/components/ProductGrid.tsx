@@ -6,7 +6,7 @@ interface Product {
   title: string;
   price: string;
   priceNumber: number;
-  image: string;
+  image: string | null;
 }
 
 interface ProductGridProps {

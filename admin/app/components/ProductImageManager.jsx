@@ -15,15 +15,27 @@ import { ImageUploadService } from "../services/ImageUploadService";
 
 /**
  * Gestionnaire d'images pour produits (Admin) - React Native pour Web + Mobile
+ * Support: upload avant création du produit ou après
  */
 export default function ProductImageManager({
   productId,
   token,
   onImagesUpdate,
+  // Nouvelles props pour support pré-création
+  images,
+  setImages,
+  isUploading,
+  setIsUploading,
 }) {
-  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [localImages, setLocalImages] = useState(images || []);
+
+  // Sync avec les props externes
+  useEffect(() => {
+    if (images) {
+      setLocalImages(images);
+    }
+  }, [images]);
 
   useEffect(() => {
     if (productId && token) {
@@ -93,8 +105,19 @@ export default function ProductImageManager({
   };
 
   const uploadImage = async (imageUri) => {
+    // Si pas de productId, stocker l'image localement pour affichage
+    if (!productId) {
+      const newImage = { uri: imageUri, id: Date.now() };
+      const newImages = [...localImages, newImage];
+      setLocalImages(newImages);
+      if (setImages) setImages(newImages);
+      if (onImagesUpdate) onImagesUpdate(newImages);
+      return;
+    }
+    
     try {
-      setUploading(true);
+      setUploadingInternal(true);
+      if (setIsUploading) setIsUploading(true);
 
       // Convertir URI en File pour upload
       const response = await fetch(imageUri);
@@ -110,19 +133,38 @@ export default function ProductImageManager({
         token
       );
 
-      const newImages = [...images, uploadedImage];
-      setImages(newImages);
+      const newImages = [...localImages, uploadedImage];
+      setLocalImages(newImages);
       if (onImagesUpdate) onImagesUpdate(newImages);
 
       Alert.alert("Success", "Image uploaded");
     } catch (error) {
       Alert.alert("Upload error", error.message);
     } finally {
-      setUploading(false);
+      setUploadingInternal(false);
+      if (setIsUploading) setIsUploading(false);
     }
   };
 
   const handleDelete = (imageId) => {
+    // Pas de productId - juste supprimer de la liste locale
+    if (!productId) {
+      Alert.alert("Delete", "Supprimer cette image?", [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const newImages = localImages.filter((img) => img.id !== imageId);
+            setLocalImages(newImages);
+            if (setImages) setImages(newImages);
+            if (onImagesUpdate) onImagesUpdate(newImages);
+          },
+        },
+      ]);
+      return;
+    }
+    
     Alert.alert("Delete", "Sure?", [
       { text: "Cancel", style: "cancel" },
       {
@@ -132,8 +174,8 @@ export default function ProductImageManager({
           try {
             setLoading(true);
             await ImageUploadService.deleteImage(imageId, token);
-            const newImages = images.filter((img) => img.id !== imageId);
-            setImages(newImages);
+            const newImages = localImages.filter((img) => img.id !== imageId);
+            setLocalImages(newImages);
             if (onImagesUpdate) onImagesUpdate(newImages);
           } catch (error) {
             Alert.alert("Error", error.message);
@@ -153,9 +195,71 @@ export default function ProductImageManager({
     );
   }
 
+  // Mode pré-création: afficher un message et les images sélectionnées
+  if (!productId) {
+    return (
+      <View style={styles.preCreateContainer}>
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity
+            style={[styles.btn, styles.btnGallery]}
+            onPress={pickImage}
+            disabled={isUploading}
+          >
+            <MaterialCommunityIcons name="image-search" size={18} color="#fff" />
+            <Text style={styles.btnText}>Gallery</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.btn, styles.btnCamera]}
+            onPress={takePhoto}
+            disabled={isUploading}
+          >
+            <MaterialCommunityIcons name="camera" size={18} color="#fff" />
+            <Text style={styles.btnText}>Photo</Text>
+          </TouchableOpacity>
+        </View>
+
+        {isUploading && (
+          <View style={styles.uploadingContainer}>
+            <ActivityIndicator size="small" color="#19b3e6" />
+            <Text style={styles.uploadingText}>Uploading...</Text>
+          </View>
+        )}
+
+        {/* Images sélectionnées */}
+        {localImages.length > 0 ? (
+          <View style={styles.imageGrid}>
+            {localImages.map((img, index) => (
+              <View key={img.id || index} style={styles.imageCard}>
+                <Image
+                  source={{ uri: img.uri || img.file_url || img }}
+                  style={styles.image}
+                />
+                <TouchableOpacity
+                  style={styles.deleteBtn}
+                  onPress={() => handleDelete(img.id || index)}
+                >
+                  <MaterialCommunityIcons name="delete" size={14} color="#fff" />
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <View style={styles.emptyState}>
+            <MaterialCommunityIcons name="image-off" size={40} color="#ccc" />
+            <Text style={styles.emptyText}>Ajoutez des photos</Text>
+          </View>
+        )}
+      </View>
+    );
+  }
+
+  const [uploadingInternal, setUploadingInternal] = useState(false);
+  const uploading = isUploading || uploadingInternal;
+
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>📸 Images ({images.length})</Text>
+      <Text style={styles.title}>📸 Images ({localImages.length})</Text>
 
       {/* Action Buttons */}
       <View style={styles.buttonGroup}>
@@ -192,14 +296,14 @@ export default function ProductImageManager({
       {/* Images Grid */}
       {loading ? (
         <ActivityIndicator size="large" color="#19b3e6" style={{ marginTop: 20 }} />
-      ) : images.length === 0 ? (
+      ) : localImages.length === 0 ? (
         <View style={styles.emptyState}>
           <MaterialCommunityIcons name="image-off" size={40} color="#ccc" />
           <Text style={styles.emptyText}>No images</Text>
         </View>
       ) : (
         <View style={styles.imageGrid}>
-          {images.map((img) => (
+          {localImages.map((img) => (
             <View key={img.id} style={styles.imageCard}>
               <Image
                 source={{
@@ -232,6 +336,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderWidth: 1,
     borderColor: "#e5e7eb",
+  },
+  preCreateContainer: {
+    padding: 16,
+    backgroundColor: "#f6f7f8",
+    borderRadius: 8,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderStyle: "dashed",
   },
   title: {
     fontSize: 16,

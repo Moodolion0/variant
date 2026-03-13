@@ -3,43 +3,25 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Cloudinary Configuration
+    | Cloudinary API Credentials
     |--------------------------------------------------------------------------
+    |
+    | Here you may specify your Cloudinary API credentials for image uploads.
+    | You can get these from your Cloudinary dashboard.
+    |
     */
 
-    'cloud_name' => env('CLOUDINARY_CLOUD_NAME', ''),
+    'cloud_name' => env('CLOUDINARY_CLOUD_NAME', 'demo'),
     'api_key' => env('CLOUDINARY_API_KEY', ''),
     'api_secret' => env('CLOUDINARY_API_SECRET', ''),
-    'url' => env('CLOUDINARY_URL', ''),
 
     /*
     |--------------------------------------------------------------------------
-    | Dossiers de stockage par type
+    | Upload Preset (Optional)
     |--------------------------------------------------------------------------
+    |
+    | If you're using Cloudinary's unsigned uploads, specify the preset here.
+    |
     */
-    'folders' => [
-        'products' => 'products',
-        'livreurs' => 'livreurs',
-        'temp' => 'temp',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Options de transformation par défaut
-    |--------------------------------------------------------------------------
-    */
-    'transformations' => [
-        'product_thumb' => [
-            'width' => 200,
-            'height' => 200,
-            'crop' => 'fill',
-            'quality' => 'auto',
-        ],
-        'product_detail' => [
-            'width' => 800,
-            'height' => 800,
-            'crop' => 'fill',
-            'quality' => 'auto',
-        ],
-    ],
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET', ''),
 ];

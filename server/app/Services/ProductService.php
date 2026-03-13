@@ -9,7 +9,7 @@ class ProductService
 {
     public function paginate(): LengthAwarePaginator
     {
-        return Product::paginate();
+        return Product::with('images')->paginate();
     }
 
     public function create(array $data): Product
@@ -28,3 +28,4 @@ class ProductService
         $product->delete();
     }
 }
+

@@ -19,7 +19,9 @@ export default function ProductForm({ token, onDone }) {
     stock_quantity: "",
     supplier_id: "",
   });
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [productId, setProductId] = useState(null);
   const [productCreated, setProductCreated] = useState(false);
 
@@ -78,7 +80,7 @@ export default function ProductForm({ token, onDone }) {
     }
   }
 
-  // Écran 1: Créer le produit
+  // Écran 1: Créer le produit avec images
   if (!productCreated) {
     return (
       <View style={styles.container}>
@@ -99,6 +101,19 @@ export default function ProductForm({ token, onDone }) {
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
         >
+          {/* Photos du produit - comme dans la maquette */}
+          <View style={styles.imageSection}>
+            <Text style={styles.sectionTitle}>Photos du produit</Text>
+            <ProductImageManager
+              productId={null}
+              token={token}
+              images={images}
+              setImages={setImages}
+              isUploading={uploadingImages}
+              setIsUploading={setUploadingImages}
+            />
+          </View>
+
           {/* Nom du produit */}
           <View style={styles.fieldContainer}>
             <Text style={styles.label}>Nom du produit *</Text>
@@ -172,9 +187,9 @@ export default function ProductForm({ token, onDone }) {
         {/* Footer Button */}
         <View style={styles.footerContainer}>
           <TouchableOpacity
-            style={[styles.submitBtn, loading && styles.submitBtnDisabled]}
+            style={[styles.submitBtn, (loading || uploadingImages) && styles.submitBtnDisabled]}
             onPress={handleCreateProduct}
-            disabled={loading}
+            disabled={loading || uploadingImages}
           >
             <MaterialIcons name="add" size={20} color="#fff" />
             <Text style={styles.submitText}>
@@ -243,6 +258,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 16,
     paddingBottom: 120,
+  },
+  imageSection: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#111618",
+    marginBottom: 12,
   },
   fieldContainer: {
     marginBottom: 12,

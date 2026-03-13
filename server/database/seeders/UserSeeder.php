@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create admin user
         User::factory()->create([
             'full_name' => 'Admin User',
             'email' => 'admin@example.com',
@@ -20,6 +21,13 @@ class UserSeeder extends Seeder
             'status' => User::STATUS_VALIDE,
         ]);
 
+        // Create livreur users
+        User::factory(3)->create([
+            'role' => User::ROLE_LIVREUR,
+            'status' => User::STATUS_VALIDE,
+        ]);
+
+        // Create regular users (clients)
         User::factory(5)->create();
     }
 }

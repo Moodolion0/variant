@@ -63,8 +63,16 @@ export default function Login() {
       const result = await authService.login(formData.email, formData.password);
       console.log('Connexion réussie:', result);
       
-      // Redirection directe après succès
-      router.replace('/client');
+      // Redirection selon le rôle
+      const user = result.user;
+      if (user.role === 'livreur') {
+        router.replace('/livreur');
+      } else if (user.role === 'fournisseur') {
+        router.replace('/fournisseur');
+      } else {
+        // client ou admin
+        router.replace('/client');
+      }
     } catch (error: any) {
       console.log('Erreur connexion:', error);
       console.log('Message erreur:', error.message);

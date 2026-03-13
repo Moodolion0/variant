@@ -89,7 +89,7 @@ export default function AdminApp() {
     <SafeAreaView style={styles.container}>
       {route === "dashboard" && <Header />}
       <View style={styles.content}>
-        {route === "dashboard" && <Dashboard onNavigate={setRoute} />}
+        {route === "dashboard" && <Dashboard onNavigate={setRoute} token={auth.token} />}
         {route === "products" && (
           <ProductList
             token={auth.token}
@@ -111,7 +111,7 @@ export default function AdminApp() {
           />
         )}
         {route === "create-supplier" && (
-          <SupplierForm onDone={() => setRoute("products")} />
+          <SupplierForm token={auth.token} onDone={() => setRoute("products")} />
         )}
         {route.startsWith("product-detail-") && (
           <ProductDetail

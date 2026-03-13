@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { authService } from "@/app/services/authService";
 import {
   ScrollView,
   StyleSheet,

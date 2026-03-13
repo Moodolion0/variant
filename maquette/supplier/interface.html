@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Supplier Sales Management Dashboard</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter for a clean professional look -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="typography-and-base">
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F9FAFB;
+      color: #111827;
+    }
+  </style>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#4F46E5', // Indigo theme
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex overflow-hidden">
+<!-- BEGIN: Sidebar Navigation -->
+<aside class="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0" data-purpose="main-navigation">
+<!-- Brand Logo -->
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight">SalesPro</span>
+</div>
+<!-- Nav Links -->
+<nav class="flex-1 px-4 mt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 bg-indigo-50 text-primary rounded-md font-medium" data-purpose="nav-item-active" href="#">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Dashboard
+      </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium transition-colors" href="#">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Commandes
+      </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium transition-colors" href="#">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Stock
+      </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium transition-colors" href="#">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Ventes
+      </a>
+</nav>
+<!-- User Profile Link at Bottom -->
+<div class="mt-auto p-4 border-t border-gray-200">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md transition-colors" href="#">
+<div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden shrink-0">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBMqmC_r0RtRMOJ-8v07D86Twx0XYdxJxScpEc0SyCwv78lriwUgMnRQHxEzCdc5L-K1GOPLEoRn6SqHFMF-Ubc2C4Iupgx_RnahBjHFlmQbzKiCF3lXNCk0C6G3Rxq0bjtgvoe7cyRI3TkgVw6LPSZOe_yYs4ZK8cGT9y0fzyMt65JaP9zBSdmu4-AX2OYThzdpSA1hbxXLe4S6d82cSsnCdm_s0saHIgyHWyN5UTpz9xWtrZeerA6D00esEQOJWt6-iKOA5K2bw"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-gray-900 truncate">Jean Dupont</p>
+<p class="text-xs text-gray-500 truncate">Profil</p>
+</div>
+</a>
+</div>
+</aside>
+<!-- END: Sidebar Navigation -->
+<!-- BEGIN: Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- BEGIN: Top Header -->
+<header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 sticky top-0 z-10">
+<h1 class="text-lg font-semibold text-gray-800">Tableau de bord</h1>
+<div class="flex items-center gap-4">
+<!-- Notification Bell -->
+<button class="relative p-2 text-gray-400 hover:text-gray-600 transition-colors" data-purpose="notification-trigger">
+<span class="absolute top-2 right-2.5 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<div class="h-8 w-px bg-gray-200 mx-1"></div>
+<span class="text-sm text-gray-500 font-medium">Fournisseur ID: #4492</span>
+</div>
+</header>
+<!-- END: Top Header -->
+<!-- BEGIN: Dashboard Grid -->
+<div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+<!-- BEGIN: Summary Cards -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm" data-purpose="kpi-card">
+<p class="text-sm font-medium text-gray-500 mb-1">Chiffre d'affaires total</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-gray-900">142,580.00 €</h3>
+<span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded">+12%</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm" data-purpose="kpi-card">
+<p class="text-sm font-medium text-gray-500 mb-1">Ventes du mois</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-gray-900">12,450 €</h3>
+<span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded">+5.2%</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm" data-purpose="kpi-card">
+<p class="text-sm font-medium text-gray-500 mb-1">Commandes traitées</p>
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-bold text-gray-900">854</h3>
+<span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">Ce mois</span>
+</div>
+</div>
+</section>
+<!-- END: Summary Cards -->
+<!-- BEGIN: Chart Section -->
+<section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-semibold text-gray-900">Performance Financière</h2>
+<select class="text-sm border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+<option>Derniers 7 jours</option>
+<option selected="">Derniers 30 jours</option>
+<option>Cette année</option>
+</select>
+</div>
+<!-- Simple Bar Chart Placeholder Using Tailwind -->
+<div class="h-64 w-full flex items-end justify-between gap-4 px-2" data-purpose="chart-visual">
+<div class="bg-indigo-100 w-full rounded-t-sm transition-all hover:bg-primary" style="height: 40%;"></div>
+<div class="bg-indigo-100 w-full rounded-t-sm transition-all hover:bg-primary" style="height: 60%;"></div>
+<div class="bg-indigo-100 w-full rounded-t-sm transition-all hover:bg-primary" style="height: 45%;"></div>
+<div class="bg-indigo-100 w-full rounded-t-sm transition-all hover:bg-primary" style="height: 80%;"></div>
+<div class="bg-indigo-100 w-full rounded-t-sm transition-all hover:bg-primary" style="height: 55%;"></div>
+<div class="bg-indigo-100 w-full rounded-t-sm transition-all hover:bg-primary" style="height: 90%;"></div>
+<div class="bg-primary w-full rounded-t-sm" style="height: 75%;"></div>
+</div>
+<!-- X-axis labels -->
+<div class="flex justify-between mt-4 text-xs text-gray-400 font-medium">
+<span>Lun</span>
+<span>Mar</span>
+<span>Mer</span>
+<span>Jeu</span>
+<span>Ven</span>
+<span>Sam</span>
+<span>Dim</span>
+</div>
+</section>
+<!-- END: Chart Section -->
+<!-- BEGIN: Recent Sales Table -->
+<section class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+<h2 class="text-lg font-semibold text-gray-900">Ventes Récentes</h2>
+<button class="text-sm font-medium text-primary hover:text-indigo-700">Voir tout</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="recent-sales-table">
+<thead>
+<tr class="bg-gray-50 text-gray-500 uppercase text-[11px] font-bold tracking-wider">
+<th class="px-6 py-3">ID Commande</th>
+<th class="px-6 py-3">Date</th>
+<th class="px-6 py-3">Client</th>
+<th class="px-6 py-3">Montant</th>
+<th class="px-6 py-3">Statut</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900">#ORD-7742</td>
+<td class="px-6 py-4 text-gray-600">12 Oct 2023</td>
+<td class="px-6 py-4 text-gray-600">Maison du Design</td>
+<td class="px-6 py-4 font-semibold text-gray-900">1,240.00 €</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Terminé
+                  </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900">#ORD-7741</td>
+<td class="px-6 py-4 text-gray-600">12 Oct 2023</td>
+<td class="px-6 py-4 text-gray-600">Logistique Express</td>
+<td class="px-6 py-4 font-semibold text-gray-900">450.00 €</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Terminé
+                  </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900">#ORD-7738</td>
+<td class="px-6 py-4 text-gray-600">11 Oct 2023</td>
+<td class="px-6 py-4 text-gray-600">Alice Smith</td>
+<td class="px-6 py-4 font-semibold text-gray-900">89.99 €</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Terminé
+                  </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900">#ORD-7735</td>
+<td class="px-6 py-4 text-gray-600">10 Oct 2023</td>
+<td class="px-6 py-4 text-gray-600">Tech Store SARL</td>
+<td class="px-6 py-4 font-semibold text-gray-900">2,100.00 €</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Terminé
+                  </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- END: Recent Sales Table -->
+</div>
+<!-- END: Dashboard Grid -->
+</main>
+<!-- END: Main Content Area -->
+<script data-purpose="mock-interactivity">
+    // Minimal script to simulate a notification click
+    document.querySelector('[data-purpose="notification-trigger"]').addEventListener('click', () => {
+      alert('Notifications check: 3 nouvelles alertes de stock.');
+    });
+  </script>
+</body></html>

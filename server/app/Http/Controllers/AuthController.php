@@ -51,14 +51,14 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|string|max:20',
             'password' => 'required|string|min:6',
-            'role' => 'required|in:admin,client,livreur',
+            'role' => 'required|in:admin,client,livreur,fournisseur',
         ]);
 
         $user = User::create([
             'full_name' => $data['name'],
             'email' => $data['email'],
             'phone_number' => $data['phone'] ?? null,
-            'password_hash' => $data['password'], // Sera hashé automatiquement par le mutator
+            'password' => $data['password'], // Utiliser 'password' pour déclencher le mutateur de hachage
             'role' => $data['role'],
             'status' => $data['role'] === 'livreur' ? 'en_attente' : 'valide', // Les livreurs doivent être validés
         ]);
@@ -73,6 +73,36 @@ class AuthController extends Controller
         $this->authorize('viewAny', User::class);
 
         return response()->json(User::paginate());
+    }
+
+    /**
+     * Store a new user (admin only)
+     */
+    public function storeUser(Request $request)
+    {
+        $this->authorize('create', User::class);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'nullable|string|max:20',
+            'password' => 'required|string|min:6',
+            'role' => 'required|in:admin,livreur,client,fournisseur',
+        ]);
+
+        $user = User::create([
+            'full_name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'password' => $validated['password'], // Will be hashed by mutator
+            'role' => $validated['role'],
+            'status' => User::STATUS_VALIDE,
+        ]);
+
+        return response()->json([
+            'message' => 'User created successfully',
+            'user' => $user,
+        ], 201);
     }
 
     /**

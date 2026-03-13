@@ -19,10 +19,10 @@ use App\Http\Controllers\ImageController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']); // Avec choix du rôle
 Route::post('/reset-admin', [AuthController::class, 'resetAdminUser']); // DEBUG: Create admin
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products', [ProductController::class, 'publicIndex']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
-// --- Routes Protégées (Middleware Sanctum ou JWT) ---
+// --- Routes Protégées (Middleware Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
 
     // --- PROFIL : CLIENT ---
@@ -48,28 +48,33 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --- PROFIL : FOURNISSEUR (Desktop/Vue.js) ---
     Route::prefix('supplier')->group(function () {
-        Route::get('/orders/to-prepare', [OrderController::class, 'supplierOrders']);
-        Route::post('/orders/{id}/mark-ready', [OrderController::class, 'markAsReady']); // Déclenche alerte livreur
-        Route::get('/inventory', [ProductController::class, 'supplierInventory']);
-        Route::patch('/inventory/{id}', [ProductController::class, 'updateStock']);
+        Route::get('/products', [SupplierController::class, 'myProducts']);
+        Route::post('/products', [SupplierController::class, 'createProduct']);
+        Route::put('/products/{id}', [SupplierController::class, 'updateProduct']);
+        Route::delete('/products/{id}', [SupplierController::class, 'deleteProduct']);
+    });
 
-        // Routes pour les images de produits
+    // --- ADMIN ---
+    Route::middleware('is_admin')->prefix('admin')->group(function () {
+        // Users management
+        Route::get('/users', [AuthController::class, 'allUsers']);
+        Route::post('/users', [AuthController::class, 'storeUser']);
+        Route::put('/users/{id}/status', [AuthController::class, 'updateUserStatus']);
+        
+        // Routes pour les produits admin
+        Route::post('/products', [ProductController::class, 'store']);
+        Route::put('/products/{product}', [ProductController::class, 'update']);
+        Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+
+        // Routes pour les images de produits admin
         Route::post('/products/{product}/images', [ImageController::class, 'uploadProductImage']);
         Route::get('/products/{product}/images', [ImageController::class, 'getProductImages']);
         Route::delete('/images/{image}', [ImageController::class, 'deleteProductImage']);
-    });
 
-    // --- PROFIL : ADMIN ---
-    Route::prefix('admin')->middleware('is_admin')->group(function () {
-        // Gestion Utilisateurs
-        Route::get('/users', [AuthController::class, 'allUsers']);
-        Route::get('/users/livreurs/pending', [LivreurController::class, 'pendingLivreurs']);
-        Route::post('/users/livreurs/{id}/validate', [LivreurController::class, 'validateLivreur']);
-
-        // Gestion Catalogue
-        Route::apiResource('products', ProductController::class)->except(['index', 'show']);
-        Route::apiResource('suppliers', SupplierController::class);
-        Route::apiResource('locations', LocationController::class); // Lieux de livraison prédéfinis
+        // Routes pour les images de produits (admin peut gérer toutes les images)
+        Route::post('/products/{product}/images', [ImageController::class, 'uploadProductImageAdmin']);
+        Route::get('/products/{product}/images', [ImageController::class, 'getProductImagesAdmin']);
+        Route::delete('/images/{image}', [ImageController::class, 'deleteProductImageAdmin']);
 
         // Stats & Global
         Route::get('/dashboard-stats', [OrderController::class, 'adminStats']);

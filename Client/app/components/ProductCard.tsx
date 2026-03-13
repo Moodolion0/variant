@@ -1,14 +1,14 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import useCart from "../hooks/useCart";
+import useCart, { CartItem } from "../hooks/useCart";
 
 interface Product {
   id: string;
   title: string;
   price: string;
   priceNumber: number;
-  image: string;
+  image: string | null;
 }
 
 interface ProductCardProps {
@@ -24,16 +24,15 @@ export default function ProductCard({
   const { addItem } = useCart();
 
   const handleAddToCart = () => {
-    addItem(
-      {
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        priceNumber: product.priceNumber,
-        image: product.image,
-      },
-      1,
-    );
+    const item: CartItem = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      priceNumber: product.priceNumber,
+      image: product.image,
+      quantity: 1,
+    };
+    addItem(item, 1);
     if (onAddToCart) onAddToCart();
   };
 
@@ -59,7 +58,7 @@ export default function ProductCard({
       </TouchableOpacity>
 
       <Image
-        source={{ uri: product.image }}
+        source={{ uri: product.image || undefined }}
         style={styles.image}
         resizeMode="cover"
       />

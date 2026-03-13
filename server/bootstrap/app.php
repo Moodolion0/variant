@@ -12,14 +12,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Appliquer CORS à toutes les routes API
+        $middleware->api(prepend: [
+            \App\Http\Middleware\CorsMiddleware::class,
+        ]);
+
         // Désactiver CSRF pour les routes API
         $middleware->validateCsrfTokens(except: [
             'api/*',
             'sanctum/csrf-cookie',
         ]);
 
+        // Ajouter le middleware CORS
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'is_admin' => \App\Http\Middleware\IsAdmin::class,
+            'cors' => \App\Http\Middleware\CorsMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

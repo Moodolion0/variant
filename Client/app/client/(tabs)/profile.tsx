@@ -18,7 +18,7 @@ const colors = {
 };
 
 export default function ProfileScreen() {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const handleLogout = async () => {
     Alert.alert(
@@ -55,15 +55,15 @@ export default function ProfileScreen() {
         <View style={styles.profileTop}>
           <View style={styles.avatarWrapper}>
             <Image
-              source={{ uri: 'https://via.placeholder.com/150' }}
+              source={{ uri: user?.photo_url || 'https://via.placeholder.com/150' }}
               style={styles.avatar}
             />
             <View style={styles.cameraBadge}>
               <MaterialIcons name="photo-camera" size={16} color="#fff" />
             </View>
           </View>
-          <Text style={styles.name}>Jean Dupont</Text>
-          <Text style={styles.email}>jean.dupont@email.com</Text>
+          <Text style={styles.name}>{user?.full_name || user?.name || 'Utilisateur'}</Text>
+          <Text style={styles.email}>{user?.email || 'email@exemple.com'}</Text>
         </View>
 
         <View style={styles.card}>

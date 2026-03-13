@@ -6,7 +6,7 @@ export interface CartItem {
   title: string;
   price: string;
   priceNumber: number;
-  image: string;
+  image: string | null | undefined;
   quantity: number;
 }
 
@@ -41,7 +41,7 @@ export default function useCart() {
     }
   };
 
-  const addItem = (product: { id: string; title: string; price: string; priceNumber: number; image: string }, qty: number) => {
+  const addItem = (product: { id: string; title: string; price: string; priceNumber: number; image: string | null | undefined }, qty: number) => {
     const existing = cart.find(i => i.id === product.id);
     let updated: CartItem[];
     if (existing) {

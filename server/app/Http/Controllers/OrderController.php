@@ -14,20 +14,15 @@ class OrderController extends Controller
     public function __construct(OrderService $service)
     {
         $this->service = $service;
-        $this->authorizeResource(Order::class, 'order');
     }
 
     public function index()
     {
-        $this->authorize('viewAny', Order::class);
-
         return response()->json($this->service->paginate());
     }
 
     public function store(StoreOrderRequest $request)
     {
-        $this->authorize('create', Order::class);
-
         $data = $request->validated();
         $data['client_id'] = auth()->id();
 
@@ -38,15 +33,11 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $this->authorize('view', $order);
-
         return response()->json($order);
     }
 
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $this->authorize('update', $order);
-
         $order = $this->service->update($order, $request->validated());
 
         return response()->json($order);
@@ -54,8 +45,6 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
-        $this->authorize('delete', $order);
-
         $this->service->delete($order);
 
         return response()->json(null, 204);
@@ -136,17 +125,35 @@ class OrderController extends Controller
 
     public function adminStats()
     {
-        $total = Order::count();
-        $pending = Order::where('status', Order::STATUS_EN_ATTENTE)->count();
+        $totalOrders = Order::count();
+        $pendingOrders = Order::where('status', Order::STATUS_EN_ATTENTE)->count();
         $inDelivery = Order::where('status', Order::STATUS_EN_COURS_LIVRAISON)->count();
+        $completedOrders = Order::where('status', Order::STATUS_LIVRE)->count();
 
-        return response()->json(["total" => $total, "pending" => $pending, "in_delivery" => $inDelivery]);
+        // Calculate total sales
+        $totalSales = Order::where('status', Order::STATUS_LIVRE)->sum('total_price');
+
+        // Get user counts
+        $totalClients = \App\Models\User::where('role', \App\Models\User::ROLE_CLIENT)->count();
+        $totalLivreurs = \App\Models\User::where('role', \App\Models\User::ROLE_LIVREUR)->count();
+
+        // Get product count
+        $totalProducts = \App\Models\Product::count();
+
+        return response()->json([
+            'total_orders' => $totalOrders,
+            'pending_orders' => $pendingOrders,
+            'in_delivery' => $inDelivery,
+            'completed_orders' => $completedOrders,
+            'total_sales' => $totalSales,
+            'total_clients' => $totalClients,
+            'total_livreurs' => $totalLivreurs,
+            'total_products' => $totalProducts,
+        ]);
     }
 
     public function allOrders()
     {
-        $this->authorize('viewAny', Order::class);
-
         return response()->json(Order::with(['client','livreur','items'])->paginate());
     }
 }

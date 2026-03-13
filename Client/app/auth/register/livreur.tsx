@@ -47,7 +47,7 @@ export default function RegisterLivreur() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -65,7 +65,7 @@ export default function RegisterLivreur() {
       return;
     }
 
-    setIsRegistering(true);
+    setIsLoading(true);
     try {
       const result = await authService.register({
         name: formData.name,
@@ -85,7 +85,7 @@ export default function RegisterLivreur() {
     } catch (error: any) {
       Alert.alert('Erreur', error.message || 'Impossible de créer le compte');
     } finally {
-      setIsRegistering(false);
+      setIsLoading(false);
     }
   };
 
@@ -113,22 +113,22 @@ export default function RegisterLivreur() {
             label="Nom complet"
             placeholder="Ex: Jean Dupont"
             value={formData.name}
-            onChangeText={(value) => updateField('name', value)}
+            onChangeText={(value) => handleInputChange('name', value)}
           />
 
           <InputField
             label="Email professionnel"
             placeholder="jean.dupont@exemple.com"
             value={formData.email}
-            onChangeText={(value) => updateField('email', value)}
+            onChangeText={(value) => handleInputChange('email', value)}
             keyboardType="email-address"
           />
 
           <InputField
             label="Numéro de téléphone"
-            placeholder="+33 6 00 00 00 00"
+            placeholder="+229 00 00 00 00 00 "
             value={formData.phone}
-            onChangeText={(value) => updateField('phone', value)}
+            onChangeText={(value) => handleInputChange('phone', value)}
             keyboardType="phone-pad"
           />
 
@@ -136,7 +136,7 @@ export default function RegisterLivreur() {
             label="Mot de passe"
             placeholder="••••••••"
             value={formData.password}
-            onChangeText={(value) => updateField('password', value)}
+            onChangeText={(value) => handleInputChange('password', value)}
             secureTextEntry={!showPassword}
             onIconPress={() => setShowPassword(!showPassword)}
             icon="👁️"
@@ -186,7 +186,7 @@ export default function RegisterLivreur() {
         <View style={styles.submitSection}>
           <TouchableOpacity 
             style={[styles.submitButton, isLoading && styles.submitButtonDisabled]}
-            onPress={handleRegister}
+            onPress={handleSubmit}
             disabled={isLoading}
             activeOpacity={0.9}
           >

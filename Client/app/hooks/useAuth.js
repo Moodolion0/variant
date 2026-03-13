@@ -62,9 +62,8 @@ export function AuthProvider({ children }) {
 
       setUser(response.user);
       setIsAuthenticated(true);
-      await authService.storeUserData(response.token, response.user);
-      alert("lol");
-      redirectBasedOnRole(response.user.role);
+      await authService.storeUserData({ token: response.token, user: response.user });
+      router.replace("/client");
     } catch (error) {
       console.error("Login hook error:", error);
       throw error;
@@ -131,7 +130,7 @@ export function AuthProvider({ children }) {
   const redirectBasedOnRole = (role) => {
     switch (role) {
       case "client":
-        router.replace("/cart"); // Page d'accueil client
+        router.replace("/client"); // Page d'accueil client
         break;
       case "livreur":
         router.replace("/livreur"); // Page livreur

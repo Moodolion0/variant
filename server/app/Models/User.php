@@ -16,6 +16,7 @@ class User extends Authenticatable
     public const ROLE_ADMIN = 'admin';
     public const ROLE_CLIENT = 'client';
     public const ROLE_LIVREUR = 'livreur';
+    public const ROLE_FOURNISSEUR = 'fournisseur';
 
     public const STATUS_EN_ATTENTE = 'en_attente';
     public const STATUS_VALIDE = 'valide';

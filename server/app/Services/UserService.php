@@ -8,16 +8,11 @@ class UserService
 {
     public function create(array $data): User
     {
-        // password mutator will hash
-        if (isset($data['password'])) {
-            $data['password'] = $data['password'];
-        }
-
         return User::create([
             'full_name' => $data['full_name'] ?? null,
             'email' => $data['email'] ?? null,
             'phone_number' => $data['phone_number'] ?? null,
-            'password_hash' => $data['password'] ?? ($data['password_hash'] ?? bcrypt('password')),
+            'password' => $data['password'] ?? bcrypt('password'), // Utiliser 'password' pour déclencher le mutateur
             'role' => $data['role'] ?? User::ROLE_CLIENT,
             'status' => $data['status'] ?? User::STATUS_EN_ATTENTE,
         ]);

@@ -14,20 +14,26 @@ class ProductController extends Controller
     public function __construct(ProductService $service)
     {
         $this->service = $service;
-        $this->authorizeResource(Product::class, 'product');
     }
 
     public function index()
     {
-        $this->authorize('viewAny', Product::class);
         $products = $this->service->paginate();
 
         return response()->json($products);
     }
 
+    /**
+     * Public endpoint - doesn't require authentication
+     */
+    public function publicIndex()
+    {
+        $products = $this->service->paginate();
+        return response()->json($products);
+    }
+
     public function store(StoreProductRequest $request)
     {
-        $this->authorize('create', Product::class);
         $product = $this->service->create($request->validated());
 
         return response()->json($product, 201);
@@ -35,13 +41,11 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $this->authorize('view', $product);
         return response()->json($product);
     }
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $this->authorize('update', $product);
         $product = $this->service->update($product, $request->validated());
 
         return response()->json($product);
@@ -49,7 +53,6 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $this->authorize('delete', $product);
         $this->service->delete($product);
 
         return response()->json(null, 204);

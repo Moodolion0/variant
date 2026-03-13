@@ -39,7 +39,7 @@ export const ImageUploadService = {
 
       // Envoyer la requête
       const response = await fetch(
-        `${API_URL}/supplier/products/${productId}/images`,
+        `${API_URL}/admin/products/${productId}/images`,
         {
           method: "POST",
           headers: {
@@ -69,7 +69,7 @@ export const ImageUploadService = {
   async getProductImages(productId, token) {
     try {
       const response = await fetch(
-        `${API_URL}/supplier/products/${productId}/images`,
+        `${API_URL}/admin/products/${productId}/images`,
         {
           method: "GET",
           headers: {
@@ -99,7 +99,7 @@ export const ImageUploadService = {
    */
   async deleteImage(imageId, token) {
     try {
-      const response = await fetch(`${API_URL}/supplier/images/${imageId}`, {
+      const response = await fetch(`${API_URL}/admin/images/${imageId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
