@@ -21,8 +21,8 @@ class OrderItemFactory extends Factory
         return [
             'order_id' => \App\Models\Order::factory(),
             'product_id' => $product->id,
-            'quantity' => $this->faker->numberBetween(1,5),
-            'price_at_purchase' => $product->price,
+            'quantity' => $this->faker->numberBetween(1, 5),
+            'price_at_purchase' => (float) $product->getFinalPrice(),
         ];
     }
 }

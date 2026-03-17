@@ -28,4 +28,3 @@ class ProductService
         $product->delete();
     }
 }
-

@@ -22,6 +22,11 @@ Route::post('/reset-admin', [AuthController::class, 'resetAdminUser']); // DEBUG
 Route::get('/products', [ProductController::class, 'publicIndex']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
+// --- DEBUG TEST ROUTE ---
+Route::get('/test', function () {
+    return response()->json(['message' => 'Server is working', 'time' => now()]);
+});
+
 // --- Routes Protégées (Middleware Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -52,6 +57,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/products', [SupplierController::class, 'createProduct']);
         Route::put('/products/{id}', [SupplierController::class, 'updateProduct']);
         Route::delete('/products/{id}', [SupplierController::class, 'deleteProduct']);
+    });
+
+    // --- DEBUG: Test auth is working ---
+    Route::get('/auth-test', function (Illuminate\Http\Request $request) {
+        $user = $request->user();
+        return response()->json([
+            'authenticated' => !!$user,
+            'user' => $user ? ['id' => $user->id, 'email' => $user->email, 'role' => $user->role] : null,
+            'guard' => 'sanctum'
+        ]);
     });
 
     // --- ADMIN ---

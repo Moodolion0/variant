@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
-import Orders from "./pages/Orders";
-import Stock from "./pages/Stock";
-import Sales from "./pages/Sales";
 import Login from "./pages/Login";
+import Orders from "./pages/Orders";
+import Sales from "./pages/Sales";
+import Stock from "./pages/Stock";
 
 interface User {
   id: number;
@@ -35,6 +35,9 @@ function AppContent() {
   const handleLogin = (newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
+    // Explicitly store in localStorage to ensure persistence
+    localStorage.setItem("supplier_token", newToken);
+    localStorage.setItem("supplier_user", JSON.stringify(newUser));
   };
 
   const handleLogout = async () => {

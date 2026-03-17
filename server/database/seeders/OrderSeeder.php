@@ -67,7 +67,7 @@ class OrderSeeder extends Seeder
         foreach ($products as $index => $product) {
             $isLast = $index === $products->count() - 1;
             $quantity = rand(1, 3);
-            $price = $product->price;
+            $price = $product->getFinalPrice();
             
             if ($isLast) {
                 $price = $remaining;

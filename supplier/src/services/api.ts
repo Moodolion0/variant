@@ -72,6 +72,7 @@ export const supplierService = {
   },
 
   async createProduct(token: string, data: any) {
+    console.log("Creating product with token:", token);
     const response = await fetch(`${API_URL}/supplier/products`, {
       method: "POST",
       headers: {
@@ -83,7 +84,9 @@ export const supplierService = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create product");
+      const errorData = await response.json();
+      console.error("Create product error:", errorData);
+      throw new Error(errorData.message || "Failed to create product");
     }
 
     return response.json();

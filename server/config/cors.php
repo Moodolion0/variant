@@ -19,6 +19,7 @@ return [
         'http://localhost:19001',
         'http://192.168.*.*:8081',
         'http://192.168.*.*:8080',
+        'http://localhost:5173', // Ajout pour supplier
     ],
 
     'allowed_origins_patterns' => [],

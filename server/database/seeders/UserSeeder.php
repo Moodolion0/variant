@@ -21,6 +21,15 @@ class UserSeeder extends Seeder
             'status' => User::STATUS_VALIDE,
         ]);
 
+        // Create supplier user
+        User::factory()->create([
+            'full_name' => 'Supplier User',
+            'email' => 'supplier@example.com',
+            'password' => 'password',
+            'role' => User::ROLE_FOURNISSEUR,
+            'status' => User::STATUS_VALIDE,
+        ]);
+
         // Create livreur users
         User::factory(3)->create([
             'role' => User::ROLE_LIVREUR,

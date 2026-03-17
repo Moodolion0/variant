@@ -6,11 +6,11 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * DEPRECATED - No longer needed with simple products table
+     * DEPRECATED - Properties stored as JSON in products table instead
      */
     public function up(): void
     {
-        // This column is no longer needed
+        // No longer needed
     }
 
     /**

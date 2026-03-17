@@ -1,27 +1,16 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     /**
      * Run the migrations.
-     * Table pour les produits des fournisseurs
+     * DEPRECATED - Products are now handled in a single products table
      */
     public function up(): void
     {
-        Schema::create('supplier_products', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->decimal('price', 10, 2)->default(0.00); // Prix du fournisseur
-            $table->integer('stock_quantity')->default(0);
-            $table->text('keywords')->nullable();
-            $table->timestamps();
-        });
+        // This table is no longer needed
     }
 
     /**
@@ -29,6 +18,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('supplier_products');
+        // Nothing to reverse
     }
 };

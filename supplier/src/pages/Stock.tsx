@@ -3,17 +3,28 @@ import { supplierService } from "../services/api";
 
 interface Product {
   id: number;
-  name: string;
-  description: string;
-  price: number;
+  name_supplier: string;
+  description_supplier: string;
+  price_supplier: number;
   stock_quantity: number;
-  keywords: string;
+  properties?: Record<string, Record<string, number>> | null;
   images?: Array<{ url: string }>;
 }
 
 interface StockProps {
   token: string | null;
 }
+
+interface PropertyConfig {
+  name: string;
+  values: string[];
+}
+
+const AVAILABLE_PROPERTIES: PropertyConfig[] = [
+  { name: "size", values: ["XS", "S", "M", "L", "XL", "XXL"] },
+  { name: "color", values: ["Red", "Blue", "Green", "Black", "White", "Yellow"] },
+  { name: "pointure", values: ["35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"] },
+];
 
 export default function Stock({ token }: StockProps) {
   const [products, setProducts] = useState<Product[]>([]);
@@ -22,12 +33,13 @@ export default function Stock({ token }: StockProps) {
   const [editStock, setEditStock] = useState<number>(0);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProduct, setNewProduct] = useState({
-    name: "",
-    description: "",
-    price: 0,
+    name_supplier: "",
+    description_supplier: "",
+    price_supplier: 0,
     stock_quantity: 0,
-    keywords: "",
   });
+  const [selectedProperties, setSelectedProperties] = useState<string[]>([]);
+  const [propertyValues, setPropertyValues] = useState<Record<string, Record<string, number>>>({});
 
   useEffect(() => {
     if (!token) {
@@ -65,19 +77,59 @@ export default function Stock({ token }: StockProps) {
   };
 
   const handleCreateProduct = async () => {
-    if (!token) return;
+    if (!token) {
+      alert("Token manquant. Veuillez vous reconnecter.");
+      return;
+    }
+
+    console.log("Creating product with token:", token);
+
+    // Validation
+    if (!newProduct.name_supplier || !newProduct.price_supplier || !newProduct.stock_quantity) {
+      alert("Veuillez remplir tous les champs obligatoires");
+      return;
+    }
+
+    // If properties are selected, validate stock distribution
+    let properties = null;
+    if (selectedProperties.length > 0) {
+      properties = {};
+      let totalDistributed = 0;
+
+      for (const prop of selectedProperties) {
+        const values = propertyValues[prop] || {};
+        const propTotal = Object.values(values).reduce((a, b) => a + b, 0);
+        
+        if (propTotal === 0) {
+          alert(`Veuillez définir au moins une quantité pour ${prop}`);
+          return;
+        }
+        
+        totalDistributed = propTotal;
+        properties[prop] = values;
+      }
+
+      if (totalDistributed !== newProduct.stock_quantity) {
+        alert(`La somme des quantités (${totalDistributed}) doit égaler le stock total (${newProduct.stock_quantity})`);
+        return;
+      }
+    }
 
     try {
-      const created = await supplierService.createProduct(token, newProduct);
+      const created = await supplierService.createProduct(token, {
+        ...newProduct,
+        properties,
+      });
       setProducts([...products, created]);
       setShowAddForm(false);
       setNewProduct({
-        name: "",
-        description: "",
-        price: 0,
+        name_supplier: "",
+        description_supplier: "",
+        price_supplier: 0,
         stock_quantity: 0,
-        keywords: "",
       });
+      setSelectedProperties([]);
+      setPropertyValues({});
     } catch (error) {
       console.error("Error creating product:", error);
       alert("Erreur lors de la création du produit");
@@ -102,6 +154,38 @@ export default function Stock({ token }: StockProps) {
       style: "currency",
       currency: "XOF",
     }).format(price);
+  };
+
+  const toggleProperty = (propName: string) => {
+    if (selectedProperties.includes(propName)) {
+      setSelectedProperties(selectedProperties.filter(p => p !== propName));
+      const newValues = { ...propertyValues };
+      delete newValues[propName];
+      setPropertyValues(newValues);
+    } else {
+      setSelectedProperties([...selectedProperties, propName]);
+      const config = AVAILABLE_PROPERTIES.find(p => p.name === propName);
+      if (config) {
+        setPropertyValues({
+          ...propertyValues,
+          [propName]: config.values.reduce((acc, val) => ({ ...acc, [val]: 0 }), {}),
+        });
+      }
+    }
+  };
+
+  const updatePropertyValue = (propName: string, value: string, quantity: number) => {
+    setPropertyValues({
+      ...propertyValues,
+      [propName]: {
+        ...propertyValues[propName],
+        [value]: quantity,
+      },
+    });
+  };
+
+  const getTotalPropertyQuantity = (propName: string) => {
+    return Object.values(propertyValues[propName] || {}).reduce((a, b) => a + b, 0);
   };
 
   const getStockBadge = (quantity: number) => {
@@ -155,12 +239,12 @@ export default function Stock({ token }: StockProps) {
                     <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
                         <div>
-                          <p className="font-medium text-gray-900">{product.name}</p>
-                          <p className="text-gray-500 text-xs">{product.keywords}</p>
+                          <p className="font-medium text-gray-900">{product.name_supplier}</p>
+                          <p className="text-gray-500 text-xs">{product.description_supplier}</p>
                         </div>
                       </td>
                       <td className="px-6 py-4 font-semibold text-gray-900">
-                        {formatPrice(product.price)}
+                        {formatPrice(product.price_supplier)}
                       </td>
                       <td className="px-6 py-4">
                         {editingId === product.id ? (
@@ -231,11 +315,15 @@ export default function Stock({ token }: StockProps) {
       {/* Add Product Modal */}
       {showAddForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[95vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
               <h2 className="text-lg font-semibold text-gray-900">Ajouter un produit</h2>
               <button
-                onClick={() => setShowAddForm(false)}
+                onClick={() => {
+                  setShowAddForm(false);
+                  setSelectedProperties([]);
+                  setPropertyValues({});
+                }}
                 className="text-gray-400 hover:text-gray-600"
               >
                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,37 +332,39 @@ export default function Stock({ token }: StockProps) {
               </button>
             </div>
             <div className="px-6 py-4 space-y-4">
+              {/* Informations de base */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nom du produit</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nom du produit *</label>
                 <input
                   type="text"
-                  value={newProduct.name}
-                  onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                  value={newProduct.name_supplier}
+                  onChange={(e) => setNewProduct({ ...newProduct, name_supplier: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                 <textarea
-                  value={newProduct.description}
-                  onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                  value={newProduct.description_supplier}
+                  onChange={(e) => setNewProduct({ ...newProduct, description_supplier: e.target.value })}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Prix (XOF)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Prix (XOF) *</label>
                   <input
                     type="number"
                     min="0"
-                    value={newProduct.price}
-                    onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) || 0 })}
+                    step="0.01"
+                    value={newProduct.price_supplier}
+                    onChange={(e) => setNewProduct({ ...newProduct, price_supplier: parseFloat(e.target.value) || 0 })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Quantité en stock</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Stock total *</label>
                   <input
                     type="number"
                     min="0"
@@ -284,16 +374,62 @@ export default function Stock({ token }: StockProps) {
                   />
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Catégories (séparées par virgule)</label>
-                <input
-                  type="text"
-                  value={newProduct.keywords}
-                  onChange={(e) => setNewProduct({ ...newProduct, keywords: e.target.value })}
-                  placeholder="électronique, smartphone, android"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
+
+              {/* Propriétés */}
+              {newProduct.stock_quantity > 0 && (
+                <div className="border-t pt-4">
+                  <p className="text-sm font-medium text-gray-700 mb-3">Propriétés optionnelles</p>
+                  <div className="space-y-3">
+                    {AVAILABLE_PROPERTIES.map((prop) => (
+                      <label key={prop.name} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={selectedProperties.includes(prop.name)}
+                          onChange={() => toggleProperty(prop.name)}
+                          className="w-4 h-4 rounded border-gray-300 text-indigo-600"
+                        />
+                        <span className="text-sm text-gray-700 capitalize">{prop.name}</span>
+                      </label>
+                    ))}
+                  </div>
+
+                  {/* Affichage des valeurs de propriétés */}
+                  {selectedProperties.length > 0 && (
+                    <div className="mt-4 space-y-3 border-t pt-4">
+                      {selectedProperties.map((propName) => {
+                        const config = AVAILABLE_PROPERTIES.find(p => p.name === propName);
+                        return (
+                          <div key={propName}>
+                            <div className="flex items-center justify-between mb-2">
+                              <label className="text-sm font-medium text-gray-700 capitalize">{propName}</label>
+                              <span className="text-xs text-gray-500">
+                                {getTotalPropertyQuantity(propName)} / {newProduct.stock_quantity}
+                              </span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                              {config?.values.map((value) => (
+                                <div key={`${propName}-${value}`} className="flex items-center gap-1">
+                                  <label className="text-xs text-gray-600 capitalize w-16">{value}:</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    value={propertyValues[propName]?.[value] || 0}
+                                    onChange={(e) =>
+                                      updatePropertyValue(propName, value, parseInt(e.target.value) || 0)
+                                    }
+                                    className="w-16 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <button
                 onClick={handleCreateProduct}
                 className="w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"

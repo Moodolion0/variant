@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone_number')->nullable()->unique();
             $table->string('password_hash');
-            $table->enum('role', ['admin','client','livreur'])->default('client');
+            $table->enum('role', ['admin','client','livreur','fournisseur'])->default('client');
             $table->enum('status', ['en_attente','valide','bloque'])->default('en_attente');
             $table->timestamps();
         });

@@ -56,12 +56,12 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $product) {
             Product::create([
-                'name' => $product['name'],
-                'description' => $product['description'],
-                'price' => $product['price'],
-                'keywords' => $product['keywords'],
+                'name_supplier' => $product['name'],
+                'description_supplier' => $product['description'],
+                'price_supplier' => $product['price'],
                 'stock_quantity' => $product['stock'],
                 'supplier_id' => $suppliers->random()->id,
+                'visible_in_catalog' => false, // Products start invisible
             ]);
         }
 

@@ -18,11 +18,16 @@ class ProductFactory extends Factory
     {
         return [
             'supplier_id' => \App\Models\Supplier::factory(),
-            'name' => $this->faker->words(3, true),
-            'description' => $this->faker->paragraph(),
-            'price' => $this->faker->randomFloat(2, 1, 500),
+            'name_supplier' => $this->faker->words(3, true),
+            'description_supplier' => $this->faker->paragraph(),
+            'price_supplier' => $this->faker->randomFloat(2, 1, 500),
             'stock_quantity' => $this->faker->numberBetween(0, 200),
-            'keywords' => implode(',', $this->faker->words(3)),
+            'name_by_admin' => null,
+            'description_by_admin' => null,
+            'category' => null,
+            'interest' => 0.00,
+            'properties' => null,
+            'visible_in_catalog' => false,
         ];
     }
 }
