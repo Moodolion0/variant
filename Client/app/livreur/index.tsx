@@ -53,13 +53,26 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
-// Order card component
-const OrderCard = ({ order, onAccept }: { order: any; onAccept: (id: string) => void }) => {
-  const router = useRouter();
+const formatPrice = (price: any) => {
+  const num = typeof price === "number" ? price : parseFloat(price) || 0;
+  return `${num.toFixed(2)} XOF`;
+};
 
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} XOF`;
-  };
+// Order card component
+const OrderCard = ({
+  order,
+  isAccepted,
+  onAccept,
+  onDeclareFinished,
+  onCancel,
+}: {
+  order: any;
+  isAccepted?: boolean;
+  onAccept?: (id: string) => void;
+  onDeclareFinished?: (id: string) => void;
+  onCancel?: (id: string) => void;
+}) => {
+  const router = useRouter();
 
   return (
     <TouchableOpacity
@@ -82,14 +95,14 @@ const OrderCard = ({ order, onAccept }: { order: any; onAccept: (id: string) => 
       </View>
 
       <View style={styles.orderDetails}>
-        <View style={styles.detailRow}>
-          <MaterialCommunityIcons name="map-marker" size={16} color={COLORS.textSecondary} />
-          <Text style={styles.detailText}>
-            {order.delivery_lat && order.delivery_long
-              ? `Lat: ${order.delivery_lat.toFixed(4)}, Lng: ${order.delivery_long.toFixed(4)}`
-              : "Adresse de livraison"}
-          </Text>
-        </View>
+        {order.client && (
+          <View style={styles.detailRow}>
+            <MaterialCommunityIcons name="account" size={16} color={COLORS.textSecondary} />
+            <Text style={styles.detailText}>
+              {order.client.full_name || order.client.email || "Client"}
+            </Text>
+          </View>
+        )}
         <View style={styles.detailRow}>
           <MaterialCommunityIcons name="currency-usd" size={16} color={COLORS.textSecondary} />
           <Text style={styles.detailText}>Total: {formatPrice(order.total_price)}</Text>
@@ -98,13 +111,14 @@ const OrderCard = ({ order, onAccept }: { order: any; onAccept: (id: string) => 
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="truck" size={16} color={COLORS.success} />
             <Text style={[styles.detailText, { color: COLORS.success }]}>
-              Frais de livraison: {formatPrice(order.delivery_fee)}
+              Livraison: {formatPrice(order.delivery_fee)}
             </Text>
           </View>
         )}
       </View>
 
-      {order.status === "paye" && (
+      {/* Bouton Accepter (seulement commandes libres, status=paye, pas de livreur) */}
+      {order.status === "paye" && !order.livreur_id && onAccept && (
         <TouchableOpacity
           style={styles.acceptButton}
           onPress={(e) => {
@@ -116,6 +130,32 @@ const OrderCard = ({ order, onAccept }: { order: any; onAccept: (id: string) => 
           <Text style={styles.acceptButtonText}>Accepter</Text>
         </TouchableOpacity>
       )}
+
+      {/* Boutons Terminer / Annuler (commandes en cours pour ce livreur) */}
+      {order.status === "en_cours_livraison" && isAccepted && (
+        <View style={styles.actionButtons}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.cancelButton]}
+            onPress={(e) => {
+              e.stopPropagation();
+              onCancel?.(order.id);
+            }}
+          >
+            <MaterialCommunityIcons name="close-circle" size={20} color={COLORS.white} />
+            <Text style={styles.actionButtonText}>Annuler</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.finishButton]}
+            onPress={(e) => {
+              e.stopPropagation();
+              onDeclareFinished?.(order.id);
+            }}
+          >
+            <MaterialCommunityIcons name="check-circle" size={20} color={COLORS.white} />
+            <Text style={styles.actionButtonText}>Terminer</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -123,17 +163,23 @@ const OrderCard = ({ order, onAccept }: { order: any; onAccept: (id: string) => 
 export default function LivreurHomeScreen() {
   const { user } = useAuth();
   const router = useRouter();
-  const [orders, setOrders] = useState<any[]>([]);
+  const [availableOrders, setAvailableOrders] = useState<any[]>([]);
+  const [myOrders, setMyOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [activeTab, setActiveTab] = useState<"available" | "mine">("mine");
 
   const fetchOrders = useCallback(async () => {
     try {
-      const data = await livreurService.getAvailableOrders();
-      setOrders(data);
+      const [available, mine] = await Promise.all([
+        livreurService.getAvailableOrders(),
+        livreurService.getMyOrders(),
+      ]);
+      setAvailableOrders(available || []);
+      setMyOrders(mine || []);
     } catch (error) {
       console.error("Error fetching orders:", error);
-      Alert.alert("Erreur", "Impossible de charger les commandes disponibles");
+      Alert.alert("Erreur", "Impossible de charger les commandes");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -171,15 +217,72 @@ export default function LivreurHomeScreen() {
     );
   };
 
+  const handleDeclareFinished = async (orderId: string) => {
+    Alert.alert(
+      "Confirmer la livraison",
+      "Avez-vous livré cette commande ?",
+      [
+        { text: "Non", style: "cancel" },
+        {
+          text: "Oui, livrer",
+          onPress: async () => {
+            try {
+              await livreurService.declareFinished(orderId);
+              Alert.alert("Succès", "Livraison terminée !");
+              fetchOrders();
+            } catch (error: any) {
+              Alert.alert("Erreur", error.message || "Impossible de terminer");
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleCancel = async (orderId: string) => {
+    Alert.alert(
+      "Annuler la livraison",
+      "Êtes-vous sûr ? Une pénalité pourrait être appliquée.",
+      [
+        { text: "Non", style: "cancel" },
+        {
+          text: "Oui, annuler",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await livreurService.cancelOrder(orderId);
+              Alert.alert("Succès", "Livraison annulée");
+              fetchOrders();
+            } catch (error: any) {
+              Alert.alert("Erreur", error.message || "Impossible d'annuler");
+            }
+          },
+        },
+      ]
+    );
+  };
+
   const renderEmptyList = () => (
     <View style={styles.emptyContainer}>
-      <MaterialCommunityIcons name="package-variant" size={64} color={COLORS.textSecondary} />
-      <Text style={styles.emptyTitle}>Aucune commande disponible</Text>
+      <MaterialCommunityIcons
+        name={activeTab === "available" ? "package-variant" : "truck-delivery"}
+        size={64}
+        color={COLORS.textSecondary}
+      />
+      <Text style={styles.emptyTitle}>
+        {activeTab === "available"
+          ? "Aucune commande disponible"
+          : "Aucune commande en cours"}
+      </Text>
       <Text style={styles.emptySubtitle}>
-        Revenez plus tard pour voir les nouvelles commandes
+        {activeTab === "available"
+          ? "Revenez plus tard pour voir les nouvelles commandes"
+          : "Acceptez des commandes pour les voir ici"}
       </Text>
     </View>
   );
+
+  const currentOrders = activeTab === "available" ? availableOrders : myOrders;
 
   if (loading) {
     return (
@@ -196,7 +299,7 @@ export default function LivreurHomeScreen() {
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>Bonjour, {user?.full_name || "Livreur"}</Text>
-          <Text style={styles.subtitle}>Commandes disponibles près de chez vous</Text>
+          <Text style={styles.subtitle}>Commandes près de chez vous</Text>
         </View>
         <TouchableOpacity style={styles.notificationButton}>
           <MaterialCommunityIcons name="bell-outline" size={24} color={COLORS.textPrimary} />
@@ -207,30 +310,61 @@ export default function LivreurHomeScreen() {
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
           <MaterialCommunityIcons name="truck-delivery" size={24} color={COLORS.primary} />
-          <Text style={styles.statValue}>{orders.filter(o => o.status === "paye").length}</Text>
+          <Text style={styles.statValue}>{availableOrders.length}</Text>
           <Text style={styles.statLabel}>Disponibles</Text>
         </View>
         <View style={styles.statCard}>
           <MaterialCommunityIcons name="clock-outline" size={24} color={COLORS.warning} />
-          <Text style={styles.statValue}>0</Text>
+          <Text style={styles.statValue}>
+            {myOrders.filter((o) => o.status === "en_cours_livraison").length}
+          </Text>
           <Text style={styles.statLabel}>En cours</Text>
         </View>
         <View style={styles.statCard}>
           <MaterialCommunityIcons name="check-circle-outline" size={24} color={COLORS.success} />
-          <Text style={styles.statValue}>0</Text>
+          <Text style={styles.statValue}>
+            {myOrders.filter((o) => ["livre", "termine"].includes(o.status)).length}
+          </Text>
           <Text style={styles.statLabel}>Terminées</Text>
         </View>
       </View>
 
+      {/* Tabs */}
+      <View style={styles.tabs}>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "mine" && styles.activeTab]}
+          onPress={() => setActiveTab("mine")}
+        >
+          <Text style={[styles.tabText, activeTab === "mine" && styles.activeTabText]}>
+            Mes commandes ({myOrders.length})
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "available" && styles.activeTab]}
+          onPress={() => setActiveTab("available")}
+        >
+          <Text style={[styles.tabText, activeTab === "available" && styles.activeTabText]}>
+            Disponibles ({availableOrders.length})
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       {/* Orders List */}
       <View style={styles.listContainer}>
-        <Text style={styles.sectionTitle}>Nouvelles commandes</Text>
         <FlatList
-          data={orders}
+          data={currentOrders}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <OrderCard order={item} onAccept={handleAcceptOrder} />}
+          renderItem={({ item }) => (
+            <OrderCard
+              order={item}
+              isAccepted={activeTab === "mine"}
+              onAccept={handleAcceptOrder}
+              onDeclareFinished={handleDeclareFinished}
+              onCancel={handleCancel}
+            />
+          )}
           ListEmptyComponent={renderEmptyList}
-          contentContainerStyle={orders.length === 0 ? styles.emptyList : styles.list}
+          contentContainerStyle={currentOrders.length === 0 ? styles.emptyList : styles.list}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -301,10 +435,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
     elevation: 2,
   },
   statValue: {
@@ -318,17 +449,39 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     marginTop: 4,
   },
+  tabs: {
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    backgroundColor: COLORS.white,
+    gap: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.background,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: "center",
+    borderRadius: 8,
+    backgroundColor: COLORS.background,
+  },
+  activeTab: {
+    backgroundColor: COLORS.primary,
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: COLORS.textSecondary,
+  },
+  activeTabText: {
+    color: COLORS.white,
+  },
   listContainer: {
     flex: 1,
     paddingHorizontal: 20,
   },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: COLORS.textPrimary,
-    marginBottom: 12,
-  },
   list: {
+    paddingTop: 16,
     paddingBottom: 100,
   },
   emptyList: {
@@ -356,10 +509,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
     elevation: 2,
   },
   orderHeader: {
@@ -410,6 +560,30 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   acceptButtonText: {
+    color: COLORS.white,
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  actionButtons: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  actionButton: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    paddingVertical: 12,
+    gap: 8,
+  },
+  cancelButton: {
+    backgroundColor: COLORS.danger,
+  },
+  finishButton: {
+    backgroundColor: COLORS.success,
+  },
+  actionButtonText: {
     color: COLORS.white,
     fontSize: 14,
     fontWeight: "600",

@@ -31,4 +31,15 @@ class Order_item extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Nom du produit au moment de la commande (via la relation Product)
+     */
+    public function getProductNameAttribute(): string
+    {
+        if ($this->relationLoaded('product') && $this->product) {
+            return $this->product->getDisplayName();
+        }
+        return 'Produit inconnu';
+    }
 } 

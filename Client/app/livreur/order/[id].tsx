@@ -1,4 +1,4 @@
-import { useState, useEffect, useLocalSearchParams } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { livreurService } from "../../services/livreurService";
 
 const COLORS = {
@@ -152,7 +152,7 @@ export default function OrderDetailScreen() {
     );
   }
 
-  const formatPrice = (price: number) => `${(price || 0).toFixed(2)} XOF`;
+  const formatPrice = (price: any) => `${((typeof price === 'number' ? price : parseFloat(price)) || 0).toFixed(2)} XOF`;
 
   return (
     <View style={styles.container}>

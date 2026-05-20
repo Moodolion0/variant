@@ -2,18 +2,18 @@
  * Service pour uploader les images vers Cloudinary via le serveur Laravel
  * Pour utilisation dans l'admin (fournisseurs et admins)
  */
+import config from '../config';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
+const API_URL = config.API_BASE_URL;
 
 export const ImageUploadService = {
   /**
    * Uploader une image vers le serveur (pour Cloudinary)
    * @param {File} file Fichier sélectionné
    * @param {number} productId ID du produit
-   * @param {string} token Token d'authentification
    * @returns {Promise<Object>} Données de l'image uploadée
    */
-  async uploadProductImage(file, productId, token) {
+  async uploadProductImage(file, productId) {
     try {
       if (!file) {
         throw new Error("Aucun fichier sélectionné");
@@ -37,14 +37,18 @@ export const ImageUploadService = {
       const formData = new FormData();
       formData.append("image", file);
 
+      // Récupérer le token
+      const token = localStorage.getItem('admin_token');
+
       // Envoyer la requête
       const response = await fetch(
         `${API_URL}/admin/products/${productId}/images`,
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token ? `Bearer ${token}` : '',
             Accept: "application/json",
+            'X-Requested-With': 'XMLHttpRequest',
           },
           body: formData,
         },

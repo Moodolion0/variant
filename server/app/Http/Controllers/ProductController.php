@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return response()->json($product);
+        return response()->json($product->load(['images', 'supplier']));
     }
 
     public function update(UpdateProductRequest $request, Product $product)

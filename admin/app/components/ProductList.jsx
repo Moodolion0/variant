@@ -1,12 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import {
-    FlatList,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import productService from "../services/productService";
 import supplierService from "../services/supplierService";
@@ -21,20 +21,40 @@ export default function ProductList({
   const [products, setProducts] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     let mounted = true;
     async function load() {
       setLoading(true);
-      const [productsList, suppliersList] = await Promise.all([
-        productService.list(),
-        supplierService.list(),
-      ]);
-      if (mounted) {
-        setProducts(productsList);
-        setSuppliers(suppliersList);
-        setLoading(false);
+      setError(null);
+      try {
+        // Handle products and suppliers loading with better error handling
+        const [productsList, suppliersList] = await Promise.all([
+          productService.list().catch(err => {
+            console.error('Error loading products:', err);
+            return [];
+          }),
+          supplierService.list().catch(err => {
+            console.error('Error loading suppliers:', err);
+            return [];
+          }),
+        ]);
+        
+         if (mounted) {
+           setProducts(productsList || []);
+           setSuppliers(suppliersList || []);
+           console.log('[ProductList] products loaded:', (productsList || []).length, productsList);
+           console.log('[ProductList] suppliers loaded:', (suppliersList || []).length);
+           setLoading(false);
+         }
+      } catch (err) {
+        console.error('Error loading data:', err);
+        if (mounted) {
+          setError(err.message || 'Erreur lors du chargement des données');
+          setLoading(false);
+        }
       }
     }
     load();
@@ -43,11 +63,12 @@ export default function ProductList({
     };
   }, []);
 
-  const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredProducts = products.filter((p) => {
+    const name = p.name_by_admin || p.name_supplier || "";
+    return name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   const filteredSuppliers = suppliers.filter((s) =>
-    s.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    s.name && s.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const handleAddClick = () => {
@@ -114,9 +135,20 @@ export default function ProductList({
       </View>
 
       {/* Content Area */}
-      {loading ? (
-        <Text style={{ color: "#637f88", padding: 12 }}>Chargement...</Text>
-      ) : tab === "articles" ? (
+      {error ? (
+        <View style={{ padding: 20 }}>
+          <Text style={{ color: "#e74c3c", fontSize: 14, marginBottom: 10 }}>
+            ⚠️ {error}
+          </Text>
+          <Text style={{ color: "#637f88", fontSize: 12 }}>
+            Veuillez vérifier que vous êtes connecté et que l'endpoint API est accessible.
+          </Text>
+        </View>
+       ) : loading ? (
+         <View style={{ padding: 20, alignItems: 'center', justifyContent: 'center' }}>
+           <Text style={{ color: "#637f88", padding: 12 }}>Chargement...</Text>
+         </View>
+       ) : tab === "articles" ? (
         <FlatList
           data={filteredProducts}
           keyExtractor={(i) => i.id}

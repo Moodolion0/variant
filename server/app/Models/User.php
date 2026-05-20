@@ -23,13 +23,6 @@ class User extends Authenticatable
     public const STATUS_BLOQUE = 'bloque';
 
     /**
-     * The column name for storing passwords.
-     *
-     * @var string
-     */
-    protected $passwordHashColumn = 'password_hash';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -38,6 +31,7 @@ class User extends Authenticatable
         'full_name',
         'email',
         'phone_number',
+        'password',
         'password_hash',
         'role',
         'status',
@@ -61,6 +55,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the password for the user.
+     */
+    public function getAuthPassword()
+    {
+        return $this->password_hash;
+    }
 
     /**
      * Hash password when setting the 'password' attribute.

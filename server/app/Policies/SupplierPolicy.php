@@ -10,7 +10,7 @@ class SupplierPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true; // allow public listing; adjust if needed
+        return true; // allow all authenticated users to list suppliers
     }
 
     public function view(User $user, Supplier $supplier): bool

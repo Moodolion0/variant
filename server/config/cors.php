@@ -13,13 +13,16 @@ return [
 
     'allowed_origins' => [
         'http://localhost:8081',
+        'http://localhost:8082',
         'http://localhost:8080',
         'http://localhost:3000',
         'http://localhost:19000',
         'http://localhost:19001',
+        'http://192.168.*.*:8082',
         'http://192.168.*.*:8081',
         'http://192.168.*.*:8080',
         'http://localhost:5173', // Ajout pour supplier
+        'http://localhost:5174', // Ajout pour supplier
     ],
 
     'allowed_origins_patterns' => [],

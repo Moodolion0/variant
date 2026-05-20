@@ -122,7 +122,7 @@ export default function CartScreen() {
               </Text>
               <Text style={styles.summaryValue}>{total.toFixed(2)} XOF</Text>
             </View>
-            <TouchableOpacity style={styles.checkoutBtn}>
+            <TouchableOpacity style={styles.checkoutBtn} onPress={() => router.push("/client/(tabs)/checkout")}>
               <MaterialCommunityIcons
                 name="shopping-bag"
                 size={20}

@@ -25,8 +25,6 @@ class LivreurController extends Controller
             'amount' => 'required|numeric|min:1',
         ]);
 
-        // Placeholder: create a withdraw request / transaction
-        return response()->json(['message' => 'Withdraw request received'], 201);
         $amount = $request->input('amount');
         $wallet = Wallet::where('user_id', auth()->id())->firstOrFail();
 

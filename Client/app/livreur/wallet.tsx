@@ -50,9 +50,9 @@ const TransactionCard = ({ transaction }: { transaction: any }) => {
         </Text>
         <Text style={styles.transactionDate}>{formatDate(transaction.created_at)}</Text>
       </View>
-      <Text style={[styles.transactionAmount, { color: isPositive ? COLORS.success : COLORS.danger }]}>
-        {isPositive ? "+" : ""}{transaction.amount.toFixed(2)} XOF
-      </Text>
+        <Text style={[styles.transactionAmount, { color: isPositive ? COLORS.success : COLORS.danger }]}>
+         {isPositive ? "+" : ""}{((typeof transaction.amount === 'number' ? transaction.amount : parseFloat(transaction.amount)) || 0).toFixed(2)} XOF
+        </Text>
     </View>
   );
 };
@@ -145,7 +145,7 @@ export default function WalletScreen() {
           <MaterialCommunityIcons name="wallet" size={32} color={COLORS.white} />
           <Text style={styles.balanceLabel}>Solde disponible</Text>
         </View>
-        <Text style={styles.balanceValue}>{balance.toFixed(2)} XOF</Text>
+        <Text style={styles.balanceValue}>{((typeof balance === 'number' ? balance : parseFloat(balance)) || 0).toFixed(2)} XOF</Text>
         
         <TouchableOpacity
           style={styles.withdrawButton}
@@ -174,7 +174,7 @@ export default function WalletScreen() {
           <View style={styles.modal}>
             <Text style={styles.modalTitle}>Demander un retrait</Text>
             <Text style={styles.modalSubtitle}>
-              Solde actuel: {balance.toFixed(2)} XOF
+              Solde actuel: {((typeof balance === 'number' ? balance : parseFloat(balance)) || 0).toFixed(2)} XOF
             </Text>
             
             <View style={styles.inputContainer}>
@@ -268,10 +268,7 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: COLORS.primary,
     borderRadius: 16,
-    shadowColor: COLORS.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    boxShadow: "0px 4px 8px rgba(25, 179, 230, 0.3)",
     elevation: 6,
   },
   balanceHeader: {
@@ -319,10 +316,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: 14,
     gap: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
     elevation: 2,
   },
   actionButtonText: {

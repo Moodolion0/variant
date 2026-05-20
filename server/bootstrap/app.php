@@ -31,5 +31,28 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Validation failed',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+        });
+
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+        });
+
+        // Fallback for API requests - ensure JSON errors
+        $exceptions->render(function (\Throwable $e, $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+                return response()->json([
+                    'message' => $e->getMessage() ?: 'Server Error',
+                ], $status);
+            }
+        });
     })->create();

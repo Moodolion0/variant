@@ -9,7 +9,7 @@ class ProductService
 {
     public function paginate(): LengthAwarePaginator
     {
-        return Product::with('images')->paginate();
+        return Product::with(['images', 'supplier'])->paginate();
     }
 
     public function create(array $data): Product

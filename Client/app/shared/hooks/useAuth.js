@@ -51,8 +51,7 @@ export function AuthProvider({ children }) {
       
       setUser(response.user);
       setIsAuthenticated(true);
-      await authService.storeUserData(response.token, response.user);
-      alert("lol")
+      await authService.storeUserData({ token: response.token, user: response.user });
       redirectBasedOnRole(response.user.role);
     } catch (error) {
       console.error('Login hook error:', error);

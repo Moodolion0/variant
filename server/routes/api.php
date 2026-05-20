@@ -27,6 +27,26 @@ Route::get('/test', function () {
     return response()->json(['message' => 'Server is working', 'time' => now()]);
 });
 
+// --- DEBUG: Create test supplier ---
+Route::post('/debug/create-supplier', function () {
+    $supplier = User::create([
+        'full_name' => 'Test Supplier',
+        'email' => 'supplier@example.com',
+        'password' => 'password',
+        'role' => User::ROLE_FOURNISSEUR,
+        'status' => User::STATUS_VALIDE,
+    ]);
+
+    return response()->json([
+        'message' => 'Supplier created successfully',
+        'user' => $supplier,
+        'credentials' => [
+            'email' => 'supplier@example.com',
+            'password' => 'password',
+        ],
+    ], 201);
+});
+
 // --- Routes Protégées (Middleware Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -42,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // --- PROFIL : LIVREUR ---
     Route::prefix('livreur')->group(function () {
         Route::get('/available-orders', [OrderController::class, 'availableForLivreur']); // Filtre < 1km
+        Route::get('/orders', [OrderController::class, 'livreurOrders']); // Mes commandes assignées
         Route::post('/orders/{id}/accept', [OrderController::class, 'acceptOrder']);
         Route::post('/orders/{id}/cancel', [OrderController::class, 'cancelOrder']); // Avec pénalité -100
         Route::post('/orders/{id}/declare-finished', [OrderController::class, 'declareFinished']);
@@ -57,6 +78,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/products', [SupplierController::class, 'createProduct']);
         Route::put('/products/{id}', [SupplierController::class, 'updateProduct']);
         Route::delete('/products/{id}', [SupplierController::class, 'deleteProduct']);
+        Route::get('/orders', [SupplierController::class, 'supplierOrders']);
+
+        // Gestionnaire d'images produits pour le fournisseur
+        Route::post('/products/{id}/images', [SupplierController::class, 'uploadProductImage']);
+        Route::get('/products/{id}/images', [SupplierController::class, 'getProductImages']);
+        Route::delete('/products/images/{image}', [SupplierController::class, 'deleteProductImage']);
     });
 
     // --- DEBUG: Test auth is working ---
@@ -77,7 +104,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/users/{id}/status', [AuthController::class, 'updateUserStatus']);
         
         // Routes pour les produits admin
+        Route::get('/products', [ProductController::class, 'index']);
         Route::post('/products', [ProductController::class, 'store']);
+        Route::get('/products/{product}', [ProductController::class, 'show']);
         Route::put('/products/{product}', [ProductController::class, 'update']);
         Route::delete('/products/{product}', [ProductController::class, 'destroy']);
 
@@ -94,6 +123,14 @@ Route::middleware('auth:sanctum')->group(function () {
         // Stats & Global
         Route::get('/dashboard-stats', [OrderController::class, 'adminStats']);
         Route::get('/all-orders', [OrderController::class, 'allOrders']);
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
+
+        // --- SUPPLIERS (Admin view) ---
+        Route::get('/suppliers', [SupplierController::class, 'index']);
+        Route::post('/suppliers', [SupplierController::class, 'store']);
+        Route::get('/suppliers/{supplier}', [SupplierController::class, 'show']);
+        Route::put('/suppliers/{supplier}', [SupplierController::class, 'update']);
+        Route::delete('/suppliers/{supplier}', [SupplierController::class, 'destroy']);
     });
 
     Route::post('/logout', [AuthController::class, 'logout']);

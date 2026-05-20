@@ -35,7 +35,8 @@ class ImageController extends Controller
             ]);
 
             // Vérifier que le produit appartient au fournisseur authentifié
-            if ($product->supplier_id !== auth()->user()->id) {
+            $supplier = \App\Models\Supplier::where('user_id', auth()->id())->first();
+            if (!$supplier || $product->supplier_id !== $supplier->id) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Non autorisé',

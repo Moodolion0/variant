@@ -21,6 +21,12 @@ export default function ProfileScreen() {
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
+    // console.log("deconnexion")
+    // try {
+    //   await logout();
+    // } catch (err) {
+    //   console.error('Logout error:', err);
+    // }
     Alert.alert(
       'Déconnexion',
       'Êtes-vous sûr de vouloir vous déconnecter?',
@@ -152,9 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.06)',
     elevation: 2,
   },
   content: { padding: 16, paddingBottom: 120 },

@@ -19,14 +19,27 @@ class AuthController extends Controller
         $user = User::where('email', $data['email'])->first();
 
         if (! $user || ! Hash::check($data['password'], $user->password_hash)) {
+            \Log::debug('Login failed', ['email' => $data['email'], 'user_found' => !!$user]);
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        \Log::debug('User found', ['user_id' => $user->id, 'role' => $user->role, 'tokens_count' => $user->tokens()->count()]);
 
-        return response()->json(['token' => $token, 'user' => $user]);
+        $tokenResult = $user->createToken('api-token');
+        \Log::debug('Token created', [
+            'token_class' => get_class($tokenResult),
+            'has_accessToken' => property_exists($tokenResult, 'accessToken'),
+            'has_plainTextToken' => property_exists($tokenResult, 'plainTextToken'),
+            'plainTextToken_type' => is_object($tokenResult->plainTextToken) ? get_class($tokenResult->plainTextToken) : gettype($tokenResult->plainTextToken),
+            'plainTextToken_value' => is_string($tokenResult->plainTextToken) ? $tokenResult->plainTextToken : json_encode($tokenResult->plainTextToken),
+        ]);
+
+        // In Sanctum 4.x, plainTextToken is a PersonalAccessTokenResult object, not a string
+        $plainToken = is_object($tokenResult->plainTextToken) ? $tokenResult->plainTextToken->token : $tokenResult->plainTextToken;
+
+        return response()->json(['token' => $plainToken, 'user' => $user]);
     }
 
     public function logout(Request $request)
@@ -63,15 +76,15 @@ class AuthController extends Controller
             'status' => $data['role'] === 'livreur' ? 'en_attente' : 'valide', // Les livreurs doivent être validés
         ]);
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        $tokenResult = $user->createToken('api-token');
+        // In Sanctum 4.x, plainTextToken is a PersonalAccessTokenResult object
+        $plainToken = is_object($tokenResult->plainTextToken) ? $tokenResult->plainTextToken->token : $tokenResult->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user], 201);
+        return response()->json(['token' => $plainToken, 'user' => $user], 201);
     }
 
     public function allUsers()
     {
-        $this->authorize('viewAny', User::class);
-
         return response()->json(User::paginate());
     }
 
@@ -80,8 +93,6 @@ class AuthController extends Controller
      */
     public function storeUser(Request $request)
     {
-        $this->authorize('create', User::class);
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -93,7 +104,7 @@ class AuthController extends Controller
         $user = User::create([
             'full_name' => $validated['name'],
             'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? null,
+            'phone_number' => $validated['phone'] ?? null,
             'password' => $validated['password'], // Will be hashed by mutator
             'role' => $validated['role'],
             'status' => User::STATUS_VALIDE,

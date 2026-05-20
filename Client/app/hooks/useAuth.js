@@ -94,34 +94,32 @@ export function AuthProvider({ children }) {
 
   // Fonction de logout
   const logout = async () => {
+    console.log("[useAuth.logout] called");
     try {
       setIsLoading(true);
+      console.log("[useAuth.logout] calling authService.logout()...");
       await authService.logout();
+      console.log("[useAuth.logout] authService.logout() done, clearing state...");
       setUser(null);
       setIsAuthenticated(false);
 
-      // Alerte visible pour confirmer la déconnexion
+      // Redirection immédiate vers la page de connexion
+      console.log("[useAuth.logout] redirecting to /auth/login");
+      router.replace("/auth/login");
+
+      // Alerte en arrière-plan pour confirmer la déconnexion
       try {
-        Alert.alert("Déconnecté", "Vous avez été déconnecté.", [
-          { text: "OK", onPress: () => router.replace("/auth/login") },
-        ]);
+        Alert.alert("Déconnecté", "Vous avez été déconnecté.");
       } catch (e) {
-        // fallback si Alert n'est pas disponible
-        router.replace("/auth/login");
+        console.error("[useAuth.logout] Alert error:", e);
       }
     } catch (error) {
-      console.error("Logout hook error:", error);
-      // Forcer le logout même en cas d'erreur
+      console.error("[useAuth.logout] error:", error);
       setUser(null);
       setIsAuthenticated(false);
-      try {
-        Alert.alert("Déconnecté", "Vous avez été déconnecté.", [
-          { text: "OK", onPress: () => router.replace("/auth/login") },
-        ]);
-      } catch (e) {
-        router.replace("/auth/login");
-      }
+      router.replace("/auth/login");
     } finally {
+      console.log("[useAuth.logout] finally, setIsLoading(false)");
       setIsLoading(false);
     }
   };

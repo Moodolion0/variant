@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LivreurDocumentController;
 use App\Http\Controllers\ProductController;
@@ -17,13 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Routes API temporaires pour tester
-Route::prefix('api')->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [AuthController::class, 'me'])->middleware('auth:sanctum');
-});
+Route::get('/login', function () {
+    return response()->json(['message' => 'Unauthenticated'], 401);
+})->name('login');
 
 Route::resource('wallets', WalletController::class);
 Route::resource('wallet-transactions', WalletTransactionController::class);

@@ -76,25 +76,30 @@ export default function ProfileScreen() {
     fetchProfileStatus();
   };
 
-  const handleLogout = () => {
-    Alert.alert(
-      "Déconnexion",
-      "Êtes-vous sûr de vouloir vous déconnecter ?",
-      [
-        { text: "Annuler", style: "cancel" },
-        {
-          text: "Déconnexion",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await logout();
-            } catch (error) {
-              console.error("Logout error:", error);
-            }
-          },
-        },
-      ]
-    );
+  const handleLogout = async() => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+    // Alert.alert(
+    //   "Déconnexion",
+    //   "Êtes-vous sûr de vouloir vous déconnecter ?",
+    //   [
+    //     { text: "Annuler", style: "cancel" },
+    //     {
+    //       text: "Déconnexion",
+    //       style: "destructive",
+    //       onPress: async () => {
+    //         try {
+    //           await logout();
+    //         } catch (error) {
+    //           console.error("Logout error:", error);
+    //         }
+    //       },
+    //     },
+    //   ]
+    // );
   };
 
   const getStatusLabel = (status: string) => {

@@ -17,6 +17,7 @@ class IsAdmin
     {
         // Vérifier si l'utilisateur est connecté et est un admin
         if (!$request->user()) {
+            // dd($request);
             return response()->json([
                 'success' => false,
                 'message' => 'Non authentifié'

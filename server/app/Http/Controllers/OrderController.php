@@ -28,11 +28,25 @@ class OrderController extends Controller
 
         $order = $this->service->create($data);
 
+        // Créer les items de commande
+        $items = $data['items'] ?? [];
+        foreach ($items as $itemData) {
+            $order->items()->create([
+                'product_id' => $itemData['product_id'],
+                'quantity' => $itemData['quantity'],
+                'price_at_purchase' => $itemData['price'],
+            ]);
+        }
+
+        // Charger les relations pour la réponse
+        $order->load(['client', 'livreur', 'items.product']);
+
         return response()->json($order, 201);
     }
 
     public function show(Order $order)
     {
+        $order->load(['client', 'livreur', 'items.product']);
         return response()->json($order);
     }
 
@@ -53,7 +67,7 @@ class OrderController extends Controller
     // --- Custom endpoints ---
     public function clientOrders()
     {
-        $orders = Order::with('items')->where('client_id', auth()->id())->get();
+        $orders = Order::with(['client', 'livreur', 'items.product'])->where('client_id', auth()->id())->get();
 
         return response()->json($orders);
     }
@@ -70,7 +84,20 @@ class OrderController extends Controller
 
     public function availableForLivreur()
     {
-        $orders = Order::whereNull('livreur_id')->where('status', Order::STATUS_PAYE)->get();
+        $orders = Order::availableForLivreur()->with(['client', 'items.product'])->get();
+
+        return response()->json($orders);
+    }
+
+    /**
+     * Get all orders assigned to the authenticated livreur
+     * Returns orders in: en_cours_livraison, livre, termine (not annule/en_attente)
+     */
+    public function livreurOrders()
+    {
+        $orders = Order::forLivreur(auth()->id())
+            ->with(['client', 'livreur', 'items.product'])
+            ->get();
 
         return response()->json($orders);
     }
@@ -154,6 +181,6 @@ class OrderController extends Controller
 
     public function allOrders()
     {
-        return response()->json(Order::with(['client','livreur','items'])->paginate());
+        return response()->json(Order::with(['client','livreur','items.product'])->paginate());
     }
 }

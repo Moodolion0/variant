@@ -20,10 +20,11 @@ export default function Login({ onLogin }: LoginProps) {
 
     try {
       const response = await authService.login(email, password);
+      console.log("Login response:", response);
       
       // Check if user is a supplier
       if (response.user.role !== "fournisseur") {
-        setError("Accès réservé aux fournisseurs");
+        setError(`Accès réservé aux fournisseurs. Votre rôle actuel: ${response.user.role}. Veuillez créer un compte fournisseur via /api/register avec role: "fournisseur"`);
         setLoading(false);
         return;
       }
@@ -35,6 +36,7 @@ export default function Login({ onLogin }: LoginProps) {
       onLogin(response.token, response.user);
       navigate("/");
     } catch (err: any) {
+      console.error("Login error:", err);
       setError(err.message || "Échec de la connexion");
     } finally {
       setLoading(false);

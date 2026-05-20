@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { supplierService } from "../services/api";
 
 interface Product {
@@ -41,25 +41,104 @@ export default function Stock({ token }: StockProps) {
   const [selectedProperties, setSelectedProperties] = useState<string[]>([]);
   const [propertyValues, setPropertyValues] = useState<Record<string, Record<string, number>>>({});
 
-  useEffect(() => {
-    if (!token) {
+  // Images
+  const [uploadingImageId, setUploadingImageId] = useState<number | null>(null);
+  const [imageUploadError, setImageUploadError] = useState<string>("");
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [activeImageProductId, setActiveImageProductId] = useState<number | null>(null);
+
+  const [productImages, setProductImages] = useState<Record<number, Array<{ id: number; file_url: string }>>>({});
+
+  const getProductImageId = (image: { id: number; file_url: string }) => image.id;
+
+  const fetchProducts = useCallback(async () => {
+    try {
+      const authResponse = await fetch('http://localhost:8000/api/auth-test', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const authData = await authResponse.json();
+      console.log('Auth test:', authData);
+
+      console.log('Fetching products with token:', token?.substring(0, 20) + '...');
+      const data = await supplierService.getProducts(token);
+      console.log('Products response:', data);
+      
+      const productsData = data.data || data;
+      console.log('Products to set:', productsData);
+      setProducts(productsData);
       setLoading(false);
-      return;
+      return data;
+    } catch (e) {
+      console.error('Error fetching products:', e);
+      setLoading(false);
+      return [];
     }
-
-    const fetchProducts = async () => {
-      try {
-        const data = await supplierService.getProducts(token);
-        setProducts(data.data || data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
   }, [token]);
+
+  const fetchAllImages = useCallback(async (productsToFetch: Product[]) => {
+    const imagesMap: Record<number, Array<{ id: number; file_url: string }>> = {};
+    await Promise.all(
+      productsToFetch.map(async (product) => {
+        try {
+          const images = await supplierService.getImages(token!, product.id);
+          imagesMap[product.id] = (images ?? []).map((img: any) => ({ id: img.id, file_url: img.file_url }));
+        } catch {
+          imagesMap[product.id] = [];
+        }
+      })
+    );
+    setProductImages(imagesMap);
+  }, [token]);
+
+  const handleAddImage = (productId: number, file: File) => {
+    uploadImageForProduct(productId, file);
+  };
+
+  const handleDeleteImage = async (productId: number, imageId: number) => {
+    if (!token) return;
+    try {
+      await supplierService.deleteImage(token, imageId);
+      setProductImages((prev) => ({
+        ...prev,
+        [productId]: (prev[productId] ?? []).filter((img) => img.id !== imageId),
+      }));
+    } catch (error: any) {
+      alert(`Erreur lors de la suppression: ${error.message}`);
+    }
+  };
+
+  const uploadImageForProduct = async (productId: number, file: File) => {
+    if (!token) return;
+
+    setUploadingImageId(productId);
+    setImageUploadError("");
+
+    try {
+      const newImage = await supplierService.uploadImage(token, productId, file);
+      setProductImages((prev) => ({
+        ...prev,
+        [productId]: [...(prev[productId] ?? []), { id: (newImage as any).id, file_url: (newImage as any).file_url }],
+      }));
+    } catch (error: any) {
+      setImageUploadError(error.message || "Erreur lors de l'upload");
+    } finally {
+      setUploadingImageId(null);
+    }
+  };
+
+  const toggleImagePicker = (productId: number) => {
+    setActiveImageProductId(activeImageProductId === productId ? null : productId);
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchProducts().then((data) => {
+        fetchAllImages(data.data || data);
+      });
+    } else {
+      setLoading(false);
+    }
+  }, [token, fetchProducts, fetchAllImages]);
 
   const handleUpdateStock = async (productId: number) => {
     if (!token) return;
@@ -82,7 +161,7 @@ export default function Stock({ token }: StockProps) {
       return;
     }
 
-    console.log("Creating product with token:", token);
+    console.log("Creating product with token:", token ? "present" : "missing");
 
     // Validation
     if (!newProduct.name_supplier || !newProduct.price_supplier || !newProduct.stock_quantity) {
@@ -130,9 +209,9 @@ export default function Stock({ token }: StockProps) {
       });
       setSelectedProperties([]);
       setPropertyValues({});
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creating product:", error);
-      alert("Erreur lors de la création du produit");
+      alert(`Erreur lors de la création du produit: ${error.message}`);
     }
   };
 
@@ -230,6 +309,7 @@ export default function Stock({ token }: StockProps) {
                     <th className="px-6 py-3">Produit</th>
                     <th className="px-6 py-3">Prix</th>
                     <th className="px-6 py-3">Stock</th>
+                    <th className="px-6 py-3">Images</th>
                     <th className="px-6 py-3">Statut</th>
                     <th className="px-6 py-3">Actions</th>
                   </tr>
@@ -276,6 +356,70 @@ export default function Stock({ token }: StockProps) {
                         ) : (
                           <span className="text-gray-900">{product.stock_quantity}</span>
                         )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => toggleImagePicker(product.id)}
+                          className="px-3 py-1 text-xs border border-indigo-300 text-indigo-600 rounded hover:bg-indigo-50 transition-colors"
+                        >
+                          {activeImageProductId === product.id ? 'Fermer' : '+ Ajouter image'}
+                        </button>
+
+                        {uploadingImageId === product.id && (
+                          <p className="text-xs text-gray-500 mt-1">Upload en cours…</p>
+                        )}
+                        {imageUploadError && uploadingImageId === product.id && (
+                          <p className="text-xs text-red-500 mt-1">{imageUploadError}</p>
+                        )}
+
+                        {activeImageProductId === product.id && (
+                          <div className="mt-2">
+                            <label className="block text-xs text-gray-500 mb-1">Choisir une image</label>
+                            <input
+                              ref={imageInputRef}
+                              type="file"
+                              accept="image/*"
+                              className="w-full text-xs text-gray-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 cursor-pointer"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  handleAddImage(product.id, file);
+                                  e.target.value = '';
+                                }
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        {(() => {
+                          const imgs = productImages[product.id] || [];
+                          if (imgs.length === 0) return null;
+                          return (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {imgs.slice(0, 4).map((img) => (
+                                <div key={getProductImageId(img)} className="relative group">
+                                  <img
+                                    src={img.file_url}
+                                    alt=""
+                                    className="w-10 h-10 object-cover rounded border border-gray-200"
+                                  />
+                                  <button
+                                    onClick={() => handleDeleteImage(product.id, getProductImageId(img))}
+                                    className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                    title="Supprimer"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                              ))}
+                              {imgs.length > 4 && (
+                                <div className="w-10 h-10 rounded border border-gray-200 bg-gray-50 flex items-center justify-center text-xs text-gray-500">
+                                  +{imgs.length - 4}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </td>
                       <td className="px-6 py-4">
                         {getStockBadge(product.stock_quantity)}

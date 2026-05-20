@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:8000/api';
+import config from '../config';
+
+const API_BASE_URL = config.API_BASE_URL;
 
 // Importer AsyncStorage correctement pour le web et React Native
 let AsyncStorage;
@@ -38,9 +40,14 @@ const fetchWithAuth = async (endpoint, options = {}) => {
 };
 
 export const livreurService = {
-  // Obtenir les commandes disponibles à livrer
+  // Obtenir les commandes disponibles à livrer (non assignées, status=paye)
   async getAvailableOrders() {
     return fetchWithAuth('/livreur/available-orders');
+  },
+
+  // Obtenir les commandes assignées au livreur connecté (hors annule/en_attente)
+  async getMyOrders() {
+    return fetchWithAuth('/livreur/orders');
   },
 
   // Accepter une commande

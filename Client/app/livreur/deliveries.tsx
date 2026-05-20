@@ -24,6 +24,7 @@ const COLORS = {
   danger: "#ef4444",
 };
 
+// Statut badge component
 const StatusBadge = ({ status }: { status: string }) => {
   const getStatusConfig = () => {
     switch (status) {
@@ -49,16 +50,18 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
-const DeliveryCard = ({ order, onDeclareFinished, onCancel }: { 
-  order: any; 
+const formatPrice = (price: any) => {
+  const num = typeof price === "number" ? price : parseFloat(price) || 0;
+  return `${num.toFixed(2)} XOF`;
+};
+
+// Delivery card component
+const DeliveryCard = ({ order, onDeclareFinished, onCancel }: {
+  order: any;
   onDeclareFinished: (id: string) => void;
   onCancel: (id: string) => void;
 }) => {
   const router = useRouter();
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} XOF`;
-  };
 
   return (
     <TouchableOpacity
@@ -81,14 +84,14 @@ const DeliveryCard = ({ order, onDeclareFinished, onCancel }: {
       </View>
 
       <View style={styles.orderDetails}>
-        <View style={styles.detailRow}>
-          <MaterialCommunityIcons name="map-marker" size={16} color={COLORS.textSecondary} />
-          <Text style={styles.detailText}>
-            {order.delivery_lat && order.delivery_long
-              ? `Lat: ${order.delivery_lat.toFixed(4)}, Lng: ${order.delivery_long.toFixed(4)}`
-              : "Adresse de livraison"}
-          </Text>
-        </View>
+        {order.client && (
+          <View style={styles.detailRow}>
+            <MaterialCommunityIcons name="account" size={16} color={COLORS.textSecondary} />
+            <Text style={styles.detailText}>
+              {order.client.full_name || order.client.email || "Client"}
+            </Text>
+          </View>
+        )}
         <View style={styles.detailRow}>
           <MaterialCommunityIcons name="currency-usd" size={16} color={COLORS.textSecondary} />
           <Text style={styles.detailText}>Total: {formatPrice(order.total_price)}</Text>
@@ -97,14 +100,8 @@ const DeliveryCard = ({ order, onDeclareFinished, onCancel }: {
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="truck" size={16} color={COLORS.success} />
             <Text style={[styles.detailText, { color: COLORS.success }]}>
-              Frais de livraison: {formatPrice(order.delivery_fee)}
+              Livraison: {formatPrice(order.delivery_fee)}
             </Text>
-          </View>
-        )}
-        {order.client && (
-          <View style={styles.detailRow}>
-            <MaterialCommunityIcons name="account" size={16} color={COLORS.textSecondary} />
-            <Text style={styles.detailText}>Client: {order.client.full_name || order.client.email}</Text>
           </View>
         )}
       </View>
@@ -147,13 +144,9 @@ export default function DeliveriesScreen() {
 
   const fetchOrders = useCallback(async () => {
     try {
-      // Get available orders (could be filtered to show only accepted orders)
-      const availableOrders = await livreurService.getAvailableOrders();
-      // Filter to show only orders accepted by this livreur
-      // For now, we'll show all non-available orders as "active"
-      // This would ideally come from a separate endpoint
-      setActiveOrders(availableOrders.filter((o: any) => o.status === "en_cours_livraison"));
-      setCompletedOrders(availableOrders.filter((o: any) => ["livre", "termine"].includes(o.status)));
+      const data = await livreurService.getMyOrders();
+      setActiveOrders(data.filter((o: any) => o.status === "en_cours_livraison"));
+      setCompletedOrders(data.filter((o: any) => ["livre", "termine"].includes(o.status)));
     } catch (error) {
       console.error("Error fetching orders:", error);
       Alert.alert("Erreur", "Impossible de charger les livraisons");
@@ -219,16 +212,16 @@ export default function DeliveriesScreen() {
 
   const renderEmptyList = () => (
     <View style={styles.emptyContainer}>
-      <MaterialCommunityIcons 
-        name={activeTab === "active" ? "truck-delivery" : "check-circle"} 
-        size={64} 
-        color={COLORS.textSecondary} 
+      <MaterialCommunityIcons
+        name={activeTab === "active" ? "truck-delivery" : "check-circle"}
+        size={64}
+        color={COLORS.textSecondary}
       />
       <Text style={styles.emptyTitle}>
         {activeTab === "active" ? "Aucune livraison en cours" : "Aucune livraison terminée"}
       </Text>
       <Text style={styles.emptySubtitle}>
-        {activeTab === "active" 
+        {activeTab === "active"
           ? "Acceptez des commandes depuis l'accueil"
           : "Vos livraisons terminées apparaîtront ici"}
       </Text>
@@ -278,8 +271,8 @@ export default function DeliveriesScreen() {
         data={orders}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <DeliveryCard 
-            order={item} 
+          <DeliveryCard
+            order={item}
             onDeclareFinished={handleDeclareFinished}
             onCancel={handleCancel}
           />
@@ -355,7 +348,6 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingTop: 16,
-    paddingBottom: 100,
   },
   emptyList: {
     flexGrow: 1,
@@ -382,10 +374,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
     elevation: 2,
   },
   orderHeader: {

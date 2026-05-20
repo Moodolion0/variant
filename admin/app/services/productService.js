@@ -1,119 +1,109 @@
-// Simple in-memory product service to keep admin UI modular and testable.
-let products = [
-  {
-    id: "p1",
-    name: "iPhone 15 Pro Max",
-    price: 1299.0,
-    stock: 15,
-    ref: "IP15-PM",
-    image: null,
-    supplier: "Fournisseur A",
-    supplierId: "s1",
-  },
-  {
-    id: "p2",
-    name: "MacBook Pro M3",
-    price: 2499.0,
-    stock: 3,
-    ref: "MB-M3-14",
-    image: null,
-    supplier: "Fournisseur B",
-    supplierId: "s2",
-  },
-  {
-    id: "p3",
-    name: "AirPods Max",
-    price: 549.0,
-    stock: 0,
-    ref: "AP-MAX-S",
-    image: null,
-    supplier: "Fournisseur C",
-    supplierId: "s3",
-  },
-];
+import config from '../config';
 
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-}
+const API_BASE_URL = config.API_BASE_URL;
+
+// Helper pour les requêtes API avec authentification
+const fetchWithAuth = async (endpoint, options = {}) => {
+  const token = localStorage.getItem('admin_token');
+  
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : '',
+      'X-Requested-With': 'XMLHttpRequest',
+      ...options.headers,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || data.errors?.flat?.().join(', ') || 'Erreur API');
+  }
+
+  return data;
+};
 
 export async function list() {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve([...products]), 200),
-  );
+  try {
+    const token = localStorage.getItem('admin_token');
+    const response = await fetch(`${API_BASE_URL}/admin/products`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+        Accept: "application/json",
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    const data = await response.json();
+    console.log('[productService] Raw response:', data);
+    console.log('[productService] Products count:', (data.data || []).length);
+    return data.data || data;
+  } catch (error) {
+    console.error("[productService] Error fetching products:", error);
+    throw error;
+  }
 }
 
 export async function getDetail(id) {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      const product = products.find((p) => p.id === id);
-      if (!product) {
-        resolve(null);
-        return;
-      }
-      // Enrich with detail data
-      const enriched = {
-        ...product,
-        description:
-          "Produit de haute qualité avec spécifications complètes et garantie fabricant. Livraison rapide et support client dédié.",
-        images: [],
-        restockDays: 5,
-        supplierDetails: {
-          name:
-            product.supplierId === "s1"
-              ? "Jean Dupont"
-              : product.supplierId === "s2"
-                ? "Marie Martin"
-                : "Pierre Moreau",
-          email:
-            product.supplierId === "s1"
-              ? "jean@techdistri.fr"
-              : product.supplierId === "s2"
-                ? "marie@globalparts.com"
-                : "pierre@euroelec.eu",
-          phone:
-            product.supplierId === "s1"
-              ? "+33 1 23 45 67 89"
-              : product.supplierId === "s2"
-                ? "+33 6 12 34 56 78"
-                : "+33 4 56 78 90 12",
-        },
-        stats: {
-          orders: Math.floor(Math.random() * 100) + 20,
-          revenue: Math.floor(Math.random() * 50000) + 10000,
-          growth: Math.floor(Math.random() * 40) + 5,
-        },
-      };
-      resolve(enriched);
-    }, 250),
-  );
+  try {
+    const token = localStorage.getItem('admin_token');
+    const response = await fetch(`${API_BASE_URL}/admin/products/${id}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+        Accept: "application/json",
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch product details');
+    }
+    const detail = await response.json();
+    console.log('[productService] Product detail:', detail);
+    return detail;
+  } catch (error) {
+    console.error("[productService] Error fetching product details:", error);
+    throw error;
+  }
 }
 
 export async function create(data) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const item = { id: uid(), ...data };
-      products = [item, ...products];
-      resolve(item);
-    }, 300);
-  });
+  try {
+    return await fetchWithAuth('/admin/products', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.error('Error creating product:', error);
+    throw error;
+  }
 }
 
-export async function update(id, patch) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      products = products.map((p) => (p.id === id ? { ...p, ...patch } : p));
-      resolve(products.find((p) => p.id === id));
-    }, 200);
-  });
+export async function update(id, data) {
+  try {
+    return await fetchWithAuth(`/admin/products/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.error('Error updating product:', error);
+    throw error;
+  }
 }
 
 export async function remove(id) {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      products = products.filter((p) => p.id !== id);
-      resolve(true);
-    }, 200),
-  );
+  try {
+    return await fetchWithAuth(`/admin/products/${id}`, {
+      method: 'DELETE',
+    });
+  } catch (error) {
+    console.error('Error removing product:', error);
+    throw error;
+  }
 }
 
 export default { list, create, getDetail, update, remove };

@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:8000/api";
+import { config } from '../config';
+
+const API_URL = config.API_BASE_URL;
 
 interface LoginResponse {
   token: string;
@@ -21,12 +23,12 @@ export const authService = {
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Login failed");
+      throw new Error(data.message || "Login failed");
     }
 
-    return response.json();
+    return data;
   },
 
   async logout(token: string): Promise<void> {
@@ -47,11 +49,12 @@ export const authService = {
       },
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to get profile");
+      throw new Error(data.message || "Failed to get profile");
     }
 
-    return response.json();
+    return data;
   },
 };
 
@@ -64,15 +67,20 @@ export const supplierService = {
       },
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to fetch products");
+      throw new Error(data.message || "Failed to fetch products");
     }
 
-    return response.json();
+    return data;
   },
 
   async createProduct(token: string, data: any) {
-    console.log("Creating product with token:", token);
+    if (!token) {
+      throw new Error("Token is required");
+    }
+    
+    console.log("Creating product with token:", token ? "present" : "missing");
     const response = await fetch(`${API_URL}/supplier/products`, {
       method: "POST",
       headers: {
@@ -83,13 +91,14 @@ export const supplierService = {
       body: JSON.stringify(data),
     });
 
+    const responseData = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Create product error:", errorData);
-      throw new Error(errorData.message || "Failed to create product");
+      console.error("Create product error:", { status: response.status, ...responseData });
+      throw new Error(responseData.message || `Failed to create product (${response.status})`);
     }
 
-    return response.json();
+    return responseData;
   },
 
   async updateProduct(token: string, id: number, data: any) {
@@ -103,11 +112,12 @@ export const supplierService = {
       body: JSON.stringify(data),
     });
 
+    const responseData = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to update product");
+      throw new Error(responseData.message || "Failed to update product");
     }
 
-    return response.json();
+    return responseData;
   },
 
   async deleteProduct(token: string, id: number) {
@@ -119,11 +129,12 @@ export const supplierService = {
       },
     });
 
+    const responseData = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to delete product");
+      throw new Error(responseData.message || "Failed to delete product");
     }
 
-    return response.json();
+    return responseData;
   },
 
   async updateStock(token: string, id: number, stockQuantity: number) {
@@ -137,11 +148,68 @@ export const supplierService = {
       body: JSON.stringify({ stock_quantity: stockQuantity }),
     });
 
+    const responseData = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to update stock");
+      throw new Error(responseData.message || "Failed to update stock");
     }
 
-    return response.json();
+    return responseData;
+  },
+
+  async uploadImage(token: string, productId: number, file: File) {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch(
+      `${API_URL}/supplier/products/${productId}/images`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to upload image");
+    }
+
+    return data.data;
+  },
+
+  async getImages(token: string, productId: number) {
+    const response = await fetch(
+      `${API_URL}/supplier/products/${productId}/images`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to fetch images");
+    }
+
+    return data.data ?? [];
+  },
+
+  async deleteImage(token: string, imageId: number) {
+    const response = await fetch(
+      `${API_URL}/supplier/products/images/${imageId}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to delete image");
+    }
+
+    return data.success;
   },
 };
 
@@ -154,11 +222,12 @@ export const orderService = {
       },
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to fetch orders");
+      throw new Error(data.message || "Failed to fetch orders");
     }
 
-    return response.json();
+    return data;
   },
 };
 

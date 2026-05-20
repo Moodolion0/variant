@@ -27,6 +27,10 @@ class StoreOrderRequest extends FormRequest
             'total_price' => ['required','numeric','min:0'],
             'delivery_fee' => ['nullable','numeric','min:0'],
             'status' => ['nullable','in:en_attente,paye,en_cours_livraison,livre,termine,annule'],
+            'items' => ['required','array','min:1'],
+            'items.*.product_id' => ['required','integer','exists:products,id'],
+            'items.*.quantity' => ['required','integer','min:1'],
+            'items.*.price' => ['required','numeric','min:0'],
         ];
     }
 }

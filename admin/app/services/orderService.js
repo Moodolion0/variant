@@ -1,134 +1,91 @@
-let orders = [
-  {
-    id: "ord1",
-    ref: "#ORD-8829",
-    customer: {
-      name: "Jean Dupont",
-      address: "123 Rue de la Paix, 75002 Paris",
-      phone: "+33 6 12 34 56 78",
-    },
-    items: [
-      {
-        name: "iPhone 15 Pro",
-        supplier: "Apple Store",
-        quantity: 1,
-        price: 1200,
-        total: 1200,
-      },
-      {
-        name: "Coque MagSafe",
-        supplier: "AccesLog",
-        quantity: 2,
-        price: 45,
-        total: 90,
-      },
-    ],
-    subtotal: 1290,
-    shippingFee: 9.9,
-    total: 1299.9,
-    delivery: {
-      name: "Marc L.",
-      distance: 4.2,
-    },
-    status: "en_cours",
-    date: "Aujourd'hui, 14:20",
-  },
-  {
-    id: "ord2",
-    ref: "#ORD-8491",
-    customer: {
-      name: "Marie Klein",
-      address: "456 Avenue des Champs, 75008 Paris",
-      phone: "+33 7 23 45 67 89",
-    },
-    items: [
-      {
-        name: "MacBook Pro M3",
-        supplier: "Apple",
-        quantity: 1,
-        price: 2499,
-        total: 2499,
-      },
-    ],
-    subtotal: 2499,
-    shippingFee: 15,
-    total: 2514,
-    delivery: {
-      name: "Sophie M.",
-      distance: 5.8,
-    },
-    status: "livree",
-    date: "Hier, 18:30",
-  },
-  {
-    id: "ord3",
-    ref: "#ORD-8490",
-    customer: {
-      name: "Paul Legrand",
-      address: "789 Rue Monteau, 75017 Paris",
-      phone: "+33 6 98 76 54 32",
-    },
-    items: [
-      {
-        name: "iPad Air",
-        supplier: "Apple Store",
-        quantity: 1,
-        price: 799,
-        total: 799,
-      },
-      {
-        name: "Apple Pencil",
-        supplier: "AccesLog",
-        quantity: 1,
-        price: 129,
-        total: 129,
-      },
-      {
-        name: "Smart Keyboard",
-        supplier: "AccesLog",
-        quantity: 1,
-        price: 349,
-        total: 349,
-      },
-    ],
-    subtotal: 1277,
-    shippingFee: 12.5,
-    total: 1289.5,
-    delivery: {
-      name: "Thomas D.",
-      distance: 3.1,
-    },
-    status: "expediee",
-    date: "Il y a 2 jours",
-  },
-];
+import config from '../config';
 
-export async function list(filter = "all") {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      const filtered =
-        filter === "all" ? orders : orders.filter((o) => o.status === filter);
-      // Transform for list view
-      const listData = filtered.map((o) => ({
-        id: o.id,
-        ref: o.ref,
-        customer: o.customer.name,
-        amount: o.total,
-        items: o.items.length,
-        status: o.status,
-        date: o.date,
-      }));
-      resolve([...listData]);
-    }, 200),
-  );
+const API_BASE_URL = config.API_BASE_URL;
+
+// Helper pour les requêtes API avec authentification
+const fetchWithAuth = async (endpoint, options = {}) => {
+  const token = localStorage.getItem('admin_token');
+  
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : '',
+      'X-Requested-With': 'XMLHttpRequest',
+      ...options.headers,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || data.errors?.flat?.().join(', ') || 'Erreur API');
+  }
+
+  return data;
+};
+
+export async function list(filter = 'all') {
+  try {
+    let endpoint = '/admin/all-orders';
+    if (filter !== 'all') {
+      endpoint += `?status=${filter}`;
+    }
+    
+    const data = await fetchWithAuth(endpoint);
+    
+    // Transform API response if needed
+    const orders = Array.isArray(data) ? data : (data.data || []);
+    
+    return orders.map(order => ({
+      id: order.id,
+      ref: `#ORD-${order.id}`,
+      customer: order.client?.full_name || order.customer_name || 'N/A',
+      amount: order.total || 0,
+      items: order.order_items?.length || 0,
+      status: order.status || 'pending',
+      date: new Date(order.created_at).toLocaleDateString('fr-FR'),
+    }));
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    throw error;
+  }
 }
 
 export async function getDetail(id) {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(orders.find((o) => o.id === id));
-    }, 200),
-  );
+  try {
+    const order = await fetchWithAuth(`/admin/orders/${id}`);
+    
+    return {
+      id: order.id,
+      ref: `#ORD-${order.id}`,
+      customer: {
+        name: order.client?.full_name || order.customer_name || 'N/A',
+        address: order.location?.address_text || 'N/A',
+        phone: order.client?.phone_number || 'N/A',
+      },
+      items: (order.order_items || []).map(item => ({
+        name: item.product?.name_supplier || item.product_name || 'N/A',
+        supplier: item.product?.supplier?.name || 'N/A',
+        quantity: item.quantity,
+        price: item.price_at_purchase,
+        total: (item.price_at_purchase || 0) * item.quantity,
+      })),
+      subtotal: order.subtotal || 0,
+      shippingFee: order.shipping_fee || 0,
+      total: order.total || 0,
+      delivery: {
+        name: order.livreur?.full_name || 'Non assigné',
+        status: order.status,
+      },
+      status: order.status,
+      date: new Date(order.created_at).toLocaleDateString('fr-FR'),
+    };
+  } catch (error) {
+    console.error('Error fetching order details:', error);
+    throw error;
+  }
 }
 
 export default { list, getDetail };

@@ -49,10 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 12,
     paddingHorizontal: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
     elevation: 2,
   },
   searchIcon: {
@@ -71,10 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#19b3e6",
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#19b3e6",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    boxShadow: "0px 2px 4px rgba(25, 179, 230, 0.2)",
     elevation: 4,
   },
 });

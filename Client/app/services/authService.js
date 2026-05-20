@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:8000/api';
+import config from '../config';
+
+const API_BASE_URL = config.API_BASE_URL;
 
 // Importer AsyncStorage correctement pour le web et React Native
 let AsyncStorage;
@@ -90,9 +92,11 @@ export const authService = {
   async logout() {
     try {
       const token = await this.getToken();
-      
+      console.log('[authService.logout] token:', token ? 'present' : 'MISSING');
+
       if (token) {
-        await fetch(`${API_BASE_URL}/logout`, {
+        console.log('[authService.logout] calling /logout endpoint...');
+        const res = await fetch(`${API_BASE_URL}/logout`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -101,14 +105,23 @@ export const authService = {
             'X-Requested-With': 'XMLHttpRequest',
           },
         });
+        console.log('[authService.logout] /logout status:', res.status);
+        if (!res.ok) {
+          const errBody = await res.json().catch(() => ({}));
+          console.error('[authService.logout] /logout error:', errBody);
+        }
+      } else {
+        console.warn('[authService.logout] no token found, skipping API call');
       }
 
       // Nettoyer les données locales
+      console.log('[authService.logout] clearing local storage...');
       await this.clearUserData();
+      console.log('[authService.logout] done.');
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('[authService.logout] unexpected error:', error);
       // Nettoyer quand même en cas d'erreur
-      await this.clearUserData();
+      await this.clearUserData().catch(e => console.error('[authService.logout] clearUserData error:', e));
     }
   },
 
@@ -147,11 +160,13 @@ export const authService = {
   // Stocker les données utilisateur
   async storeUserData(userData) {
     try {
+      console.log('[authService.storeUserData] saving:', { hasToken: !!userData.token, hasUser: !!userData.user });
       await AsyncStorage.setItem('auth_token', userData.token);
       await AsyncStorage.setItem('user_data', JSON.stringify(userData.user || userData));
+      console.log('[authService.storeUserData] saved successfully');
       return true;
     } catch (error) {
-      console.error('Store user data error:', error);
+      console.error('[authService.storeUserData] error:', error);
       return false;
     }
   },
@@ -159,9 +174,11 @@ export const authService = {
   // Obtenir le token
   async getToken() {
     try {
-      return await AsyncStorage.getItem('auth_token');
+      const token = await AsyncStorage.getItem('auth_token');
+      console.log('[authService.getToken] result:', token ? token.substring(0, 20) + '...' : 'NULL/EMPTY');
+      return token;
     } catch (error) {
-      console.error('Get token error:', error);
+      console.error('[authService.getToken] error:', error);
       return null;
     }
   },

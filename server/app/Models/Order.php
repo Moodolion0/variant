@@ -52,4 +52,24 @@ class Order extends Model
     {
         return $this->hasMany(Order_item::class);
     }
+
+    /**
+     * Scope: commandes assignées au livreur connecté, hors annulées et en attente
+     */
+    public function scopeForLivreur($query, $livreurId)
+    {
+        return $query->where('livreur_id', $livreurId)
+                     ->whereNotIn('status', [self::STATUS_ANNULE, self::STATUS_EN_ATTENTE])
+                     ->orderByDesc('created_at');
+    }
+
+    /**
+     * Scope: commandes disponibles à livrer (pas de livreur, status=paye)
+     */
+    public function scopeAvailableForLivreur($query)
+    {
+        return $query->whereNull('livreur_id')
+                     ->where('status', self::STATUS_PAYE)
+                     ->orderByDesc('created_at');
+    }
 } 
